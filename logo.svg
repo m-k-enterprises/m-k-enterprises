@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 1883 1140" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-138.24,-509.76)">
+        <rect id="Monogram" x="138.24" y="509.76" width="1883.52" height="1140.48" style="fill:none;"/>
+        <clipPath id="_clip1">
+            <rect id="Monogram1" x="138.24" y="509.76" width="1883.52" height="1140.48"/>
+        </clipPath>
+        <g clip-path="url(#_clip1)">
+            <g id="Monogram2" transform="matrix(1,0,0,1,138.48,82.9164)">
+                <path d="M1036.8,948.884L1558.08,427.604L1802.88,427.604L1252.8,974.804L1883.52,1562.32L1877.76,1565.2L1632.96,1565.2L1131.84,1095.76L1036.8,1190.8L1036.8,1568.08L864,1568.08L864,732.884L622.08,1087.12L607.68,1104.4L599.04,1121.68L547.2,1196.56L518.4,1242.64L486.72,1196.56L434.88,1121.68L426.24,1104.4L411.84,1087.12L172.8,732.884L172.8,1568.08L-0,1568.08L-0,427.604L175.68,427.604L518.4,931.604L858.24,427.604L1036.8,427.604L1036.8,948.884Z" style="fill:rgb(32,46,82);fill-rule:nonzero;"/>
+            </g>
+        </g>
+    </g>
+</svg>
