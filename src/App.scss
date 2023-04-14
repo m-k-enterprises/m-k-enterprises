@@ -1,0 +1,110 @@
+@import "pantone-css/scss/pantone";
+@import "@smolpack/bootstrap-extensions/scss/functions";
+
+$enable-rounded: false;
+$enable-negative-margins: true;
+
+$primary: $pantone-2767-cp;
+$secondary: $pantone-viva-magenta-tpg;
+
+$font-family-sans-serif: "Blooming Elegant Sans";
+
+$font-path:                               "./fonts/";
+$font-path-blooming-elegant-sans-regular: "#{$font-path}blooming-elegant-sans-regular";
+$font-path-blooming-elegant-sans-bold:    "#{$font-path}blooming-elegant-sans-bold";
+
+$card-height: 100%;
+
+@import "@smolpack/bootstrap-extensions/scss/variables";
+
+$theme-colors: map-merge($theme-colors, (
+  "primary":   $primary,
+  "secondary": $secondary
+));
+
+$navbar-brand-font-size: $h1-font-size;
+
+@import "@smolpack/bootstrap-extensions/scss/bootstrap-extensions";
+
+@font-face {
+  font-family: "Blooming Elegant Sans";
+  font-weight: 400;
+  src: url("#{$font-path-blooming-elegant-sans-regular}.woff2") format("woff2"), url("#{$font-path-blooming-elegant-sans-regular}.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Blooming Elegant Sans";
+  font-weight: 700;
+  src: url("#{$font-path-blooming-elegant-sans-bold}.woff2") format("woff2"), url("#{$font-path-blooming-elegant-sans-bold}.woff") format("woff");
+}
+
+.block {
+  transition: $transition-collapse;
+}
+
+.block-large,
+.carousel-item-large {
+  height: $spacer * 39;
+}
+
+.btn-more {
+  padding-left: 0;
+  padding-right: 0;
+
+  border: 0;
+  border-bottom: $nav-bordered-border-width solid transparent;
+
+  &:active,
+  &:hover {
+    border-color: $nav-bordered-border-width solid var(--bs-btn-color);
+  }
+
+  &::after {
+    content: "";
+    background-image: escape-svg($carousel-control-next-icon-bg);
+    background-position: bottom right;
+    background-repeat: no-repeat;
+    background-size: contain;
+    padding-left: 0;
+    height: calc(var(--bs-btn-font-size) / var(--bs-btn-line-height));
+  }
+}
+
+.card {
+  box-shadow: $box-shadow;
+  transition: $transition-base;
+
+  &:hover {
+    box-shadow: $box-shadow-lg;
+  }
+}
+
+.carousel {
+  transition: $transition-base;
+}
+
+.carousel-background {
+  background-position: center;
+  background-size: cover;
+  opacity: 25%;
+  width: 100%;
+  height: 100%;
+}
+
+.carousel-caption {
+  bottom: 50%;
+  transform: translateY(50%);
+
+  .btn-more {
+    border-color: var(--bs-btn-color);
+
+    &::after {
+      padding-left: var(--bs-btn-padding-x);
+      width: var(--bs-btn-font-size);
+    }
+  }
+}
+
+.navbar-brand img {
+  height: calc(var(--bs-navbar-brand-font-size) * var(--bs-body-line-height));
+}
