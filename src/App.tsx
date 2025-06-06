@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap'
 import { Container, Image as Img, Nav, Navbar, Spinner } from 'react-bootstrap';
 import { loader } from 'graphql.macro';
@@ -15,6 +15,7 @@ const Brands = React.lazy(() => import('./routes/Brands'));
 const News = React.lazy(() => import('./routes/News'));
 const Responsibility = React.lazy(() => import('./routes/Responsibility'));
 const Contact = React.lazy(() => import('./routes/Contact'));
+const Privacy = React.lazy(() => import('./routes/Privacy'));
 
 interface StorefrontData {
   shop: Shop
@@ -229,11 +230,15 @@ function App() {
           <Route path="/news" element={<News loading={loading} error={error} articles={articles} />} />
           <Route path="/responsibility" element={<Responsibility />} />
           <Route path="/contact" element={<Contact loading={loading} error={error} shops={shops} />} />
+          <Route path="/privacy" element={<Privacy />} />
         </Routes>
       </React.Suspense>
       <Block>
         <Container>
           <p>&copy; 2022 - {now.getFullYear()} M-K Enterprises. All rights reserved.</p>
+          <p className="mb-1">
+            <Link to="/privacy">Privacy Policy</Link>
+          </p>
         </Container>
       </Block>
     </Router>
