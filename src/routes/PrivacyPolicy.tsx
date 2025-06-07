@@ -60,7 +60,7 @@ function PrivacyPolicy() {
             the right to know what information we collect, request deletion, and
             opt out of any sale of your data. We do not sell personal
             information. To exercise these rights, contact us at
-            privacy@m-k.enterprises. We will verify your request before
+            team@m-k.enterprises. We will verify your request before
             processing it and will not discriminate against you for exercising
             your rights.
           </p>
@@ -79,7 +79,7 @@ function PrivacyPolicy() {
           <h2>Contact Information</h2>
           <p>
             For questions or requests regarding this Privacy Policy, contact us
-            at <a href="mailto:privacy@m-k.enterprises">privacy@m-k.enterprises</a>.
+            at <a href="mailto:team@m-k.enterprises">team@m-k.enterprises</a>.
           </p>
         </Container>
       </Block>
