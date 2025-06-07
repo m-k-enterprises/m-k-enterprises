@@ -50,3 +50,6 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 Use [Dev Containers](https://containers.dev/) for a one-click setup.
 The included `.devcontainer/devcontainer.json` installs dependencies and
 preconfigures useful VS Code extensions.
+
+The site includes a [Privacy Policy](./src/routes/Privacy.tsx) accessible at
+`/privacy`.
