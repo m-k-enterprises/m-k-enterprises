@@ -1653,6 +1653,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/runtime@npm:^7.27.6":
+  version: 7.27.6
+  resolution: "@babel/runtime@npm:7.27.6"
+  checksum: 10c0/89726be83f356f511dcdb74d3ea4d873a5f0cf0017d4530cb53aa27380c01ca102d573eff8b8b77815e624b1f8c24e7f0311834ad4fb632c90a770fda00bd4c8
+  languageName: node
+  linkType: hard
+
 "@babel/runtime@npm:^7.7.2":
   version: 7.20.6
   resolution: "@babel/runtime@npm:7.20.6"
@@ -9249,6 +9256,7 @@ __metadata:
   resolution: "m-k-enterprises@workspace:."
   dependencies:
     "@apollo/client": "npm:^3.7.3"
+    "@babel/runtime": "npm:^7.27.6"
     "@smolpack/bootstrap-extensions": "npm:^1.0.0"
     "@smolpack/react-bootstrap-extensions": "npm:^0.1.1"
     "@testing-library/jest-dom": "npm:^5.14.1"
