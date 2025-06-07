@@ -12,12 +12,12 @@ jest.mock('@smolpack/react-bootstrap-extensions', () => ({
 
 test('renders Home link', () => {
   render(<App />);
-  const linkElement = screen.getByText('Home');
+  const linkElement = screen.getByRole('link', { name: 'Home' });
   expect(linkElement).toBeInTheDocument();
 });
 
 test('renders Privacy Policy link', () => {
   render(<App />);
-  const privacyLink = screen.getByText('Privacy Policy');
-  expect(privacyLink).toBeInTheDocument();
+  const privacyLink = screen.getByRole('link', { name: 'Privacy Policy' });
+  expect(privacyLink).toHaveAttribute('href', '/privacy.html');
 });
