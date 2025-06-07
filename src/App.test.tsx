@@ -1,6 +1,6 @@
 'use strict';
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import App from './App';
 
 jest.mock('@apollo/client', () => {
@@ -15,6 +15,9 @@ jest.mock('@apollo/client', () => {
 });
 
 test('shows privacy link', async () => {
-  render(<App />);
-  expect(await screen.findByRole('link', { name: /privacy policy/i })).toBeInTheDocument();
+  await act(async () => {
+    render(<App />);
+  });
+  const link = await screen.findByRole('link', { name: /privacy policy/i });
+  expect(link).toBeInTheDocument();
 });

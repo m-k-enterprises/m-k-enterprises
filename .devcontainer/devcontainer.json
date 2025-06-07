@@ -1,0 +1,13 @@
+{
+  "name": "MK Enterprises",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:18",
+  "postCreateCommand": "yarn install --immutable",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode"
+      ]
+    }
+  }
+}
