@@ -1,13 +1,15 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import { LinkContainer } from 'react-router-bootstrap'
+import { LinkContainer } from 'react-router-bootstrap';
 import { Container, Image as Img, Nav, Navbar, Spinner } from 'react-bootstrap';
 import { loader } from 'graphql.macro';
-import { clients } from './clients';
-import logo from './logo.svg';
-import './App.scss';
 import { useQuery } from '@apollo/client';
 import { Block } from '@smolpack/react-bootstrap-extensions';
+
+import { clients } from './clients';
+import logo from './logo.svg';
+
+import './App.scss';
 
 const Home = React.lazy(() => import('./routes/Home'));
 const About = React.lazy(() => import('./routes/About'));

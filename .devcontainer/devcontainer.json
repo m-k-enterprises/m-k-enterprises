@@ -1,7 +1,7 @@
 {
   "name": "MK Enterprises",
   "image": "mcr.microsoft.com/devcontainers/typescript-node:18",
-  "postCreateCommand": "sudo corepack enable && yarn install --immutable",
+  "postCreateCommand": "sudo COREPACK_ENABLE_DOWNLOAD_PROMPT=0 corepack enable && yarn install --immutable",
   "customizations": {
     "vscode": {
       "extensions": [
