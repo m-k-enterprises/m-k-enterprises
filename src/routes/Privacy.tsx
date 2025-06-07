@@ -1,3 +1,4 @@
+'use strict';
 import React from 'react';
 import { Container } from 'react-bootstrap';
 import { Block } from '@smolpack/react-bootstrap-extensions';
