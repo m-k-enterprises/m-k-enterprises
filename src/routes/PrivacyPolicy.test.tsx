@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import App from './App';
+import PrivacyPolicy from './PrivacyPolicy';
 
 jest.mock('@smolpack/react-bootstrap-extensions', () => ({
   __esModule: true,
@@ -10,14 +10,11 @@ jest.mock('@smolpack/react-bootstrap-extensions', () => ({
   )
 }));
 
-test('renders Home link', () => {
-  render(<App />);
-  const linkElement = screen.getByText('Home');
-  expect(linkElement).toBeInTheDocument();
-});
-
-test('renders Privacy Policy link', () => {
-  render(<App />);
-  const privacyLink = screen.getByText('Privacy Policy');
-  expect(privacyLink).toBeInTheDocument();
+test('renders policy heading', () => {
+  render(<PrivacyPolicy />);
+  const heading = screen.getByRole('heading', {
+    name: /privacy policy/i,
+    level: 1
+  });
+  expect(heading).toBeInTheDocument();
 });
