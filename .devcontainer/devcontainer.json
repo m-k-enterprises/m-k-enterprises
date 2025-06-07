@@ -1,7 +1,7 @@
 {
   "name": "m-k-enterprises",
   "image": "mcr.microsoft.com/vscode/devcontainers/typescript-node:18",
-  "postCreateCommand": "corepack enable && yarn install",
+  "postCreateCommand": "sudo corepack enable && yarn install",
   "customizations": {
     "vscode": {
       "extensions": ["dbaeumer.vscode-eslint"]
