@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import { LinkContainer } from 'react-router-bootstrap'
+import { LinkContainer } from 'react-router-bootstrap';
 import { Container, Image as Img, Nav, Navbar, Spinner } from 'react-bootstrap';
 import { loader } from 'graphql.macro';
 import { clients } from './clients';
