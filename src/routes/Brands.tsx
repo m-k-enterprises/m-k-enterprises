@@ -32,7 +32,7 @@ function Brands(props: ShopProps) {
                   </Placeholder>
                 </Ratio>
               </Col>
-              <Col lassName="mb-3" xs={12} md={10}>
+              <Col className="mb-3" xs={12} md={10}>
                 <Placeholder className="lead" as="p" animation="wave">
                   {Array.from({ length: random(4, 8) }).map(() => (
                     <>
@@ -68,7 +68,7 @@ function Brands(props: ShopProps) {
               <Col className="mb-3" xs={10} md={2}>
                 <Image src={shop.brand?.logo?.image?.logoUrl} alt={shop.brand?.logo?.image?.altText} width={shop.brand?.logo?.image?.width} height={shop.brand?.logo?.image?.height} fluid />
               </Col>
-              <Col lassName="mb-3" xs={12} md={10}>
+              <Col className="mb-3" xs={12} md={10}>
                 <p className="lead">{shop.brand?.shortDescription}</p>
                 <Button variant="more" as="a" href={shop.primaryDomain.url}>Learn more</Button>
               </Col>
