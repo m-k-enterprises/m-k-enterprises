@@ -50,9 +50,19 @@ function Home(props: HomeProps) {
               <Container>
                 <h1 className="display-1">{shop.name}</h1>
                 <p className="lead">{shop.brand?.slogan}</p>
-                <Button variant="more" size="lg" as="a" href={shop.primaryDomain.url} style={{
-                  '--bs-btn-color': shop.brand?.colors.primary[0].foreground
-                } as React.CSSProperties}>Learn more</Button>
+                <Button
+                  variant="more"
+                  size="lg"
+                  as="a"
+                  href={shop.primaryDomain.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    '--bs-btn-color': shop.brand?.colors.primary[0].foreground
+                  } as React.CSSProperties}
+                >
+                  Learn more
+                </Button>
               </Container>
             </Carousel.Caption>
           </Carousel.Item>

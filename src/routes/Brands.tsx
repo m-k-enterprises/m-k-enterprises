@@ -70,7 +70,15 @@ function Brands(props: ShopProps) {
               </Col>
               <Col className="mb-3" xs={12} md={10}>
                 <p className="lead">{shop.brand?.shortDescription}</p>
-                <Button variant="more" as="a" href={shop.primaryDomain.url}>Learn more</Button>
+                <Button
+                  variant="more"
+                  as="a"
+                  href={shop.primaryDomain.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Learn more
+                </Button>
               </Col>
             </Row>
           </Container>

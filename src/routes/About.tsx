@@ -111,7 +111,15 @@ function About(props: ShopProps) {
                 <Card.Body>
                   <Card.Title>{member.firstName} {member.lastName}</Card.Title>
                   <Card.Text>{member.job}</Card.Text>
-                  <Button variant="more" as="a" href={member.linkedInUrl}>LinkedIn</Button>
+                  <Button
+                    variant="more"
+                    as="a"
+                    href={member.linkedInUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    LinkedIn
+                  </Button>
                 </Card.Body>
               </Card>
             </Col>
