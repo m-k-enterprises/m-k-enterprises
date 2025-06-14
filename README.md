@@ -2,6 +2,20 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Setup
+
+1. Copy `.env.example` to `.env` and fill in your Shopify tokens.
+2. Install dependencies with `yarn install` or `npm install`.
+3. Start the dev server with `yarn start`.
+
+### Required environment variables
+
+```
+REACT_APP_BEAR_BELTS_TOKEN=<token>
+REACT_APP_POCKET_BEARS_APPAREL_TOKEN=<token>
+REACT_APP_SIZZLE_SOAK_TOKEN=<token>
+```
+
 ## Available Scripts
 
 In the project directory, you can run:
