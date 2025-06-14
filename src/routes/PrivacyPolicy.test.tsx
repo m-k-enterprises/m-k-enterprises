@@ -11,3 +11,9 @@ test('renders heading', () => {
   });
   expect(heading).toBeInTheDocument();
 });
+
+test('shows introduction section', () => {
+  render(<PrivacyPolicy />);
+  const section = screen.getByRole('heading', { name: /introduction and scope/i });
+  expect(section).toBeInTheDocument();
+});

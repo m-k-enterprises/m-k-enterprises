@@ -8,3 +8,9 @@ test('renders heading', () => {
   const heading = screen.getByRole('heading', { name: /our commitment/i });
   expect(heading).toBeInTheDocument();
 });
+
+test('shows commitment text', () => {
+  render(<Responsibility />);
+  const paragraph = screen.getByText(/is committed to making the world/i);
+  expect(paragraph).toBeInTheDocument();
+});
