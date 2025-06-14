@@ -4,9 +4,9 @@ beforeEach(() => {
   jest.resetModules();
   process.env = {
     ...realEnv,
-    REACT_APP_BEAR_BELTS_TOKEN: 'a',
-    REACT_APP_POCKET_BEARS_APPAREL_TOKEN: 'b',
-    REACT_APP_SIZZLE_SOAK_TOKEN: 'c',
+    REACT_APP_SHOPIFY_TOKEN_BEAR_BELTS: 'a',
+    REACT_APP_SHOPIFY_TOKEN_POCKET_BEARS_APPAREL: 'b',
+    REACT_APP_SHOPIFY_TOKEN_SIZZLE_SOAK: 'c',
   };
 });
 
@@ -15,8 +15,8 @@ afterEach(() => {
 });
 
 test('throws if any token missing', () => {
-  delete process.env.REACT_APP_BEAR_BELTS_TOKEN;
-  expect(() => require('./clients')).toThrow('REACT_APP_BEAR_BELTS_TOKEN');
+  delete process.env.REACT_APP_SHOPIFY_TOKEN_BEAR_BELTS;
+  expect(() => require('./clients')).toThrow('REACT_APP_SHOPIFY_TOKEN_BEAR_BELTS');
 });
 
 test('exports clients when tokens present', () => {

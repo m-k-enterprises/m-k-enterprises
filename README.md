@@ -11,9 +11,9 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ### Required environment variables
 
 ```
-REACT_APP_BEAR_BELTS_TOKEN=<token>
-REACT_APP_POCKET_BEARS_APPAREL_TOKEN=<token>
-REACT_APP_SIZZLE_SOAK_TOKEN=<token>
+REACT_APP_SHOPIFY_TOKEN_BEAR_BELTS=<token>
+REACT_APP_SHOPIFY_TOKEN_POCKET_BEARS_APPAREL=<token>
+REACT_APP_SHOPIFY_TOKEN_SIZZLE_SOAK=<token>
 ```
 
 ## Available Scripts

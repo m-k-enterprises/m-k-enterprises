@@ -15,15 +15,15 @@ function requireEnvVar(name: string): string {
 const clientOptions: Record<string, ClientOptions> = {
   bearBelts: {
     uri: 'bear-belts',
-    shopifyStorefrontAccessToken: requireEnvVar('REACT_APP_BEAR_BELTS_TOKEN')
+    shopifyStorefrontAccessToken: requireEnvVar('REACT_APP_SHOPIFY_TOKEN_BEAR_BELTS')
   },
   pocketBearsApparel: {
     uri: 'pocket-bears-apparel',
-    shopifyStorefrontAccessToken: requireEnvVar('REACT_APP_POCKET_BEARS_APPAREL_TOKEN')
+    shopifyStorefrontAccessToken: requireEnvVar('REACT_APP_SHOPIFY_TOKEN_POCKET_BEARS_APPAREL')
   },
   sizzleSoak: {
     uri: 'sizzle-soak',
-    shopifyStorefrontAccessToken: requireEnvVar('REACT_APP_SIZZLE_SOAK_TOKEN')
+    shopifyStorefrontAccessToken: requireEnvVar('REACT_APP_SHOPIFY_TOKEN_SIZZLE_SOAK')
   }
 };
 
