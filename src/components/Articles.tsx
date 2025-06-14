@@ -49,7 +49,15 @@ function Articles(props: ArticleProps) {
             <Card.Body>
               <Card.Title>{article.title}</Card.Title>
               <Card.Text dangerouslySetInnerHTML={{ __html: article.excerptHtml || '' }} />
-              <Button variant="more" as="a" href={article.onlineStoreUrl}>Read more</Button>
+              <Button
+                variant="more"
+                as="a"
+                href={article.onlineStoreUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Read more
+              </Button>
             </Card.Body>
             <Card.Footer className="text-muted">{new Date(article.publishedAt).toLocaleDateString(undefined, {
               day: 'numeric',
