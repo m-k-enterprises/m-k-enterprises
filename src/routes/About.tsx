@@ -104,14 +104,14 @@ function About(props: ShopProps) {
       </Block>
       <Container className="mt-n5">
         <Row className="justify-content-center">
-          {team.map(team => (
-            <Col xs={6} md={4} xl={3}>
+          {team.map(member => (
+            <Col key={member.email} xs={6} md={4} xl={3}>
               <Card className="border-0" border="light">
-                <Gravatar className="card-img-top img-fluid" email={team.email} rating="g" size={1920} default="blank" />
+                <Gravatar className="card-img-top img-fluid" email={member.email} rating="g" size={1920} default="blank" />
                 <Card.Body>
-                  <Card.Title>{team.firstName} {team.lastName}</Card.Title>
-                  <Card.Text>{team.job}</Card.Text>
-                  <Button variant="more" as="a" href={team.linkedInUrl}>LinkedIn</Button>
+                  <Card.Title>{member.firstName} {member.lastName}</Card.Title>
+                  <Card.Text>{member.job}</Card.Text>
+                  <Button variant="more" as="a" href={member.linkedInUrl}>LinkedIn</Button>
                 </Card.Body>
               </Card>
             </Col>
