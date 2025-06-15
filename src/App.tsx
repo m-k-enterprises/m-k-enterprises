@@ -16,6 +16,7 @@ const News = React.lazy(() => import('./routes/News'));
 const Responsibility = React.lazy(() => import('./routes/Responsibility'));
 const Contact = React.lazy(() => import('./routes/Contact'));
 const PrivacyPolicy = React.lazy(() => import('./routes/PrivacyPolicy'));
+const Links = React.lazy(() => import('./routes/Links'));
 
 interface StorefrontData {
   shop: Shop
@@ -230,6 +231,7 @@ function App() {
           <Route path="/news" element={<News loading={loading} error={error} articles={articles} />} />
           <Route path="/responsibility" element={<Responsibility />} />
           <Route path="/contact" element={<Contact loading={loading} error={error} shops={shops} />} />
+          <Route path="/links" element={<Links />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         </Routes>
       </React.Suspense>
