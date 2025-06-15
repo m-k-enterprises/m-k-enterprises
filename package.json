@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "homepage": "https://m-k.enterprises",
+  "packageManager": "yarn@1.22.22",
   "dependencies": {
     "@apollo/client": "^3.7.3",
     "@smolpack/bootstrap-extensions": "^1.0.0",

@@ -2,17 +2,19 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 
 import Brands from './Brands';
+import { Shop } from '../App';
 
-const shops = Array.from({ length: 4 }, (_, i) => ({
+const shops: Shop[] = Array.from({ length: 4 }, (_, i) => ({
   id: String(i + 1),
   name: `Test ${i + 1}`,
   shipsToCountries: [],
   primaryDomain: { url: `https://example${i + 1}.com` },
   brand: {
     shortDescription: `Description ${i + 1}`,
-    coverImage: { image: { carouselUrl: `cover${i + 1}.jpg` } },
+    coverImage: { image: { url: '', carouselUrl: `cover${i + 1}.jpg` } },
     logo: {
       image: {
+        url: '',
         logoUrl: `logo${i + 1}.png`,
         altText: `Logo ${i + 1}`,
         width: 1,

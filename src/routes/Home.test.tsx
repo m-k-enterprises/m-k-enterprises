@@ -2,8 +2,9 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 
 import Home from './Home';
+import { Shop } from '../App';
 
-const shops = Array.from({ length: 2 }, (_, i) => ({
+const shops: Shop[] = Array.from({ length: 2 }, (_, i) => ({
   id: String(i + 1),
   name: `Shop ${i + 1}`,
   shipsToCountries: [],

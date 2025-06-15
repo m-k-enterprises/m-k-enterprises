@@ -2,14 +2,15 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 
 import Contact from './Contact';
+import { Shop } from '../App';
 
-const shops = Array.from({ length: 2 }, (_, i) => ({
+const shops: Shop[] = Array.from({ length: 2 }, (_, i) => ({
   id: String(i + 1),
   name: `Shop ${i + 1}`,
   shipsToCountries: [],
   primaryDomain: { url: `https://shop${i + 1}.com` },
   brand: {
-    logo: { image: { logoUrl: `logo${i + 1}.png`, altText: `Logo ${i + 1}`, width: 1, height: 1 } },
+    logo: { image: { url: '', logoUrl: `logo${i + 1}.png`, altText: `Logo ${i + 1}`, width: 1, height: 1 } },
     colors: { primary: [{ background: '#fff', foreground: '#000' }] },
   },
 }));
