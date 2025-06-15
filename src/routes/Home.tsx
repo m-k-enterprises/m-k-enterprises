@@ -7,6 +7,12 @@ import { random } from 'lodash';
 
 interface HomeProps extends ShopProps, ArticleProps {}
 
+/**
+ * Home page showing brand highlights and latest news.
+ *
+ * @param props - Shop and article data with loading states.
+ * @returns JSX for the home route.
+ */
 function Home(props: HomeProps) {
   return (
     <>

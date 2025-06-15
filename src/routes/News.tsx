@@ -4,6 +4,12 @@ import { Block } from '@smolpack/react-bootstrap-extensions';
 import { Articles } from '../components';
 import { ArticleProps } from '../App';
 
+/**
+ * News route listing recent company articles.
+ *
+ * @param props - Article data with loading state.
+ * @returns JSX for the news route.
+ */
 function News(props: ArticleProps) {
   return (
     <>

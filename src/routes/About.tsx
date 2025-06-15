@@ -6,6 +6,12 @@ import { ShopProps } from '../App';
 import about from './about.jpg';
 import Gravatar from 'react-gravatar';
 
+/**
+ * About page describing the company and team.
+ *
+ * @param props - Shop data with loading state.
+ * @returns JSX for the about route.
+ */
 function About(props: ShopProps) {
   const shipsToCountriesMin = intersection(...props.shops.map(shop => shop.shipsToCountries)).length;
   const shipsToCountriesMax = union(...props.shops.map(shop => shop.shipsToCountries)).length;
