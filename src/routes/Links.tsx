@@ -12,9 +12,11 @@ import './Links.scss';
 function Links() {
   const items = [
     { name: 'M-K Enterprises', tagline: 'Corporate site', href: 'https://m-k.enterprises' },
-    { name: 'Bear Belts', tagline: 'Belts for every bear', href: 'https://bearbelts.com' },
-    { name: 'Pocket Bears Apparel', tagline: 'Pocket-sized style', href: 'https://pocketbears.com' },
-    { name: 'Sizzle Soak', tagline: 'Add flavour fast', href: 'https://sizzlesoak.com' },
+    { name: 'Bear Belts', tagline: 'Belts for every bear', href: 'https://bearbelts.store' },
+    { name: 'Pocket Bears Apparel', tagline: 'Pocket-sized style', href: 'https://pocketbearsapparel.store' },
+    // { name: 'Sizzle & Soak', tagline: 'Add flavour fast', href: 'https://sizzleandsoak.store' },
+    { name: 'Mythical Moods', tagline: 'Enchanting scents', href: 'https://mythicalmoods.store' },
+    { name: 'Aura & Essence', tagline: 'Holistic aromas', href: 'https://aura-and-essence.store' },
   ];
 
   return (
