@@ -6,8 +6,8 @@ import { ArticleProps } from '../App';
 function Articles(props: ArticleProps) {
   return (
     <>
-      {props.loading || props.error ? Array.from({ length: 6 }).map(() => (
-        <Col border="light">
+      {props.loading || props.error ? Array.from({ length: 6 }).map((_, index) => (
+        <Col key={index} border="light">
           <Card border="light">
             <Ratio aspectRatio="16x9">
               <Placeholder variant="top" animation="glow">
@@ -16,17 +16,17 @@ function Articles(props: ArticleProps) {
             </Ratio>
             <Card.Body>
               <Placeholder animation="wave" as={Card.Title}>
-                {Array.from({ length: random(2, 8) }).map(() => (
-                    <>
+                {Array.from({ length: random(2, 8) }).map((_, i) => (
+                    <React.Fragment key={i}>
                       <Placeholder xs={random(1, 6)} />{' '}
-                    </>
+                    </React.Fragment>
                   ))}
               </Placeholder>
               <Placeholder animation="wave" as={Card.Text}>
-                {Array.from({ length: random(3, 12) }).map(() => (
-                  <>
+                {Array.from({ length: random(3, 12) }).map((_, i) => (
+                  <React.Fragment key={i}>
                     <Placeholder xs={random(1, 6)} />{' '}
-                  </>
+                  </React.Fragment>
                 ))}
               </Placeholder>
               <Placeholder.Button variant="more" animation="wave" xs={2}>

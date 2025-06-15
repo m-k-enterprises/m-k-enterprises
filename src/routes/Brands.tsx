@@ -12,8 +12,8 @@ function Brands(props: ShopProps) {
           <Block.Title>Our Brands</Block.Title>
         </Container>
       </Block>
-      {props.loading || props.error ? Array.from({ length: 2 }).map(() => (
-        <Block>
+      {props.loading || props.error ? Array.from({ length: 2 }).map((_, index) => (
+        <Block key={index}>
           <Container className="border-bottom border-4">
             <Row className="justify-content-center mb-3">
               <Col md={10}>
@@ -34,10 +34,10 @@ function Brands(props: ShopProps) {
               </Col>
               <Col className="mb-3" xs={12} md={10}>
                 <Placeholder className="lead" as="p" animation="wave">
-                  {Array.from({ length: random(4, 8) }).map(() => (
-                    <>
+                  {Array.from({ length: random(4, 8) }).map((_, i) => (
+                    <React.Fragment key={i}>
                       <Placeholder xs={random(1, 6)} />{' '}
-                    </>
+                    </React.Fragment>
                   ))}
                 </Placeholder>
                 <Placeholder.Button variant="more" animation="wave" xs={2}>
