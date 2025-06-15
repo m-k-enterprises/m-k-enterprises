@@ -2,9 +2,10 @@ import React from 'react';
 import { Button, Card, Col, Container, Figure, Placeholder, Row } from 'react-bootstrap';
 import { Block, PullQuote, StatCard } from '@smolpack/react-bootstrap-extensions';
 import { intersection, union } from 'lodash';
+import Gravatar from 'react-gravatar';
+
 import { ShopProps } from '../App';
 import about from './about.jpg';
-import Gravatar from 'react-gravatar';
 
 /**
  * About page describing the company and team.
