@@ -14,7 +14,7 @@ function Links() {
     { name: 'M-K Enterprises', tagline: 'Corporate site', href: 'https://m-k.enterprises' },
     { name: 'Bear Belts', tagline: 'Belts for every bear', href: 'https://bearbelts.com' },
     { name: 'Pocket Bears Apparel', tagline: 'Pocket-sized style', href: 'https://pocketbears.com' },
-    { name: 'Sizzle Soak', tagline: 'Add flavour fast', href: 'https://sizzlesoak.com' },
+    { name: 'Aura & Essence', tagline: 'Holistic wellness', href: 'https://auraessence.com' },
   ];
 
   return (

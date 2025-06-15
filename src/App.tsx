@@ -102,11 +102,11 @@ function App() {
     client: clients.pocketBearsApparel
   });
   const {
-    loading: sizzleSoakLoading,
-    error: sizzleSoakError,
-    data: sizzleSoakData
+    loading: auraEssenceLoading,
+    error: auraEssenceError,
+    data: auraEssenceData,
   } = useQuery<StorefrontData>(storefrontQuery, {
-    client: clients.sizzleSoak
+    client: clients.auraEssence,
   });
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(false);
@@ -114,15 +114,15 @@ function App() {
   const [articles, setArticles] = React.useState<Article[]>([]);
 
   React.useEffect(() => {
-    const isLoading = bearBeltsLoading || sizzleSoakLoading;
+    const isLoading = bearBeltsLoading || auraEssenceLoading;
 
     if (!isLoading) {
-      setLoading(bearBeltsLoading || pocketBearsApparelLoading || sizzleSoakLoading);
+      setLoading(bearBeltsLoading || pocketBearsApparelLoading || auraEssenceLoading);
     }
-  }, [bearBeltsLoading, pocketBearsApparelLoading, sizzleSoakLoading]);
+  }, [bearBeltsLoading, pocketBearsApparelLoading, auraEssenceLoading]);
 
   React.useEffect(() => {
-    const hasError = bearBeltsError || sizzleSoakError;    
+    const hasError = bearBeltsError || auraEssenceError;
 
     if (hasError) {
       if (bearBeltsError) {
@@ -131,13 +131,13 @@ function App() {
       if (pocketBearsApparelError) {
         console.error(pocketBearsApparelError);
       }
-      if (sizzleSoakError) {
-        console.error(sizzleSoakError);
+      if (auraEssenceError) {
+        console.error(auraEssenceError);
       }
 
-      setError(!!(bearBeltsError || pocketBearsApparelError || sizzleSoakError));
+      setError(!!(bearBeltsError || pocketBearsApparelError || auraEssenceError));
     }
-  }, [bearBeltsError, pocketBearsApparelError, sizzleSoakError]);
+  }, [bearBeltsError, pocketBearsApparelError, auraEssenceError]);
 
   React.useEffect(() => {
     const shopData: Shop[] = [];
@@ -157,10 +157,10 @@ function App() {
       }
     }
 
-    if (sizzleSoakData) {
-      shopData.push(sizzleSoakData.shop);
-      if (sizzleSoakData.articles.nodes) {
-        articlesData.push(...sizzleSoakData.articles.nodes)
+    if (auraEssenceData) {
+      shopData.push(auraEssenceData.shop);
+      if (auraEssenceData.articles.nodes) {
+        articlesData.push(...auraEssenceData.articles.nodes)
       }
     }
 
@@ -173,7 +173,7 @@ function App() {
 
     setShops(shopData);
     setArticles(articlesData);
-  }, [bearBeltsData, pocketBearsApparelData, sizzleSoakData]);
+  }, [bearBeltsData, pocketBearsApparelData, auraEssenceData]);
 
   const now = new Date();
 

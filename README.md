@@ -13,7 +13,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ```
 REACT_APP_SHOPIFY_TOKEN_BEAR_BELTS=<token>
 REACT_APP_SHOPIFY_TOKEN_POCKET_BEARS_APPAREL=<token>
-REACT_APP_SHOPIFY_TOKEN_SIZZLE_SOAK=<token>
+REACT_APP_SHOPIFY_TOKEN_AURA_ESSENCE=<token>
 ```
 
 ## Available Scripts

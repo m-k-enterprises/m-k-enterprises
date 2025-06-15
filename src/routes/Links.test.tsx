@@ -7,7 +7,7 @@ const hrefs = [
   'https://m-k.enterprises',
   'https://bearbelts.com',
   'https://pocketbears.com',
-  'https://sizzlesoak.com',
+  'https://auraessence.com',
 ];
 
 test('renders heading', () => {
