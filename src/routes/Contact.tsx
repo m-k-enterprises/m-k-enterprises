@@ -3,6 +3,12 @@ import { Col, Container, Image, Placeholder, Ratio, Row } from 'react-bootstrap'
 import { Block } from '@smolpack/react-bootstrap-extensions';
 import { ShopProps } from '../App';
 
+/**
+ * Shows contact information for each brand.
+ *
+ * @param props - Shop data with loading state.
+ * @returns JSX for the contact route.
+ */
 function Contact(props: ShopProps) {
   return (
     <>

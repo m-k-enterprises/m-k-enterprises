@@ -2,6 +2,11 @@ import React from 'react';
 import { Container } from 'react-bootstrap';
 import { Block } from '@smolpack/react-bootstrap-extensions';
 
+/**
+ * Details the company's sustainability efforts.
+ *
+ * @returns JSX for the responsibility route.
+ */
 function Responsibility() {
   return (
     <>

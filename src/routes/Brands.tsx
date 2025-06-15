@@ -4,6 +4,12 @@ import { Block } from '@smolpack/react-bootstrap-extensions';
 import { random } from 'lodash';
 import { ShopProps } from '../App';
 
+/**
+ * Lists every brand with link to learn more.
+ *
+ * @param props - Shop data for all brands.
+ * @returns JSX for the brands route.
+ */
 function Brands(props: ShopProps) {
   return (
     <>
