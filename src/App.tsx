@@ -27,10 +27,10 @@ interface StorefrontData {
   }
 }
 
-interface Shop {
+export interface Shop {
   id: string
   name: string
-  shipsToCountries: [string]
+  shipsToCountries: string[]
   primaryDomain: {
     url: string
   }
