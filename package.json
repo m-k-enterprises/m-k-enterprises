@@ -61,5 +61,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@popperjs/core": "^2.11.8",
+    "@testing-library/dom": "^10.4.0"
   }
 }
