@@ -5,3 +5,4 @@ export { default as News } from './News';
 export { default as Responsibility } from './Responsibility';
 export { default as Contact } from './Contact';
 export { default as PrivacyPolicy } from './PrivacyPolicy';
+export { default as Links } from './Links';
