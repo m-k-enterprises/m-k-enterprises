@@ -17,17 +17,17 @@ function Home(props: HomeProps) {
             <Carousel.Caption className="text-end text-primary">
               <Container>
                 <Placeholder className="display-1" animation="wave" as="h1">
-                  {Array.from({ length: random(2, 3) }).map(() => (
-                    <>
+                  {Array.from({ length: random(2, 3) }).map((_, i) => (
+                    <React.Fragment key={i}>
                       <Placeholder xs={random(1, 3)} />{' '}
-                    </>
+                    </React.Fragment>
                   ))}
                 </Placeholder>
                 <Placeholder className="lead" animation="wave" as="p">
-                  {Array.from({ length: random(4, 8) }).map(() => (
-                    <>
+                  {Array.from({ length: random(4, 8) }).map((_, i) => (
+                    <React.Fragment key={i}>
                       <Placeholder xs={random(1, 6)} />{' '}
-                    </>
+                    </React.Fragment>
                   ))}
                 </Placeholder>
                 <Placeholder.Button variant="more" size="lg" animation="wave" xs={2}>
