@@ -5,10 +5,10 @@ import Links from './Links';
 
 const hrefs = [
   'https://m-k.enterprises',
-  'https://bearbelts.com',
-  'https://pocketbears.com',
-  'https://mythicalmoods.com',
-  'https://auraessence.com',
+  'https://bearbelts.store',
+  'https://pocketbearsapparel.store',
+  'https://mythicalmoods.store',
+  'https://aura-and-essence.store',
 ];
 
 test('renders heading', () => {
