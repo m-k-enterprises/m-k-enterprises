@@ -7,7 +7,8 @@ const hrefs = [
   'https://m-k.enterprises',
   'https://bearbelts.com',
   'https://pocketbears.com',
-  'https://sizzlesoak.com',
+  'https://mythicalmoods.com',
+  'https://auraessence.com',
 ];
 
 test('renders heading', () => {
@@ -16,10 +17,10 @@ test('renders heading', () => {
   expect(heading).toBeInTheDocument();
 });
 
-test('renders four cards with correct links', () => {
+test('renders five cards with correct links', () => {
   render(<Links />);
   const links = screen.getAllByRole('button', { name: /visit/i });
-  expect(links).toHaveLength(4);
+  expect(links).toHaveLength(5);
   links.forEach((link, i) => {
     expect(link).toHaveAttribute('href', hrefs[i]);
     expect(link).toHaveAttribute('target', '_blank');
