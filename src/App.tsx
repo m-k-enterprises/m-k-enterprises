@@ -94,8 +94,10 @@ const shopConfigs = [
 ] as const;
 
 function App() {
-  const queries = shopConfigs.map((cfg) =>
-    useQuery<StorefrontData>(storefrontQuery, { client: cfg.client })
+  const queries = shopConfigs.map(
+    (shopConfig) =>
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      useQuery<StorefrontData>(storefrontQuery, { client: shopConfig.client })
   );
 
   const [loading, setLoading] = React.useState(true);
@@ -104,31 +106,35 @@ function App() {
   const [articles, setArticles] = React.useState<Article[]>([]);
 
   React.useEffect(() => {
-    setLoading(queries.some((q) => q.loading));
-  }, queries.map((q) => q.loading));
+    setLoading(queries.some((query) => query.loading));
+  },
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  queries.map((query) => query.loading));
 
   React.useEffect(() => {
-    const hasError = queries.some((q) => q.error);
+    const hasError = queries.some((query) => query.error);
 
     if (hasError) {
-      queries.forEach((q) => {
-        if (q.error) {
-          console.error(q.error);
+      queries.forEach((query) => {
+        if (query.error) {
+          console.error(query.error);
         }
       });
     }
     setError(hasError);
-  }, queries.map((q) => q.error));
+  },
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  queries.map((query) => query.error));
 
   React.useEffect(() => {
     const shopData: Shop[] = [];
     let articlesData: Article[] = [];
 
-    queries.forEach((q) => {
-      if (q.data) {
-        shopData.push(q.data.shop);
-        if (q.data.articles.nodes) {
-          articlesData.push(...q.data.articles.nodes);
+    queries.forEach((query) => {
+      if (query.data) {
+        shopData.push(query.data.shop);
+        if (query.data.articles.nodes) {
+          articlesData.push(...query.data.articles.nodes);
         }
       }
     });
@@ -142,7 +148,9 @@ function App() {
 
     setShops(shopData);
     setArticles(articlesData);
-  }, queries.map((q) => q.data));
+  },
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  queries.map((query) => query.data));
 
   const now = new Date();
 

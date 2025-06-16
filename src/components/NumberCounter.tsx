@@ -1,5 +1,4 @@
 import React from 'react';
-import { random } from 'lodash';
 
 interface NumberCounterProps {
   number: number;
