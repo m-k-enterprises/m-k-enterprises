@@ -210,7 +210,7 @@ function App() {
           <Route path="/news" element={<News loading={loading} error={error} articles={articles} />} />
           <Route path="/responsibility" element={<Responsibility />} />
           <Route path="/contact" element={<Contact loading={loading} error={error} shops={shops} />} />
-          <Route path="/links" element={<Links />} />
+          <Route path="/links" element={<Links loading={loading} error={error} shops={shops} />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         </Routes>
       </React.Suspense>
