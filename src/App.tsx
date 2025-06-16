@@ -86,112 +86,58 @@ export interface ArticleProps extends QueryProps {
 
 const storefrontQuery = loader('./storefront.gql');
 
+const shopConfigs = [
+  { key: 'bearBelts', client: clients.bearBelts },
+  { key: 'pocketBearsApparel', client: clients.pocketBearsApparel },
+  { key: 'mythicalMoods', client: clients.mythicalMoods },
+  { key: 'auraEssence', client: clients.auraEssence },
+] as const;
+
 function App() {
-  const {
-    loading: bearBeltsLoading,
-    error: bearBeltsError,
-    data: bearBeltsData
-  } = useQuery<StorefrontData>(storefrontQuery, {
-    client: clients.bearBelts
-  });
-  const {
-    loading: pocketBearsApparelLoading,
-    error: pocketBearsApparelError,
-    data: pocketBearsApparelData
-  } = useQuery<StorefrontData>(storefrontQuery, {
-    client: clients.pocketBearsApparel
-  });
-  const {
-    loading: mythicalMoodsLoading,
-    error: mythicalMoodsError,
-    data: mythicalMoodsData
-  } = useQuery<StorefrontData>(storefrontQuery, {
-    client: clients.mythicalMoods
-  });
-  const {
-    loading: auraEssenceLoading,
-    error: auraEssenceError,
-    data: auraEssenceData
-  } = useQuery<StorefrontData>(storefrontQuery, {
-    client: clients.auraEssence
-  });
+  const queries = shopConfigs.map(
+    (shopConfig) =>
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      useQuery<StorefrontData>(storefrontQuery, { client: shopConfig.client })
+  );
+
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(false);
   const [shops, setShops] = React.useState<Shop[]>([]);
   const [articles, setArticles] = React.useState<Article[]>([]);
 
   React.useEffect(() => {
-    const isLoading = bearBeltsLoading || mythicalMoodsLoading || auraEssenceLoading;
-
-    if (!isLoading) {
-      setLoading(
-        bearBeltsLoading ||
-          pocketBearsApparelLoading ||
-          mythicalMoodsLoading ||
-          auraEssenceLoading
-      );
-    }
-  }, [bearBeltsLoading, pocketBearsApparelLoading, mythicalMoodsLoading, auraEssenceLoading]);
+    setLoading(queries.some((query) => query.loading));
+  },
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  queries.map((query) => query.loading));
 
   React.useEffect(() => {
-    const hasError = bearBeltsError || mythicalMoodsError || auraEssenceError;
+    const hasError = queries.some((query) => query.error);
 
     if (hasError) {
-      if (bearBeltsError) {
-        console.error(bearBeltsError);
-      }
-      if (pocketBearsApparelError) {
-        console.error(pocketBearsApparelError);
-      }
-      if (mythicalMoodsError) {
-        console.error(mythicalMoodsError);
-      }
-      if (auraEssenceError) {
-        console.error(auraEssenceError);
-      }
-
-      setError(
-        !!(
-          bearBeltsError ||
-            pocketBearsApparelError ||
-            mythicalMoodsError ||
-            auraEssenceError
-        )
-      );
+      queries.forEach((query) => {
+        if (query.error) {
+          console.error(query.error);
+        }
+      });
     }
-  }, [bearBeltsError, pocketBearsApparelError, mythicalMoodsError, auraEssenceError]);
+    setError(hasError);
+  },
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  queries.map((query) => query.error));
 
   React.useEffect(() => {
     const shopData: Shop[] = [];
     let articlesData: Article[] = [];
 
-    if (bearBeltsData) {
-      shopData.push(bearBeltsData.shop);
-      if (bearBeltsData.articles.nodes) {
-        articlesData.push(...bearBeltsData.articles.nodes);
+    queries.forEach((query) => {
+      if (query.data) {
+        shopData.push(query.data.shop);
+        if (query.data.articles.nodes) {
+          articlesData.push(...query.data.articles.nodes);
+        }
       }
-    }
-
-    if (pocketBearsApparelData) {
-      shopData.push(pocketBearsApparelData.shop);
-      if (pocketBearsApparelData.articles.nodes) {
-        articlesData.push(...pocketBearsApparelData.articles.nodes);
-      }
-    }
-
-    if (mythicalMoodsData) {
-      shopData.push(mythicalMoodsData.shop);
-      if (mythicalMoodsData.articles.nodes) {
-        articlesData.push(...mythicalMoodsData.articles.nodes);
-      }
-    }
-
-    if (auraEssenceData) {
-      shopData.push(auraEssenceData.shop);
-      if (auraEssenceData.articles.nodes) {
-        articlesData.push(...auraEssenceData.articles.nodes);
-      }
-    }
+    });
 
     articlesData = articlesData.sort((a, b) => {
       const aTime = new Date(a.publishedAt).getTime();
@@ -202,12 +148,9 @@ function App() {
 
     setShops(shopData);
     setArticles(articlesData);
-  }, [
-    bearBeltsData,
-    pocketBearsApparelData,
-    mythicalMoodsData,
-    auraEssenceData,
-  ]);
+  },
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  queries.map((query) => query.data));
 
   const now = new Date();
 
