@@ -24,3 +24,9 @@ test('renders team links', () => {
     expect(link).toHaveAttribute('rel', 'noopener noreferrer');
   });
 });
+
+test('renders about image with alt', () => {
+  render(<About loading={false} error={false} shops={[]} />);
+  const image = screen.getByAltText(/Bear Belts launch event/i);
+  expect(image).toBeInTheDocument();
+});

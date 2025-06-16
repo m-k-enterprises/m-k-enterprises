@@ -63,7 +63,7 @@ function About(props: ShopProps) {
           <Row className="align-items-center">
             <Col>
               <Figure>
-                <Figure.Image src={about} fluid />
+                <Figure.Image src={about} alt="Bear Belts launch event" fluid />
                 <Figure.Caption className="text-center">Bear Belts' first event in Edinburgh.</Figure.Caption>
               </Figure>
             </Col>
