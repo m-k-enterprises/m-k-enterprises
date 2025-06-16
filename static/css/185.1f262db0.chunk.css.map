@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/185.1f262db0.chunk.css","mappings":"AAAA,OACE,gBAGF,aACE,mBAGF,qBAEE,kBADA,UACA","sources":["routes/Links.scss"],"sourcesContent":[".links {\n  margin-top: 1rem;\n}\n\n.links .card {\n  margin-bottom: 1rem;\n}\n\n.links .card-img-top {\n  width: 4rem;\n  margin: 0.5rem auto;\n}\n"],"names":[],"sourceRoot":""}
