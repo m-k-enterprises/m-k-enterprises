@@ -26,7 +26,7 @@ const clientOptions: Record<string, ClientOptions> = {
     shopifyStorefrontAccessToken: requireEnvVar('REACT_APP_SHOPIFY_TOKEN_MYTHICAL_MOODS')
   },
   auraEssence: {
-    uri: 'aura-essence',
+    uri: 'aura-and-essence',
     shopifyStorefrontAccessToken: requireEnvVar('REACT_APP_SHOPIFY_TOKEN_AURA_ESSENCE')
   },
   // sizzleSoak temporarily disabled
