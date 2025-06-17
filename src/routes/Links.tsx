@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Row } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import { Block } from '@smolpack/react-bootstrap-extensions';
 
 import { ShopProps } from '../App';
@@ -29,7 +29,9 @@ function Links(props: LinksProps) {
         <Container className="links">
           <Row>
             {items.map(shop => (
-              <LinkCard key={shop.id} shop={shop} />
+              <Col key={shop.id} xs={12} md={6} className="d-flex">
+                <LinkCard shop={shop} />
+              </Col>
             ))}
           </Row>
         </Container>
