@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Card } from 'react-bootstrap';
+import { Button, Card, Col, Image } from 'react-bootstrap';
 
 import { Shop } from '../App';
 import logo from '../logo.svg';
@@ -16,18 +16,21 @@ interface LinkCardProps {
  */
 export default function LinkCard(props: LinkCardProps) {
   const { shop } = props;
-  const image = shop.brand?.logo?.image;
+
   return (
-    <Card className="flex-fill text-center">
-      <Card.Img
-        variant="top"
-        src={image?.logoUrl ?? logo}
-        alt={image?.altText ?? shop.name}
-        width={image?.width}
-        height={image?.height}
-      />
-      <Card.Body>
-        <Card.Title>{shop.name}</Card.Title>
+    <Card className="flex-fill text-center" style={{
+      backgroundColor: shop.brand?.colors.primary[0].background,
+    }}>
+      <div className="img-background" style={{
+        backgroundColor: shop.brand?.colors.primary[0].background,
+        backgroundImage: `url(${shop.brand?.coverImage?.image?.carouselUrl})`
+      }} />
+      <Card.Body style={{
+        color: shop.brand?.colors.primary[0].foreground
+      }}>
+        <Col className="mb-3 mx-auto" xs={10} md={2}>
+          <Image src={shop.brand?.logo?.image?.logoUrl} alt={shop.brand?.logo?.image?.altText} width={shop.brand?.logo?.image?.width} height={shop.brand?.logo?.image?.height} fluid />
+        </Col>
         <Card.Text>{shop.brand?.slogan}</Card.Text>
         <Button
           variant="more"
