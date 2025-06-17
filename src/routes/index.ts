@@ -6,4 +6,3 @@ export { default as Responsibility } from './Responsibility';
 export { default as Contact } from './Contact';
 export { default as PrivacyPolicy } from './PrivacyPolicy';
 export { default as Links } from './Links';
-export { default as LinkCard } from './LinkCard';
