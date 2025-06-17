@@ -17,14 +17,14 @@ export default function LinkCard(props: LinkCardProps) {
   const { shop } = props;
 
   return (
-    <Card className="flex-fill text-center" style={{
+    <Card className="card-link flex-fill text-center" style={{
       backgroundColor: shop.brand?.colors.primary[0].background,
     }}>
       <div className="img-background" style={{
         backgroundColor: shop.brand?.colors.primary[0].background,
         backgroundImage: `url(${shop.brand?.coverImage?.image?.carouselUrl})`
       }} />
-      <Card.Body style={{
+      <Card.Body className="d-flex flex-column align-items-center justify-content-between" style={{
         color: shop.brand?.colors.primary[0].foreground
       }}>
         <Col className="mb-3 mx-auto" xs={10} md={2}>
@@ -37,6 +37,7 @@ export default function LinkCard(props: LinkCardProps) {
           href={shop.primaryDomain.url}
           target="_blank"
           rel="noopener noreferrer"
+          className="stretched-link"
         >
           Visit
         </Button>

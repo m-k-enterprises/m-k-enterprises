@@ -4,7 +4,6 @@ import { Block } from '@smolpack/react-bootstrap-extensions';
 
 import { ShopProps } from '../App';
 import { LinkCard } from '../components';
-import './Links.scss';
 
 interface LinksProps extends ShopProps {}
 
@@ -20,14 +19,9 @@ function Links(props: LinksProps) {
 
   return (
     <>
-      <Block className="text-bg-primary">
-        <Container>
-          <Block.Title>Useful Links</Block.Title>
-        </Container>
-      </Block>
       <Block>
         <Container className="links">
-          <Row>
+          <Row className="g-3">
             {items.map(shop => (
               <Col key={shop.id} xs={12} md={6} className="d-flex">
                 <LinkCard shop={shop} />

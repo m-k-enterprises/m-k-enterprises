@@ -78,7 +78,12 @@ $navbar-brand-font-size: $h1-font-size;
     box-shadow: $box-shadow-lg;
   }
 
+  .card-body {
+    z-index: 1;
+  }
+
   .img-background {
+    position: absolute;
     background-position: center;
     background-size: cover;
     opacity: 25%;
