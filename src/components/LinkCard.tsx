@@ -14,7 +14,8 @@ interface LinkCardProps {
  * @param props - Brand shop data.
  * @returns JSX element for a link card.
  */
-export default function LinkCard({ shop }: LinkCardProps) {
+export default function LinkCard(props: LinkCardProps) {
+  const { shop } = props;
   const image = shop.brand?.logo?.image;
   return (
     <Card className="flex-fill text-center">
