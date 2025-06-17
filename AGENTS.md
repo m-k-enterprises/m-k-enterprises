@@ -1,7 +1,7 @@
 # M-K Enterprises React Frontend
 
-A TypeScript + React app that showcases our brands, news, and landing pages.  
-Tech stack: **Create React App**, React-Router, Apollo Client (Shopify Storefront GraphQL), React-Bootstrap + custom SCSS.
+A TypeScript + React app that showcases our brands, news, and landing pages.
+Tech stack: **Next.js**, Apollo Client (Shopify Storefront GraphQL), React-Bootstrap + custom SCSS.
 
 ---
 
@@ -10,12 +10,12 @@ Tech stack: **Create React App**, React-Router, Apollo Client (Shopify Storefron
 | Step | Command |
 |------|---------|
 | Install deps | `yarn install` or `npm install` |
-| Start dev server | `yarn start` → http://localhost:3000 (hot-reload) |
+| Start dev server | `next dev` → http://localhost:3000 |
 | Run tests | `yarn test` (React Testing Library + Jest, watch mode) |
 | Lint (optional) | `yarn lint` |
 | Type-check only | `tsc --noEmit` |
-| Prod build | `yarn build` → outputs `build/` |
-| Deploy to GH Pages | `yarn deploy` (script runs `gh-pages -d build`) |
+| Prod build | `next build` |
+| Start prod server | `next start` |
 
 > **Node LTS** is recommended. Yarn or npm both work.
 
@@ -23,7 +23,7 @@ Tech stack: **Create React App**, React-Router, Apollo Client (Shopify Storefron
 
 ## 🧪 Testing
 
-- Jest is pre-configured by CRA; tests live beside code as `*.test.tsx` / `*.test.ts`.
+- Jest is pre-configured; tests live beside code as `*.test.tsx` / `*.test.ts`.
 - CI tip: run with `CI=true yarn test --coverage` for deterministic output.
 
 ---
@@ -34,7 +34,7 @@ Tech stack: **Create React App**, React-Router, Apollo Client (Shopify Storefron
 
 src/
 ├── components/      # Re-usable UI widgets
-├── routes/          # Page components, lazy-loaded
+├── app/ (or pages/) # Route segments (Next.js)
 ├── clients.ts       # Apollo Shopify clients
 ├── storefront.gql   # GraphQL queries (loaded via graphql.macro)
 ├── App.tsx          # Router + Suspense wrapper
@@ -74,7 +74,7 @@ public/
 
 ### 🤖 Agent Notes
 
-- Put new page components in `src/routes/` and export them from `index.ts` re-export barrel.  
-- Add env secrets (if ever required) via `.env` *before* running `yarn start`; CRA auto-loads `REACT_APP_*` vars.
+- Put new page components in `app/` or `pages/`.
+- Add env secrets (if ever required) via `.env.local` *before* running `next dev`; Next.js auto-loads `NEXT_PUBLIC_*` vars.
 
 Happy shipping!
