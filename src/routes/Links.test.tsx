@@ -9,7 +9,7 @@ const shops: Shop[] = Array.from({ length: 3 }, (_, i) => ({
   name: `Shop ${i + 1}`,
   shipsToCountries: [],
   primaryDomain: { url: `https://shop${i + 1}.com` },
-  brand: { slogan: `Tagline ${i + 1}` }
+  brand: { slogan: `Tagline ${i + 1}`, colors: { primary: [{}] } }
 }));
 
 test('renders heading', () => {
