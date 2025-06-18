@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 
-import Home from './Home';
-import { Shop } from '../App';
+import Home from './page';
+import { Shop } from '../types';
 
 const shops: Shop[] = Array.from({ length: 2 }, (_, i) => ({
   id: String(i + 1),

@@ -3,7 +3,7 @@ import { Button, Carousel, Container, Placeholder, Row } from 'react-bootstrap';
 import { Block } from '@smolpack/react-bootstrap-extensions';
 import { random } from 'lodash';
 import { Articles } from '../components';
-import { ArticleProps, ShopProps } from '../App';
+import { ArticleProps, ShopProps } from '../types';
 
 interface HomeProps extends ShopProps, ArticleProps {}
 

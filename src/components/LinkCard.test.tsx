@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 
 import LinkCard from './LinkCard';
-import { Shop } from '../App';
+import { Shop } from '../types';
 
 const shop: Shop = {
   id: '1',

@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 
-import Responsibility from './Responsibility';
+import Responsibility from './page';
 
 test('renders heading', () => {
   render(<Responsibility />);

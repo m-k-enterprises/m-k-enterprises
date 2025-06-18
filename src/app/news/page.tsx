@@ -1,8 +1,8 @@
 import React from 'react';
 import { Container, Row } from 'react-bootstrap';
 import { Block } from '@smolpack/react-bootstrap-extensions';
-import { Articles } from '../components';
-import { ArticleProps } from '../App';
+import { Articles } from '../../components';
+import { ArticleProps } from '../../types';
 
 /**
  * News route listing recent company articles.

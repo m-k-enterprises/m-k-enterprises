@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 
-import PrivacyPolicy from './PrivacyPolicy';
+import PrivacyPolicy from './page';
 
 test('renders heading', () => {
   render(<PrivacyPolicy />);
