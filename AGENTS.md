@@ -37,10 +37,7 @@ src/
 ├── app/ or pages/   # Route components (Next.js)
 ├── clients.ts       # Apollo Shopify clients
 ├── storefront.gql   # GraphQL queries (loaded via graphql.macro)
-├── App.tsx          # Router + Suspense wrapper
 └── index.scss       # Bootstrap reboot/grid + globals
-public/
-└── index.html
 
 ```
 
