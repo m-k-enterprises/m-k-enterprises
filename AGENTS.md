@@ -34,13 +34,12 @@ Tech stack: **Next.js**, Apollo Client (Shopify Storefront GraphQL), React-Boots
 
 src/
 ├── components/      # Re-usable UI widgets
-├── app/ or pages/   # Route components (Next.js)
+├── app/             # Next.js route segments
 ├── clients.ts       # Apollo Shopify clients
 ├── storefront.gql   # GraphQL queries (loaded via graphql.macro)
-├── App.tsx          # Router + Suspense wrapper
-└── index.scss       # Bootstrap reboot/grid + globals
+├── index.scss       # Bootstrap reboot/grid + globals
 public/
-└── index.html
+└──                # static assets (favicon, images)
 
 ```
 
@@ -57,8 +56,8 @@ public/
 | Components | Function components with ES module **default export** |
 | Hooks | Follow React Hook rules (`useX` prefix) |
 | Props | Typed via `interface` |
-| Lint | CRA ESLint (`react-app`, `react-app/jest`) |
-| Formatting | Tabs = 2 spaces, single quotes, trailing commas (follow CRA defaults) |
+| Lint | Next.js ESLint (`next/core-web-vitals`) |
+| Formatting | Tabs = 2 spaces, single quotes, trailing commas |
 
 ---
 
@@ -74,7 +73,7 @@ public/
 
 ### 🤖 Agent Notes
 
-- Put new page components in `app/` or `pages/`.
+- Put new page components in `app/`.
 - Add env secrets (if ever required) via `.env.local` *before* running `next dev`; Next.js auto-loads `NEXT_PUBLIC_*` vars.
 
 Happy shipping!

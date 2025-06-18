@@ -1,107 +1,56 @@
-# 📍 Routes Guide (src/routes)
+# 📍 Pages Guide (`app/`)
 
-This folder contains **page-level React components** that map to the app’s URL paths via React-Router.  
-Each file exports a **default function component** and is **lazy-loaded** in `App.tsx` to enable code-splitting.
+This project uses Next.js `app/` directory routing. Each folder becomes a route segment and must include a `page.tsx` file.
 
 ---
 
 ## 🗂️ Folder Layout
 
 ```
-
-src/routes/
-Home.tsx
-Brands.tsx
-News.tsx
-Contact.tsx
-PrivacyPolicy.tsx
-index.ts          # barrel export – KEEP UPDATED
-AGENTS.md         # ← you are here
-
-````
-
-> **Rule:** one file = one route component.  
-> If a route needs sub-views (tabs, steps), create a nested folder:  
-> `src/routes/Account/Settings.tsx` etc.
-
----
-
-## 🔑 Naming & Conventions
-
-| Aspect | Convention |
-|--------|------------|
-| File name | `PascalCase.tsx` matching component name |
-| Export   | **default** export only |
-| Props    | Keep minimal; use hooks (e.g. `useShop()`) rather than props when possible |
-| Styling  | Use Bootstrap utility classes + `.scss` for route-specific styles (optional) |
-| Tests    | Co-locate as in the same folder |
-
----
-
-## 🚦 Adding a New Route (agent checklist)
-
-1. **Create Component**  
-   ```bash
-   touch src/routes/FooBar.tsx
-````
-
-Scaffold:
-
-```tsx
-export default function FooBar() {
-  return </>;
-}
+src/app/
+├── about/
+│   └── page.tsx
+├── brands/
+│   └── page.tsx
+└── layout.tsx  # shared layout
 ```
 
-2. **Update Barrel Export** (`src/routes/index.ts`)
+Create subfolders for nested routes. Dynamic segments use the `[param]` syntax.
 
-   ```ts
-   export { default as FooBar } from './FooBar';
+---
+
+## 🛠️ Adding a New Page
+
+1. **Create Folder & Page**
+   ```bash
+   mkdir src/app/foo && touch src/app/foo/page.tsx
    ```
 
-3. **Wire into Router** (`src/App.tsx`)
-
+2. **Scaffold**
    ```tsx
-   const FooBar = lazy(() => import('./routes/FooBar'));
-   // ...
-   <Route path="/foo" element={<FooBar />} />
+   export default function Page() {
+     return <p>Hello from Foo 🚀</p>;
+   }
    ```
 
-4. **Add Menu Link** (if required) in `NavBar.tsx`.
-
-5. **Write a Test**
-
+3. **Test**
    ```tsx
-   it('renders FooBar page', () => {
-     render(<FooBar />);
-     expect(screen.getByText(/Foo Bar/i)).toBeInTheDocument();
+   import { render, screen } from '@testing-library/react';
+   import Page from './page';
+
+   it('shows foo text', () => {
+     render(<Page />);
+     expect(screen.getByText(/hello from foo/i)).toBeInTheDocument();
    });
    ```
-
-6. **Run** `yarn test` ➜ all green.
-
----
-
-## 🧩 Route-Level Data
-
-* For Shopify data, **query in parent layout** (e.g. `App.tsx`) and pass down via context/hooks (`useBrands()`).
-* If a route needs unique data, place **GraphQL queries** in `src/routes/fooBar.gql` and import with `graphql.macro`.
+   Place the test beside `page.tsx` as `page.test.tsx`.
 
 ---
 
-## 🗺️ URL Patterns & Params
+## 🧩 Data Fetching
 
-Use `useParams<{ handle: string }>()` for type-safe params.
+Use Next.js data functions (`generateMetadata`, `generateStaticParams`) or fetch inside `page.tsx` with `fetch`/`graphql` clients. Return early and keep components small.
 
 ---
 
-## ☑️ Agent To-Dos
-
-When a task says “add a new page” or “modify route X”:
-
-* **Search** in `src/routes/` first.
-* **Keep barrel export** (`index.ts`) in sync.
-* **Update router** in `App.tsx`.
-* **Add/adjust tests** so CI stays green.
-
-Happy routing! 🛣️
+Happy paging! 🌐
