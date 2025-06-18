@@ -28,25 +28,22 @@
     "react-bootstrap": "^2.7.3",
     "react-dom": "^18.2.0",
     "react-gravatar": "^2.6.3",
-    "react-scripts": "5.0.1",
     "sass": "^1.56.1",
     "typescript": "^4.4.2",
     "unsplash-js": "^7.0.15",
     "web-vitals": "^2.1.0"
   },
   "scripts": {
-    "predeploy": "yarn run build",
-    "deploy": "gh-pages -d build",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "next start",
+    "build": "next build",
+    "test": "next test",
     "lint": "eslint 'src/**/*.{ts,tsx}'",
-    "eject": "react-scripts eject"
+    "dev": "next dev"
   },
   "eslintConfig": {
     "extends": [
-      "react-app",
-      "react-app/jest"
+      "next",
+      "next/core-web-vitals"
     ]
   },
   "browserslist": {
@@ -63,6 +60,9 @@
   },
   "devDependencies": {
     "@popperjs/core": "^2.11.8",
-    "@testing-library/dom": "^10.4.0"
+    "@testing-library/dom": "^10.4.0",
+    "eslint": "^9.29.0",
+    "eslint-config-next": "^15.3.3",
+    "eslint-plugin-next": "^0.0.0"
   }
 }

@@ -2,6 +2,10 @@
 
 This project is powered by [Next.js](https://nextjs.org/), Apollo Client and React-Bootstrap.
 
+### Node version
+
+Use **Node.js 20.x LTS** for all development and CI steps.
+
 ## Setup
 
 1. Copy `.env.example` to `.env.local` and fill in your Shopify tokens.
