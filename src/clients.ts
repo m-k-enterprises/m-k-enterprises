@@ -15,24 +15,24 @@ function requireEnvVar(name: string): string {
 const clientOptions: Record<string, ClientOptions> = {
   bearBelts: {
     uri: 'bear-belts',
-    shopifyStorefrontAccessToken: requireEnvVar('REACT_APP_SHOPIFY_TOKEN_BEAR_BELTS')
+    shopifyStorefrontAccessToken: requireEnvVar('NEXT_PUBLIC_SHOPIFY_TOKEN_BEAR_BELTS')
   },
   pocketBearsApparel: {
     uri: 'pocket-bears-apparel',
-    shopifyStorefrontAccessToken: requireEnvVar('REACT_APP_SHOPIFY_TOKEN_POCKET_BEARS_APPAREL')
+    shopifyStorefrontAccessToken: requireEnvVar('NEXT_PUBLIC_SHOPIFY_TOKEN_POCKET_BEARS_APPAREL')
   },
   mythicalMoods: {
     uri: 'mythical-moods',
-    shopifyStorefrontAccessToken: requireEnvVar('REACT_APP_SHOPIFY_TOKEN_MYTHICAL_MOODS')
+    shopifyStorefrontAccessToken: requireEnvVar('NEXT_PUBLIC_SHOPIFY_TOKEN_MYTHICAL_MOODS')
   },
   auraEssence: {
     uri: 'aura-and-essence',
-    shopifyStorefrontAccessToken: requireEnvVar('REACT_APP_SHOPIFY_TOKEN_AURA_ESSENCE')
+    shopifyStorefrontAccessToken: requireEnvVar('NEXT_PUBLIC_SHOPIFY_TOKEN_AURA_ESSENCE')
   },
   // sizzleSoak temporarily disabled
   // sizzleSoak: {
   //   uri: 'sizzle-soak',
-  //   shopifyStorefrontAccessToken: requireEnvVar('REACT_APP_SHOPIFY_TOKEN_SIZZLE_SOAK'),
+  //   shopifyStorefrontAccessToken: requireEnvVar('NEXT_PUBLIC_SHOPIFY_TOKEN_SIZZLE_SOAK'),
   // }
 };
 
