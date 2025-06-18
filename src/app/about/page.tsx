@@ -4,7 +4,7 @@ import { Block, PullQuote, StatCard } from '@smolpack/react-bootstrap-extensions
 import { intersection, union } from 'lodash';
 import Gravatar from 'react-gravatar';
 
-import { ShopProps } from '../App';
+import { ShopProps } from '../../types';
 import about from './about.jpg';
 
 /**

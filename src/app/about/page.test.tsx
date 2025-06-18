@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 
-import About from './About';
+import About from './page';
 
 const urls = [
   'http://linkedin.com/in/kristianmatthewskennington',

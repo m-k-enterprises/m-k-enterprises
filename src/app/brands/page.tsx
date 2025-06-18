@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Col, Container, Image, Placeholder, Ratio, Row } from 'react-bootstrap';
 import { Block } from '@smolpack/react-bootstrap-extensions';
 import { random } from 'lodash';
-import { ShopProps } from '../App';
+import { ShopProps } from '../../types';
 
 /**
  * Lists every brand with link to learn more.

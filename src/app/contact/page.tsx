@@ -1,7 +1,7 @@
 import React from 'react';
 import { Col, Container, Image, Placeholder, Ratio, Row } from 'react-bootstrap';
 import { Block } from '@smolpack/react-bootstrap-extensions';
-import { ShopProps } from '../App';
+import { ShopProps } from '../../types';
 
 /**
  * Shows contact information for each brand.

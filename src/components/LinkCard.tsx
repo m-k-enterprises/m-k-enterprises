@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Card, Col, Image } from 'react-bootstrap';
 
-import { Shop } from '../App';
+import { Shop } from '../types';
 
 interface LinkCardProps {
   shop: Shop;

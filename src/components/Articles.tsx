@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Card, Col, Placeholder, Ratio } from 'react-bootstrap';
 import { random } from 'lodash';
-import { ArticleProps } from '../App';
+import { ArticleProps } from '../types';
 
 function Articles(props: ArticleProps) {
   return (

@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 
-import News from './News';
+import News from './page';
 
 const articles = Array.from({ length: 2 }, (_, i) => ({
   id: String(i + 1),
