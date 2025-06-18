@@ -28,20 +28,17 @@
     "react-bootstrap": "^2.7.3",
     "react-dom": "^18.2.0",
     "react-gravatar": "^2.6.3",
-    "react-scripts": "5.0.1",
     "sass": "^1.56.1",
     "typescript": "^4.4.2",
     "unsplash-js": "^7.0.15",
     "web-vitals": "^2.1.0"
   },
   "scripts": {
-    "predeploy": "yarn run build",
-    "deploy": "gh-pages -d build",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "next start",
+    "build": "next build",
     "test": "react-scripts test",
     "lint": "eslint 'src/**/*.{ts,tsx}'",
-    "eject": "react-scripts eject"
+    "dev": "next dev"
   },
   "eslintConfig": {
     "extends": [
