@@ -11,7 +11,7 @@
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",
-    "@types/jest": "^27.0.1",
+    "@types/jest": "^30.0.0",
     "@types/lodash": "^4.14.191",
     "@types/node": "^16.7.13",
     "@types/react": "^18.0.0",
@@ -36,7 +36,7 @@
   "scripts": {
     "start": "next start",
     "build": "next build",
-    "test": "react-scripts test",
+    "test": "jest",
     "lint": "eslint 'src/**/*.{ts,tsx}'",
     "dev": "next dev"
   },
@@ -60,6 +60,12 @@
   },
   "devDependencies": {
     "@popperjs/core": "^2.11.8",
-    "@testing-library/dom": "^10.4.0"
+    "@testing-library/dom": "^10.4.0",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^30.0.0",
+    "jest-environment-jsdom": "^30.0.0",
+    "jest-transform-stub": "^2.0.0",
+    "ts-jest": "^29.4.0",
+    "whatwg-fetch": "^3.6.20"
   }
 }

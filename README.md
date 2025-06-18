@@ -27,9 +27,9 @@ In the project directory, you can run:
 Runs the app in development mode at [http://localhost:3000](http://localhost:3000).\
 The page reloads on edits and displays lint errors in the console.
 
-### `next test`
+### `yarn test`
 
-Launches the test runner in watch mode.
+Runs the Jest test runner in watch mode.
 
 ### `yarn lint`
 
