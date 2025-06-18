@@ -9,6 +9,7 @@ Use **Node.js 20.x LTS** for all development and CI steps.
 ## Setup
 
 1. Copy `.env.example` to `.env.local` and fill in your Shopify tokens.
+   Environment variables use the `NEXT_PUBLIC_` prefix.
 2. Install dependencies with `yarn install` or `npm install`.
 3. Start the dev server with `next dev`.
 
