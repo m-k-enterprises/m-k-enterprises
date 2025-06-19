@@ -14,6 +14,8 @@ Use **Node.js 20.x LTS** for all development and CI steps.
 
 ### Required environment variables
 
+Environment variable names now share the `NEXT_PUBLIC_SHOPIFY_TOKEN_` prefix.
+
 ```
 NEXT_PUBLIC_SHOPIFY_TOKEN_BEAR_BELTS=<token>
 NEXT_PUBLIC_SHOPIFY_TOKEN_POCKET_BEARS_APPAREL=<token>
