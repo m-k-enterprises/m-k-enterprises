@@ -3,13 +3,25 @@ import React from 'react';
 import Link from 'next/link';
 import { Container, Image as Img, Nav, Navbar } from 'react-bootstrap';
 import { Block } from '@smolpack/react-bootstrap-extensions';
+
 import logo from '../logo.svg';
+
+import 'bootstrap/dist/css/bootstrap.min.css';
 import '../index.scss';
+import '../App.scss';
 
 interface LayoutProps {
   children: React.ReactNode;
 }
 
+/**
+ * Root layout wrapping every page.
+ *
+ * Imports Bootstrap and custom SCSS so styles and fonts apply globally.
+ *
+ * @param props - Layout content.
+ * @returns Page wrapper element.
+ */
 export default function RootLayout({ children }: LayoutProps) {
   const now = new Date();
 
