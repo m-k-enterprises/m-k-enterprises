@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import { Container } from 'react-bootstrap';
 import { Block } from '@smolpack/react-bootstrap-extensions';
@@ -7,7 +8,7 @@ import { Block } from '@smolpack/react-bootstrap-extensions';
  *
  * @returns React element containing the policy.
  */
-function PrivacyPolicy() {
+export default function PrivacyPolicy() {
   return (
     <>
       <Block className="text-bg-primary">
@@ -87,4 +88,3 @@ function PrivacyPolicy() {
   );
 }
 
-export default PrivacyPolicy;

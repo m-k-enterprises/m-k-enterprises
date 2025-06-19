@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import { Container } from 'react-bootstrap';
 import { Block } from '@smolpack/react-bootstrap-extensions';
@@ -7,7 +8,7 @@ import { Block } from '@smolpack/react-bootstrap-extensions';
  *
  * @returns JSX for the responsibility route.
  */
-function Responsibility() {
+export default function Responsibility() {
   return (
     <>
       <Block className="text-bg-primary">
@@ -24,4 +25,3 @@ function Responsibility() {
   );
 }
 
-export default Responsibility;

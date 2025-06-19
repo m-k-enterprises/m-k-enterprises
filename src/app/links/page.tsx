@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { Block } from '@smolpack/react-bootstrap-extensions';
@@ -14,8 +15,9 @@ interface LinksProps extends ShopProps {}
  * @returns React element containing corporate links.
  */
 
-function Links(props: LinksProps) {
-  const items = props.shops;
+export default function Links(props: any) {
+  const shops = props?.shops ?? [];
+  const items = shops;
 
   return (
     <>
@@ -23,7 +25,7 @@ function Links(props: LinksProps) {
         <Container className="links">
           <Block.Title>Useful Links</Block.Title>
           <Row className="g-3">
-            {items.map(shop => (
+            {items.map((shop: any) => (
               <Col key={shop.id} xs={12} md={6} className="d-flex">
                 <LinkCard shop={shop} />
               </Col>
@@ -35,4 +37,3 @@ function Links(props: LinksProps) {
   );
 }
 
-export default Links;
