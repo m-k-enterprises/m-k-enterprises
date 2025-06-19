@@ -10,6 +10,11 @@
 
 # production
 /build
+/.next
+.turbo
+.vercel
+/dist
+/out
 
 # misc
 .DS_Store
