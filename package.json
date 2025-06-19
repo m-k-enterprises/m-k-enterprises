@@ -36,14 +36,8 @@
     "start": "next start",
     "build": "next build",
     "test": "jest",
-    "lint": "eslint 'src/**/*.{ts,tsx}'",
+    "lint": "next lint",
     "dev": "next dev"
-  },
-  "eslintConfig": {
-    "extends": [
-      "next",
-      "next/core-web-vitals"
-    ]
   },
   "browserslist": {
     "production": [

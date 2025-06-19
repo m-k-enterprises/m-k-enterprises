@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import Link from 'next/link';
 import { Container } from 'react-bootstrap';
@@ -8,7 +9,7 @@ import { Block } from '@smolpack/react-bootstrap-extensions';
  *
  * @returns React element shown when a page is not found.
  */
-function NotFound() {
+export default function NotFound() {
   return (
     <>
       <Block className='text-bg-primary'>
@@ -28,4 +29,3 @@ function NotFound() {
   );
 }
 
-export default NotFound;

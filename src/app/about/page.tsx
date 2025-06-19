@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import { Button, Card, Col, Container, Figure, Placeholder, Row } from 'react-bootstrap';
 import { Block, PullQuote, StatCard } from '@smolpack/react-bootstrap-extensions';
@@ -5,6 +6,7 @@ import { intersection, union } from 'lodash';
 import Gravatar from 'react-gravatar';
 
 import { ShopProps } from '../../types';
+// @ts-expect-error Image imported as URL
 import about from './about.jpg';
 
 /**
@@ -13,9 +15,16 @@ import about from './about.jpg';
  * @param props - Shop data with loading state.
  * @returns JSX for the about route.
  */
-function About(props: ShopProps) {
-  const shipsToCountriesMin = intersection(...props.shops.map(shop => shop.shipsToCountries)).length;
-  const shipsToCountriesMax = union(...props.shops.map(shop => shop.shipsToCountries)).length;
+export default function Page(props: any) {
+  const shops = props?.shops ?? [];
+  const loading = props?.loading ?? false;
+  const error = props?.error ?? false;
+  const shipsToCountriesMin = intersection(
+    ...shops.map((shop: any) => shop.shipsToCountries)
+  ).length;
+  const shipsToCountriesMax = union(
+    ...shops.map((shop: any) => shop.shipsToCountries)
+  ).length;
 
   const team = [
     {
@@ -46,7 +55,7 @@ function About(props: ShopProps) {
           <Col>
             <StatCard className="text-center">
               <StatCard.Desc>Ships to</StatCard.Desc>
-              {props.loading || props.error ? (
+              {loading || error ? (
                 <Placeholder className="statcard-number text-primary" as="h2" animation="wave">
                   <Placeholder xs={1} />
                 </Placeholder>
@@ -137,4 +146,3 @@ function About(props: ShopProps) {
   );
 }
 
-export default About;

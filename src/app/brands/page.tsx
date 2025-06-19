@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import { Button, Col, Container, Image, Placeholder, Ratio, Row } from 'react-bootstrap';
 import { Block } from '@smolpack/react-bootstrap-extensions';
@@ -10,7 +11,10 @@ import { ShopProps } from '../../types';
  * @param props - Shop data for all brands.
  * @returns JSX for the brands route.
  */
-function Brands(props: ShopProps) {
+export default function Brands(props: any) {
+  const shops = props?.shops ?? [];
+  const loading = props?.loading ?? false;
+  const error = props?.error ?? false;
   return (
     <>
       <Block className="text-bg-primary">
@@ -18,7 +22,7 @@ function Brands(props: ShopProps) {
           <Block.Title>Our Brands</Block.Title>
         </Container>
       </Block>
-      {props.loading || props.error ? Array.from({ length: 2 }).map((_, index) => (
+      {loading || error ? Array.from({ length: 2 }).map((_: any, index: number) => (
         <Block key={index}>
           <Container className="border-bottom border-4">
             <Row className="justify-content-center mb-3">
@@ -53,7 +57,7 @@ function Brands(props: ShopProps) {
             </Row>
           </Container>
         </Block>
-      )) : props.shops.map((shop, index) => (
+      )) : shops.map((shop: any, index: number) => (
         <Block key={shop.id}>
           <Container className="border-bottom border-4" style={{
             '--bs-border-color': shop.brand?.colors.primary[0].background
@@ -94,4 +98,3 @@ function Brands(props: ShopProps) {
   );
 }
 
-export default Brands;

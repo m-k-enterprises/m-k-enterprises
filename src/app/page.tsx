@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import { Button, Carousel, Container, Placeholder, Row } from 'react-bootstrap';
 import { Block } from '@smolpack/react-bootstrap-extensions';
@@ -13,11 +14,15 @@ interface HomeProps extends ShopProps, ArticleProps {}
  * @param props - Shop and article data with loading states.
  * @returns JSX for the home route.
  */
-function Home(props: HomeProps) {
+export default function Home(props: any) {
+  const shops = props?.shops ?? [];
+  const articles = props?.articles ?? [];
+  const loading = props?.loading ?? false;
+  const error = props?.error ?? false;
   return (
     <>
       <Carousel>
-        {props.loading || props.error ? (
+        {loading || error ? (
           <Carousel.Item className="carousel-item-large">
             <div className="carousel-background" />
             <Carousel.Caption className="text-end text-primary">
@@ -42,7 +47,7 @@ function Home(props: HomeProps) {
               </Container>
             </Carousel.Caption>
           </Carousel.Item>
-        ) : props.shops.map(shop => (
+        ) : shops.map((shop: any) => (
           <Carousel.Item key={shop.id} className="carousel-item-large" style={{
             backgroundColor: shop.brand?.colors.primary[0].background
           }}>
@@ -83,7 +88,7 @@ function Home(props: HomeProps) {
         <Container>
           <h1>Latest News</h1>
           <Row className="g-3" xs={1} md={2} xl={3}>
-            <Articles loading={props.loading} error={props.error} articles={props.articles} />
+            <Articles loading={loading} error={error} articles={articles} />
           </Row>
         </Container>
       </Block>
@@ -91,4 +96,3 @@ function Home(props: HomeProps) {
   );
 }
 
-export default Home;

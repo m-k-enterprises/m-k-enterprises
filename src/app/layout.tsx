@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { Container, Image as Img, Nav, Navbar } from 'react-bootstrap';
 import { Block } from '@smolpack/react-bootstrap-extensions';
 
+// @ts-expect-error Image imported as URL
 import logo from '../logo.svg';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
