@@ -1,6 +1,6 @@
 # 📍 Pages Guide (`app/`)
 
-This project uses Next.js `app/` directory routing. Each folder becomes a route segment and must include a `page.tsx` file.
+Next.js uses the `app/` directory for routing. Each folder that contains a `page.tsx` file becomes a route.
 
 ---
 
@@ -12,28 +12,36 @@ src/app/
 │   └── page.tsx
 ├── brands/
 │   └── page.tsx
-└── layout.tsx  # shared layout
+└── layout.tsx
 ```
 
-Create subfolders for nested routes. Dynamic segments use the `[param]` syntax.
+Create subfolders for nested routes. Dynamic segments use the `[param]` syntax, e.g. `src/app/products/[id]/page.tsx`.
 
 ---
 
-## 🛠️ Adding a New Page
+## 🛠️ Adding a Page
 
-1. **Create Folder & Page**
+1. Create the folder and `page.tsx`:
    ```bash
    mkdir src/app/foo && touch src/app/foo/page.tsx
    ```
 
-2. **Scaffold**
+2. Scaffold the component:
    ```tsx
+   import Link from 'next/link';
+
    export default function Page() {
-     return <p>Hello from Foo 🚀</p>;
+     return (
+       <div>
+         <p>Hello from Foo 🚀</p>
+         <Link href='/'>Back home</Link>
+       </div>
+     );
    }
    ```
+   Use `<Link>` from `next/link` for internal navigation.
 
-3. **Test**
+3. Write a test next to `page.tsx` (`page.test.tsx`):
    ```tsx
    import { render, screen } from '@testing-library/react';
    import Page from './page';
@@ -43,14 +51,11 @@ Create subfolders for nested routes. Dynamic segments use the `[param]` syntax.
      expect(screen.getByText(/hello from foo/i)).toBeInTheDocument();
    });
    ```
-   Place the test beside `page.tsx` as `page.test.tsx`.
 
 ---
 
-## 🧩 Data Fetching
+## 🧩 Data Fetching Tips
 
-Use Next.js data functions (`generateMetadata`, `generateStaticParams`) or fetch inside `page.tsx` with `fetch`/`graphql` clients. Return early and keep components small.
-
----
+Use `generateMetadata` and `generateStaticParams` when data or metadata is needed. Return early and keep components small.
 
 Happy paging! 🌐
