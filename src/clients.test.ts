@@ -1,14 +1,15 @@
 const realEnv = process.env;
+const tokenPrefix = 'NEXT_PUBLIC_SHOPIFY_TOKEN_';
 
 beforeEach(() => {
   jest.resetModules();
   process.env = {
     ...realEnv,
-    NEXT_PUBLIC_SHOPIFY_TOKEN_BEAR_BELTS: 'a',
-    NEXT_PUBLIC_SHOPIFY_TOKEN_POCKET_BEARS_APPAREL: 'b',
-    NEXT_PUBLIC_SHOPIFY_TOKEN_MYTHICAL_MOODS: 'c',
-    NEXT_PUBLIC_SHOPIFY_TOKEN_AURA_ESSENCE: 'd',
-  };
+    [`${tokenPrefix}BEAR_BELTS`]: 'a',
+    [`${tokenPrefix}POCKET_BEARS_APPAREL`]: 'b',
+    [`${tokenPrefix}MYTHICAL_MOODS`]: 'c',
+    [`${tokenPrefix}AURA_ESSENCE`]: 'd',
+  } as NodeJS.ProcessEnv;
 });
 
 afterEach(() => {
@@ -16,8 +17,8 @@ afterEach(() => {
 });
 
 test('throws if any token missing', () => {
-  delete process.env.NEXT_PUBLIC_SHOPIFY_TOKEN_BEAR_BELTS;
-  expect(() => require('./clients')).toThrow('NEXT_PUBLIC_SHOPIFY_TOKEN_BEAR_BELTS');
+  delete process.env[`${tokenPrefix}BEAR_BELTS`];
+  expect(() => require('./clients')).toThrow(`${tokenPrefix}BEAR_BELTS`);
 });
 
 test('exports clients when tokens present', () => {

@@ -12,22 +12,31 @@ function requireEnvVar(name: string): string {
   return value
 }
 
+const tokenPrefix = 'NEXT_PUBLIC_SHOPIFY_TOKEN_' as const
+
+/**
+ * Returns the Shopify storefront token for the given store.
+ */
+function token(name: string): string {
+  return requireEnvVar(`${tokenPrefix}${name}`)
+}
+
 const clientOptions: Record<string, ClientOptions> = {
   bearBelts: {
     uri: 'bear-belts',
-    shopifyStorefrontAccessToken: requireEnvVar('NEXT_PUBLIC_SHOPIFY_TOKEN_BEAR_BELTS')
+    shopifyStorefrontAccessToken: token('BEAR_BELTS'),
   },
   pocketBearsApparel: {
     uri: 'pocket-bears-apparel',
-    shopifyStorefrontAccessToken: requireEnvVar('NEXT_PUBLIC_SHOPIFY_TOKEN_POCKET_BEARS_APPAREL')
+    shopifyStorefrontAccessToken: token('POCKET_BEARS_APPAREL'),
   },
   mythicalMoods: {
     uri: 'mythical-moods',
-    shopifyStorefrontAccessToken: requireEnvVar('NEXT_PUBLIC_SHOPIFY_TOKEN_MYTHICAL_MOODS')
+    shopifyStorefrontAccessToken: token('MYTHICAL_MOODS'),
   },
   auraEssence: {
     uri: 'aura-and-essence',
-    shopifyStorefrontAccessToken: requireEnvVar('NEXT_PUBLIC_SHOPIFY_TOKEN_AURA_ESSENCE')
+    shopifyStorefrontAccessToken: token('AURA_ESSENCE'),
   },
   // sizzleSoak temporarily disabled
   // sizzleSoak: {
