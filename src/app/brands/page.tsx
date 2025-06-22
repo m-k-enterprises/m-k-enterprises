@@ -4,6 +4,7 @@ import { Button, Col, Container, Image, Placeholder, Ratio, Row } from 'react-bo
 import { Block } from '@smolpack/react-bootstrap-extensions';
 import { random } from 'lodash';
 import { ShopProps } from '../../types';
+import { ensureString } from '../../utils';
 
 /**
  * Lists every brand with link to learn more.
@@ -84,7 +85,7 @@ export default function Brands({
                 <Button
                   variant="more"
                   as="a"
-                  href={shop.primaryDomain.url}
+                  href={ensureString(shop.primaryDomain.url)}
                   target="_blank"
                   rel="noopener noreferrer"
                 >

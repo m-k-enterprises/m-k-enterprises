@@ -37,6 +37,7 @@ test('renders brand cards with correct links', () => {
   expect(links).toHaveLength(4);
   links.forEach((link, i) => {
     expect(link).toHaveAttribute('href', shops[i].primaryDomain.url);
+    expect(typeof link.getAttribute('href')).toBe('string');
     expect(link).toHaveAttribute('target', '_blank');
     expect(link).toHaveAttribute('rel', 'noopener noreferrer');
   });

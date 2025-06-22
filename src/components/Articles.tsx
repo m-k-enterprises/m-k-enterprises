@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Card, Col, Placeholder, Ratio } from 'react-bootstrap';
 import { random } from 'lodash';
 import { ArticleProps } from '../types';
+import { ensureString } from '../utils';
 
 function Articles(props: ArticleProps) {
   return (
@@ -52,7 +53,7 @@ function Articles(props: ArticleProps) {
               <Button
                 variant="more"
                 as="a"
-                href={article.onlineStoreUrl}
+                href={ensureString(article.onlineStoreUrl)}
                 target="_blank"
                 rel="noopener noreferrer"
               >

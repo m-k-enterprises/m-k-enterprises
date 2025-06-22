@@ -14,6 +14,7 @@ test('article links have security attributes', () => {
   ];
   render(<Articles loading={false} error={false} articles={articles} />);
   const link = screen.getByRole('button', { name: /read more/i });
+  expect(typeof link.getAttribute('href')).toBe('string');
   expect(link).toHaveAttribute('target', '_blank');
   expect(link).toHaveAttribute('rel', 'noopener noreferrer');
 });

@@ -17,3 +17,10 @@ test('shows introduction section', () => {
   const section = screen.getByRole('heading', { name: /introduction and scope/i });
   expect(section).toBeInTheDocument();
 });
+
+test('contact link is string', () => {
+  render(<PrivacyPolicy />);
+  const link = screen.getByRole('link', { name: /team@m-k.enterprises/i });
+  expect(link).toHaveAttribute('href', 'mailto:team@m-k.enterprises');
+  expect(typeof link.getAttribute('href')).toBe('string');
+});

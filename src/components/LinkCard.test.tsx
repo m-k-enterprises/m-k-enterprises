@@ -20,6 +20,7 @@ test('link has correct attributes', () => {
   render(<LinkCard shop={shop} />);
   const link = screen.getByRole('button', { name: /visit/i });
   expect(link).toHaveAttribute('href', shop.primaryDomain.url);
+  expect(typeof link.getAttribute('href')).toBe('string');
   expect(link).toHaveAttribute('target', '_blank');
   expect(link).toHaveAttribute('rel', 'noopener noreferrer');
 });

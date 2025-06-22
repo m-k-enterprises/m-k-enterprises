@@ -20,6 +20,7 @@ test('renders team links', () => {
   expect(links).toHaveLength(2);
   links.forEach((link, i) => {
     expect(link).toHaveAttribute('href', urls[i]);
+    expect(typeof link.getAttribute('href')).toBe('string');
     expect(link).toHaveAttribute('target', '_blank');
     expect(link).toHaveAttribute('rel', 'noopener noreferrer');
   });
