@@ -11,10 +11,11 @@ import { ArticleProps } from '../../types';
  * @param props - Article data with loading state.
  * @returns JSX for the news route.
  */
-export default function News(props: any) {
-  const loading = props?.loading ?? false;
-  const error = props?.error ?? false;
-  const articles = props?.articles ?? [];
+export default function News({
+  loading = false,
+  error = false,
+  articles = [],
+}: ArticleProps) {
   return (
     <>
       <Block className="text-bg-primary">

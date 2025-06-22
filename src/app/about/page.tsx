@@ -15,15 +15,16 @@ import about from './about.jpg';
  * @param props - Shop data with loading state.
  * @returns JSX for the about route.
  */
-export default function Page(props: any) {
-  const shops = props?.shops ?? [];
-  const loading = props?.loading ?? false;
-  const error = props?.error ?? false;
+export default function Page({
+  shops = [],
+  loading = false,
+  error = false,
+}: ShopProps) {
   const shipsToCountriesMin = intersection(
-    ...shops.map((shop: any) => shop.shipsToCountries)
+    ...shops.map(shop => shop.shipsToCountries)
   ).length;
   const shipsToCountriesMax = union(
-    ...shops.map((shop: any) => shop.shipsToCountries)
+    ...shops.map(shop => shop.shipsToCountries)
   ).length;
 
   const team = [

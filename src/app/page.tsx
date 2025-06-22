@@ -4,9 +4,7 @@ import { Button, Carousel, Container, Placeholder, Row } from 'react-bootstrap';
 import { Block } from '@smolpack/react-bootstrap-extensions';
 import { random } from 'lodash';
 import { Articles } from '../components';
-import { ArticleProps, ShopProps } from '../types';
-
-interface HomeProps extends ShopProps, ArticleProps {}
+import { HomeProps } from '../types';
 
 /**
  * Home page showing brand highlights and latest news.
@@ -14,11 +12,12 @@ interface HomeProps extends ShopProps, ArticleProps {}
  * @param props - Shop and article data with loading states.
  * @returns JSX for the home route.
  */
-export default function Home(props: any) {
-  const shops = props?.shops ?? [];
-  const articles = props?.articles ?? [];
-  const loading = props?.loading ?? false;
-  const error = props?.error ?? false;
+export default function Home({
+  shops = [],
+  articles = [],
+  loading = false,
+  error = false,
+}: HomeProps) {
   return (
     <>
       <Carousel>
@@ -47,7 +46,7 @@ export default function Home(props: any) {
               </Container>
             </Carousel.Caption>
           </Carousel.Item>
-        ) : shops.map((shop: any) => (
+        ) : shops.map(shop => (
           <Carousel.Item key={shop.id} className="carousel-item-large" style={{
             backgroundColor: shop.brand?.colors.primary[0].background
           }}>

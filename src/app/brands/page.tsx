@@ -11,10 +11,11 @@ import { ShopProps } from '../../types';
  * @param props - Shop data for all brands.
  * @returns JSX for the brands route.
  */
-export default function Brands(props: any) {
-  const shops = props?.shops ?? [];
-  const loading = props?.loading ?? false;
-  const error = props?.error ?? false;
+export default function Brands({
+  shops = [],
+  loading = false,
+  error = false,
+}: ShopProps) {
   return (
     <>
       <Block className="text-bg-primary">
@@ -22,7 +23,7 @@ export default function Brands(props: any) {
           <Block.Title>Our Brands</Block.Title>
         </Container>
       </Block>
-      {loading || error ? Array.from({ length: 2 }).map((_: any, index: number) => (
+      {loading || error ? Array.from({ length: 2 }).map((_, index: number) => (
         <Block key={index}>
           <Container className="border-bottom border-4">
             <Row className="justify-content-center mb-3">
@@ -57,7 +58,7 @@ export default function Brands(props: any) {
             </Row>
           </Container>
         </Block>
-      )) : shops.map((shop: any, index: number) => (
+      )) : shops.map((shop, index: number) => (
         <Block key={shop.id}>
           <Container className="border-bottom border-4" style={{
             '--bs-border-color': shop.brand?.colors.primary[0].background

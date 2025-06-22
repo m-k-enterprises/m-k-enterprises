@@ -10,10 +10,11 @@ import { ShopProps } from '../../types';
  * @param props - Shop data with loading state.
  * @returns JSX for the contact route.
  */
-export default function Contact(props: any) {
-  const shops = props?.shops ?? [];
-  const loading = props?.loading ?? false;
-  const error = props?.error ?? false;
+export default function Contact({
+  shops = [],
+  loading = false,
+  error = false,
+}: ShopProps) {
   return (
     <>
       <Block className="text-bg-primary">
@@ -25,7 +26,7 @@ export default function Contact(props: any) {
         <Container>
           <p className="lead">Our in-house customer service team is here to help. Please connect with us by visiting one of our brands below.</p>
           <Row className="align-items-center justify-content-evenly text-center">
-            {loading || error ? Array.from({ length: 2 }).map((_: any, i: number) => (
+            {loading || error ? Array.from({ length: 2 }).map((_, i: number) => (
               <Col key={i} xs={10} md={5} xl={4}>
                 <Ratio aspectRatio="16x9">
                   <Placeholder className="img-fluid" animation="glow">
@@ -33,7 +34,7 @@ export default function Contact(props: any) {
                   </Placeholder>
                 </Ratio>
               </Col>
-            )) : shops.map((shop: any) => (
+            )) : shops.map(shop => (
               <Col key={shop.id} xs={10} md={5} xl={4}>
                 <a href={shop.primaryDomain.url}>
                   <Image src={shop.brand?.logo?.image?.logoUrl} alt={shop.brand?.logo?.image?.altText} width={shop.brand?.logo?.image?.width} height={shop.brand?.logo?.image?.height} fluid />

@@ -54,3 +54,5 @@ export interface ShopProps extends QueryProps {
 export interface ArticleProps extends QueryProps {
   articles: Article[];
 }
+
+export interface HomeProps extends ShopProps, ArticleProps {}

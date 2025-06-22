@@ -15,8 +15,7 @@ interface LinksProps extends ShopProps {}
  * @returns React element containing corporate links.
  */
 
-export default function Links(props: any) {
-  const shops = props?.shops ?? [];
+export default function Links({ shops = [] }: LinksProps) {
   const items = shops;
 
   return (
@@ -25,7 +24,7 @@ export default function Links(props: any) {
         <Container className="links">
           <Block.Title>Useful Links</Block.Title>
           <Row className="g-3">
-            {items.map((shop: any) => (
+            {items.map(shop => (
               <Col key={shop.id} xs={12} md={6} className="d-flex">
                 <LinkCard shop={shop} />
               </Col>
