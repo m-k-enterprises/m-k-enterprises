@@ -1,8 +1,13 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 
-import Brands from './page';
 import { Shop } from '../../types';
+jest.mock('../../hooks/useStorefront', () => ({
+  __esModule: true,
+  default: jest.fn(),
+}));
+import useStorefront from '../../hooks/useStorefront';
+import Brands from './page';
 
 const shops: Shop[] = Array.from({ length: 4 }, (_, i) => ({
   id: String(i + 1),
@@ -25,14 +30,29 @@ const shops: Shop[] = Array.from({ length: 4 }, (_, i) => ({
   },
 }));
 
+beforeEach(() => {
+  (useStorefront as jest.Mock).mockReturnValue({
+    shops: [],
+    articles: [],
+    loading: true,
+    error: false,
+  });
+});
+
 test('renders heading', () => {
-  render(<Brands loading={true} error={false} shops={[]} />);
+  render(<Brands />);
   const heading = screen.getByRole('heading', { name: /our brands/i });
   expect(heading).toBeInTheDocument();
 });
 
 test('renders brand cards with correct links', () => {
-  render(<Brands loading={false} error={false} shops={shops} />);
+  (useStorefront as jest.Mock).mockReturnValue({
+    shops,
+    articles: [],
+    loading: false,
+    error: false,
+  });
+  render(<Brands />);
   const links = screen.getAllByRole('button', { name: /learn more/i });
   expect(links).toHaveLength(4);
   links.forEach((link, i) => {

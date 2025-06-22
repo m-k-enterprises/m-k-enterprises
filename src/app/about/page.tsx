@@ -5,22 +5,20 @@ import { Block, PullQuote, StatCard } from '@smolpack/react-bootstrap-extensions
 import { intersection, union } from 'lodash';
 import Gravatar from 'react-gravatar';
 
-import { ShopProps } from '../../types';
 import { ensureString } from '../../utils';
+import useStorefront from '../../hooks/useStorefront';
 // @ts-expect-error Image imported as URL
 import about from './about.jpg';
 
 /**
  * About page describing the company and team.
  *
- * @param props - Shop data with loading state.
+ * Fetches shop data to display company information.
+ *
  * @returns JSX for the about route.
  */
-export default function Page({
-  shops = [],
-  loading = false,
-  error = false,
-}: ShopProps) {
+export default function Page() {
+  const { shops, loading, error } = useStorefront();
   const shipsToCountriesMin = intersection(
     ...shops.map(shop => shop.shipsToCountries)
   ).length;

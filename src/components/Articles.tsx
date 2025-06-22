@@ -1,10 +1,22 @@
 import React from 'react';
 import { Button, Card, Col, Placeholder, Ratio } from 'react-bootstrap';
 import { random } from 'lodash';
-import { ArticleProps } from '../types';
+import { Article } from '../types';
 import { ensureString } from '../utils';
 
-function Articles(props: ArticleProps) {
+interface ArticlesProps {
+  loading: boolean;
+  error: boolean;
+  articles: Article[];
+}
+
+/**
+ * Displays a list of articles with loading placeholders.
+ *
+ * @param props - Article data and status flags.
+ * @returns Grid of article cards.
+ */
+function Articles(props: ArticlesProps) {
   return (
     <>
       {props.loading || props.error ? Array.from({ length: 6 }).map((_, index) => (

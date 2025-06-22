@@ -42,17 +42,3 @@ export interface Image {
   height?: number;
 }
 
-export interface QueryProps {
-  loading: boolean;
-  error: boolean;
-}
-
-export interface ShopProps extends QueryProps {
-  shops: Shop[];
-}
-
-export interface ArticleProps extends QueryProps {
-  articles: Article[];
-}
-
-export interface HomeProps extends ShopProps, ArticleProps {}
