@@ -5,21 +5,27 @@ import RootLayout from './layout';
 
 const Child = () => <div>Child</div>;
 
+beforeEach(() => {
+  document.documentElement.innerHTML = '<head></head><body></body>';
+});
+
 test('renders brand link', () => {
-  render(
+  const { getByRole } = render(
     <RootLayout>
       <Child />
-    </RootLayout>
+    </RootLayout>,
+    { container: document.documentElement, baseElement: document.documentElement }
   );
-  const link = screen.getByRole('link', { name: /enterprises/i });
+  const link = getByRole('link', { name: /enterprises/i });
   expect(link).toBeInTheDocument();
 });
 
 test('renders children content', () => {
-  render(
+  const { getByText } = render(
     <RootLayout>
       <Child />
-    </RootLayout>
+    </RootLayout>,
+    { container: document.documentElement, baseElement: document.documentElement }
   );
-  expect(screen.getByText('Child')).toBeInTheDocument();
+  expect(getByText('Child')).toBeInTheDocument();
 });
