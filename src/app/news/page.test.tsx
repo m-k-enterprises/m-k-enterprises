@@ -22,6 +22,7 @@ test('renders article links', () => {
   expect(links).toHaveLength(2);
   links.forEach((link, i) => {
     expect(link).toHaveAttribute('href', articles[i].onlineStoreUrl);
+    expect(typeof link.getAttribute('href')).toBe('string');
     expect(link).toHaveAttribute('target', '_blank');
     expect(link).toHaveAttribute('rel', 'noopener noreferrer');
   });

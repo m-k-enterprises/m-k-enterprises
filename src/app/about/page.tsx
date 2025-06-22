@@ -6,6 +6,7 @@ import { intersection, union } from 'lodash';
 import Gravatar from 'react-gravatar';
 
 import { ShopProps } from '../../types';
+import { ensureString } from '../../utils';
 // @ts-expect-error Image imported as URL
 import about from './about.jpg';
 
@@ -131,7 +132,7 @@ export default function Page({
                   <Button
                     variant="more"
                     as="a"
-                    href={member.linkedInUrl}
+                    href={ensureString(member.linkedInUrl)}
                     target="_blank"
                     rel="noopener noreferrer"
                   >

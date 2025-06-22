@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Card, Col, Image } from 'react-bootstrap';
 
 import { Shop } from '../types';
+import { ensureString } from '../utils';
 
 interface LinkCardProps {
   shop: Shop;
@@ -34,7 +35,7 @@ export default function LinkCard(props: LinkCardProps) {
         <Button
           variant="more"
           as="a"
-          href={shop.primaryDomain.url}
+          href={ensureString(shop.primaryDomain.url)}
           target="_blank"
           rel="noopener noreferrer"
           className="stretched-link"

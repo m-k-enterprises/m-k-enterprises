@@ -5,6 +5,7 @@ import { Block } from '@smolpack/react-bootstrap-extensions';
 import { random } from 'lodash';
 import { Articles } from '../components';
 import { HomeProps } from '../types';
+import { ensureString } from '../utils';
 
 /**
  * Home page showing brand highlights and latest news.
@@ -64,7 +65,7 @@ export default function Home({
                   variant="more"
                   size="lg"
                   as="a"
-                  href={shop.primaryDomain.url}
+                  href={ensureString(shop.primaryDomain.url)}
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{
