@@ -1,8 +1,13 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 
-import Contact from './page';
 import { Shop } from '../../types';
+jest.mock('../../hooks/useStorefront', () => ({
+  __esModule: true,
+  default: jest.fn(),
+}));
+import useStorefront from '../../hooks/useStorefront';
+import Contact from './page';
 
 const shops: Shop[] = Array.from({ length: 2 }, (_, i) => ({
   id: String(i + 1),
@@ -15,14 +20,29 @@ const shops: Shop[] = Array.from({ length: 2 }, (_, i) => ({
   },
 }));
 
+beforeEach(() => {
+  (useStorefront as jest.Mock).mockReturnValue({
+    shops: [],
+    articles: [],
+    loading: true,
+    error: false,
+  });
+});
+
 test('renders heading', () => {
-  render(<Contact loading={true} error={false} shops={[]} />);
+  render(<Contact />);
   const heading = screen.getByRole('heading', { name: /need support\?/i });
   expect(heading).toBeInTheDocument();
 });
 
 test('renders brand links', () => {
-  render(<Contact loading={false} error={false} shops={shops} />);
+  (useStorefront as jest.Mock).mockReturnValue({
+    shops,
+    articles: [],
+    loading: false,
+    error: false,
+  });
+  render(<Contact />);
   const links = screen.getAllByRole('link');
   expect(links).toHaveLength(2);
   links.forEach((link, i) => {

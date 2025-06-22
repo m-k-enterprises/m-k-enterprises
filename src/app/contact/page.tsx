@@ -2,20 +2,17 @@
 import React from 'react';
 import { Col, Container, Image, Placeholder, Ratio, Row } from 'react-bootstrap';
 import { Block } from '@smolpack/react-bootstrap-extensions';
-import { ShopProps } from '../../types';
 import { ensureString } from '../../utils';
+import useStorefront from '../../hooks/useStorefront';
 
 /**
  * Shows contact information for each brand.
+ * Fetches shop data to display contact information.
  *
- * @param props - Shop data with loading state.
  * @returns JSX for the contact route.
  */
-export default function Contact({
-  shops = [],
-  loading = false,
-  error = false,
-}: ShopProps) {
+export default function Contact() {
+  const { shops, loading, error } = useStorefront();
   return (
     <>
       <Block className="text-bg-primary">

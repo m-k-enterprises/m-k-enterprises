@@ -3,20 +3,18 @@ import React from 'react';
 import { Button, Col, Container, Image, Placeholder, Ratio, Row } from 'react-bootstrap';
 import { Block } from '@smolpack/react-bootstrap-extensions';
 import { random } from 'lodash';
-import { ShopProps } from '../../types';
 import { ensureString } from '../../utils';
+import useStorefront from '../../hooks/useStorefront';
 
 /**
  * Lists every brand with link to learn more.
  *
- * @param props - Shop data for all brands.
+ * Fetches all shop data for brand listing.
+ *
  * @returns JSX for the brands route.
  */
-export default function Brands({
-  shops = [],
-  loading = false,
-  error = false,
-}: ShopProps) {
+export default function Brands() {
+  const { shops, loading, error } = useStorefront();
   return (
     <>
       <Block className="text-bg-primary">

@@ -3,19 +3,17 @@ import React from 'react';
 import { Container, Row } from 'react-bootstrap';
 import { Block } from '@smolpack/react-bootstrap-extensions';
 import { Articles } from '../../components';
-import { ArticleProps } from '../../types';
+import useStorefront from '../../hooks/useStorefront';
 
 /**
  * News route listing recent company articles.
  *
- * @param props - Article data with loading state.
+ * Fetches article data for the news listing.
+ *
  * @returns JSX for the news route.
  */
-export default function News({
-  loading = false,
-  error = false,
-  articles = [],
-}: ArticleProps) {
+export default function News() {
+  const { articles, loading, error } = useStorefront();
   return (
     <>
       <Block className="text-bg-primary">

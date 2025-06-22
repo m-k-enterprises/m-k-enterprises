@@ -3,19 +3,19 @@ import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { Block } from '@smolpack/react-bootstrap-extensions';
 
-import { ShopProps } from '../../types';
 import { LinkCard } from '../../components';
+import useStorefront from '../../hooks/useStorefront';
 
-interface LinksProps extends ShopProps {}
 
 /**
  * External links page.
+ * Fetches shop data for quick access to brand links.
  *
- * @param props - Shop data with loading state.
  * @returns React element containing corporate links.
  */
 
-export default function Links({ shops = [] }: LinksProps) {
+export default function Links() {
+  const { shops } = useStorefront();
   const items = shops;
 
   return (

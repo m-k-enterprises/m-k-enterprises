@@ -4,21 +4,18 @@ import { Button, Carousel, Container, Placeholder, Row } from 'react-bootstrap';
 import { Block } from '@smolpack/react-bootstrap-extensions';
 import { random } from 'lodash';
 import { Articles } from '../components';
-import { HomeProps } from '../types';
+import useStorefront from '../hooks/useStorefront';
 import { ensureString } from '../utils';
 
 /**
  * Home page showing brand highlights and latest news.
  *
- * @param props - Shop and article data with loading states.
+ * Fetches shop and article data using configured clients.
+ *
  * @returns JSX for the home route.
  */
-export default function Home({
-  shops = [],
-  articles = [],
-  loading = false,
-  error = false,
-}: HomeProps) {
+export default function Home() {
+  const { shops, articles, loading, error } = useStorefront();
   return (
     <>
       <Carousel>
