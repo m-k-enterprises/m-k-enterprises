@@ -36,7 +36,7 @@ src/
 ├── components/      # Re-usable UI widgets
 ├── app/             # Next.js route segments
 ├── clients.ts       # Apollo Shopify clients
-├── storefront.gql   # GraphQL queries (loaded via graphql.macro)
+├── storefront.ts   # GraphQL queries (Apollo `gql` constants)
 ├── index.scss       # Bootstrap reboot/grid + globals
 public/
 └──                # static assets (favicon, images)

@@ -19,7 +19,6 @@
     "bootstrap": "^5.2.2",
     "gh-pages": "^4.0.0",
     "graphql": "^16.6.0",
-    "graphql.macro": "^1.4.2",
     "lodash": "^4.17.21",
     "next": "^15.3.3",
     "pantone-css": "^0.2.9",
