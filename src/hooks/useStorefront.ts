@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
-import { loader } from 'graphql.macro';
 import { ApolloQueryResult } from '@apollo/client';
+
+import { STOREFRONT_QUERY } from '../storefront';
 import { clients } from '../clients';
 import { Article, Shop } from '../types';
-
-const STOREFRONT_QUERY = loader('../storefront.gql');
 
 export interface StorefrontState {
   shops: Shop[];
