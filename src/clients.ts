@@ -7,7 +7,9 @@ interface ClientOptions extends Partial<ApolloClientOptions<{}>> {
 function requireEnvVar(name: string): string {
   const value = process.env[name]
   if (!value) {
-    throw new Error(`Missing env variable: ${name}`)
+    throw new Error(
+      `Missing env variable: ${name}. Did you copy .env.example to .env.local?`
+    )
   }
   return value
 }
