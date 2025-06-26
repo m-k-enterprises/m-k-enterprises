@@ -1,6 +1,11 @@
 @import "pantone-css/scss/pantone";
 @import "@smolpack/bootstrap-extensions/scss/functions";
 
+// Patch Bootstrap's opaque() to avoid Sass warning about unitless percentages
+@function opaque($background, $foreground) {
+  @return mix(rgba($foreground, 1), $background, opacity($foreground) * 100%);
+}
+
 $enable-rounded: false;
 $enable-negative-margins: true;
 
