@@ -32,7 +32,7 @@ export default function RootLayout({ children }: LayoutProps) {
         <Navbar bg="light" expand="lg" sticky="top">
           <Container className="justify-content-between" fluid>
             <Navbar.Brand as={Link} href="/">
-              <Img className="d-inline-block align-top" src={logo} alt="M-K" fluid />{' '}
+              <Img className="d-inline-block align-top" src={(logo as any).src ?? logo} alt="M-K" fluid />{' '}
               Enterprises
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="main-navbar-nav" />

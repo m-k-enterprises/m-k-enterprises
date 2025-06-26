@@ -72,7 +72,7 @@ export default function Page() {
           <Row className="align-items-center">
             <Col>
               <Figure>
-                <Figure.Image src={about} alt="Bear Belts launch event" fluid />
+                <Figure.Image src={(about as any).src ?? about} alt="Bear Belts launch event" fluid />
                 <Figure.Caption className="text-center">Bear Belts' first event in Edinburgh.</Figure.Caption>
               </Figure>
             </Col>
