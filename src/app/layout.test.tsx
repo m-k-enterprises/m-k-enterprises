@@ -5,7 +5,14 @@ import RootLayout from './layout';
 
 const Child = () => <div>Child</div>;
 
+let container: HTMLElement;
+
 beforeEach(() => {
+  container = document.createElement('div');
+  document.body.appendChild(container);
+});
+
+afterEach(() => {
   document.body.innerHTML = '';
 });
 
@@ -14,7 +21,7 @@ test('renders brand link', () => {
     <RootLayout>
       <Child />
     </RootLayout>,
-    { container: document.body, baseElement: document.documentElement }
+    { container }
   );
   const link = getByRole('link', { name: /enterprises/i });
   expect(link).toBeInTheDocument();
@@ -25,7 +32,7 @@ test('renders children content', () => {
     <RootLayout>
       <Child />
     </RootLayout>,
-    { container: document.body, baseElement: document.documentElement }
+    { container }
   );
   expect(getByText('Child')).toBeInTheDocument();
 });
