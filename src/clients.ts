@@ -1,6 +1,6 @@
 import { ApolloClient, ApolloClientOptions, InMemoryCache } from '@apollo/client';
 
-interface ClientOptions extends Partial<ApolloClientOptions<{}>> {
+interface ClientOptions extends Partial<ApolloClientOptions<unknown>> {
   shopifyStorefrontAccessToken: string
 }
 
