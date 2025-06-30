@@ -1,4 +1,9 @@
 import { ReportHandler } from 'web-vitals';
+/**
+ * Measures and forwards Web Vitals metrics to the given handler.
+ *
+ * @param onPerfEntry - Callback invoked with each metric.
+ */
 
 const reportWebVitals = (onPerfEntry?: ReportHandler) => {
   if (onPerfEntry && onPerfEntry instanceof Function) {

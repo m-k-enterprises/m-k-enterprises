@@ -7,6 +7,8 @@ import { Block } from '@smolpack/react-bootstrap-extensions';
 // @ts-expect-error Image imported as URL
 import logo from '../logo.svg';
 
+import usePerformanceReporting from '../hooks/usePerformanceReporting';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../index.scss';
 import '../App.scss';
@@ -24,6 +26,7 @@ interface LayoutProps {
  * @returns Page wrapper element.
  */
 export default function RootLayout({ children }: LayoutProps) {
+  usePerformanceReporting();
   const now = new Date();
 
   return (
