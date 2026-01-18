@@ -105,14 +105,25 @@ function App() {
   const [shops, setShops] = React.useState<Shop[]>([]);
   const [articles, setArticles] = React.useState<Article[]>([]);
 
-  React.useEffect(() => {
-    setLoading(queries.some((query) => query.loading));
-  },
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  queries.map((query) => query.loading));
+  const queryLoadings = React.useMemo(
+    () => queries.map((query) => query.loading),
+    [queries]
+  );
+  const queryErrors = React.useMemo(
+    () => queries.map((query) => query.error),
+    [queries]
+  );
+  const queryData = React.useMemo(
+    () => queries.map((query) => query.data),
+    [queries]
+  );
 
   React.useEffect(() => {
-    const hasError = queries.some((query) => query.error);
+    setLoading(queryLoadings.some(Boolean));
+  }, [queryLoadings]);
+
+  React.useEffect(() => {
+    const hasError = queryErrors.some(Boolean);
 
     if (hasError) {
       queries.forEach((query) => {
@@ -122,9 +133,7 @@ function App() {
       });
     }
     setError(hasError);
-  },
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  queries.map((query) => query.error));
+  }, [queryErrors, queries]);
 
   React.useEffect(() => {
     const shopData: Shop[] = [];
@@ -148,9 +157,7 @@ function App() {
 
     setShops(shopData);
     setArticles(articlesData);
-  },
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  queries.map((query) => query.data));
+  }, [queryData, queries]);
 
   const now = new Date();
 
