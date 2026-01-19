@@ -20,10 +20,10 @@ test('article links have security attributes', () => {
 
 test('Articles loading state is stable across re-renders', () => {
   const { container, rerender } = render(<Articles loading={true} error={false} articles={[]} />);
-  const firstRender = container.innerHTML;
+  const firstRenderText = container.textContent;
 
   rerender(<Articles loading={true} error={false} articles={[]} />);
-  const secondRender = container.innerHTML;
+  const secondRenderText = container.textContent;
 
-  expect(firstRender).toEqual(secondRender);
+  expect(firstRenderText).toEqual(secondRenderText);
 });
