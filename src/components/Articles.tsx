@@ -12,7 +12,7 @@ function Articles(props: ArticleProps) {
     return Array.from({ length: 6 }).map(() => ({
       title: Array.from({ length: random(2, 8) }).map(() => random(1, 6)),
       text: Array.from({ length: random(3, 12) }).map(() => random(1, 6)),
-      footer: [random(1), random(1, 3)]
+      footer: [1, random(1, 3)]
     }));
   }, [props.loading, props.error]);
   return (
