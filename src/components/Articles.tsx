@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Card, Col, Placeholder, Ratio } from 'react-bootstrap';
-import { random } from 'lodash';
+import random from 'lodash/random';
 import { ArticleProps } from '../App';
 
 function Articles(props: ArticleProps) {

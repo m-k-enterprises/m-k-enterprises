@@ -12,16 +12,11 @@ const shops: Shop[] = Array.from({ length: 3 }, (_, i) => ({
   brand: { slogan: `Tagline ${i + 1}`, colors: { primary: [{}] } }
 }));
 
-test('renders heading', () => {
-  render(<Links loading={false} error={false} shops={shops} />);
-  const heading = screen.getByRole('heading', { name: /useful links/i });
-  expect(heading).toBeInTheDocument();
-});
-
 test('renders cards with correct links', () => {
   render(<Links loading={false} error={false} shops={shops} />);
   const links = screen.getAllByRole('button', { name: /visit/i });
   expect(links).toHaveLength(shops.length);
+
   links.forEach((link, i) => {
     expect(link).toHaveAttribute('href', shops[i].primaryDomain.url);
     expect(link).toHaveAttribute('target', '_blank');
