@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Button, Card, Col, Container, Figure, Placeholder, Row } from 'react-bootstrap';
 import { Block, PullQuote, StatCard } from '@smolpack/react-bootstrap-extensions';
-import { intersection, union } from 'lodash';
+import intersection from 'lodash/intersection';
+import union from 'lodash/union';
 import Gravatar from 'react-gravatar';
 
 import { ShopProps } from '../App';
@@ -14,8 +15,14 @@ import about from './about.jpg';
  * @returns JSX for the about route.
  */
 function About(props: ShopProps) {
-  const shipsToCountriesMin = intersection(...props.shops.map(shop => shop.shipsToCountries)).length;
-  const shipsToCountriesMax = union(...props.shops.map(shop => shop.shipsToCountries)).length;
+  const shipsToCountriesMin = useMemo(
+    () => intersection(...props.shops.map(shop => shop.shipsToCountries)).length,
+    [props.shops]
+  );
+  const shipsToCountriesMax = useMemo(
+    () => union(...props.shops.map(shop => shop.shipsToCountries)).length,
+    [props.shops]
+  );
 
   const team = [
     {
