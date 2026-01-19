@@ -2,10 +2,38 @@ import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { Block } from '@smolpack/react-bootstrap-extensions';
 
-import { ShopProps } from '../App';
+import { Shop, ShopProps } from '../App';
 import { LinkCard } from '../components';
+import logo from '../logo.svg';
 
 interface LinksProps extends ShopProps {}
+
+const mkShop: Shop = {
+  id: 'mk-enterprises',
+  name: 'M-K Enterprises',
+  shipsToCountries: ['US', 'CA', 'GB'],
+  primaryDomain: {
+    url: 'https://mk-enterprises.com'
+  },
+  brand: {
+    logo: {
+      image: {
+        url: logo,
+        logoUrl: logo,
+        altText: 'M-K Enterprises',
+        width: 150,
+        height: 150
+      }
+    },
+    slogan: 'Quality and Innovation',
+    colors: {
+      primary: [{
+        background: '#f8f9fa',
+        foreground: '#212529'
+      }]
+    }
+  }
+};
 
 /**
  * External links page.
@@ -15,7 +43,7 @@ interface LinksProps extends ShopProps {}
  */
 
 function Links(props: LinksProps) {
-  const items = props.shops;
+  const items = [mkShop, ...props.shops];
 
   return (
     <>
