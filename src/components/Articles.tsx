@@ -4,17 +4,12 @@ import random from 'lodash/random';
 import { ArticleProps } from '../App';
 
 function Articles(props: ArticleProps) {
-  const skeletons = React.useMemo(() => {
-    if (!props.loading && !props.error) {
-      return [];
-    }
+  const skeletons = React.useMemo(() => Array.from({ length: 6 }).map(() => ({
+    title: Array.from({ length: random(2, 8) }).map(() => random(1, 6)),
+    text: Array.from({ length: random(3, 12) }).map(() => random(1, 6)),
+    footer: [random(1), random(1, 3)]
+  })), []);
 
-    return Array.from({ length: 6 }).map(() => ({
-      title: Array.from({ length: random(2, 8) }).map(() => random(1, 6)),
-      text: Array.from({ length: random(3, 12) }).map(() => random(1, 6)),
-      footer: [1, random(1, 3)]
-    }));
-  }, [props.loading, props.error]);
   return (
     <>
       {props.loading || props.error ? skeletons.map((skeleton, index) => (

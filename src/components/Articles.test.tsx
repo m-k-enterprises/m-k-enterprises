@@ -19,11 +19,11 @@ test('article links have security attributes', () => {
 });
 
 test('Articles loading state is stable across re-renders', () => {
-  const { container, rerender } = render(<Articles loading={true} error={false} articles={[]} />);
-  const firstRenderText = container.textContent;
+  const { asFragment, rerender } = render(<Articles loading={true} error={false} articles={[]} />);
+  const firstRender = asFragment();
 
   rerender(<Articles loading={true} error={false} articles={[]} />);
-  const secondRenderText = container.textContent;
+  const secondRender = asFragment();
 
-  expect(firstRenderText).toEqual(secondRenderText);
+  expect(secondRender).toMatchObject(firstRender);
 });
