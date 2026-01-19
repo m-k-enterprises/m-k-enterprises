@@ -20,8 +20,8 @@ const mapShopToLinkItem = (shop: Shop): LinkItem => ({
   },
   coverImageUrl: shop.brand?.coverImage?.image?.carouselUrl,
   colors: {
-    background: shop.brand?.colors.primary[0].background,
-    foreground: shop.brand?.colors.primary[0].foreground
+    background: shop.brand?.colors?.primary?.[0]?.background,
+    foreground: shop.brand?.colors?.primary?.[0]?.foreground
   }
 });
 
