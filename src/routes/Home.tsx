@@ -3,9 +3,41 @@ import { Button, Carousel, Container, Placeholder, Row } from 'react-bootstrap';
 import { Block } from '@smolpack/react-bootstrap-extensions';
 import { random } from 'lodash';
 import { Articles } from '../components';
-import { ArticleProps, ShopProps } from '../App';
+import { ArticleProps, ShopProps, Shop } from '../App';
 
 interface HomeProps extends ShopProps, ArticleProps {}
+
+const ShopCarouselItem = React.memo(React.forwardRef<HTMLDivElement, { shop: Shop } & React.ComponentProps<typeof Carousel.Item>>(({ shop, ...props }, ref) => (
+  <Carousel.Item ref={ref} {...props} className="carousel-item-large" style={{
+    backgroundColor: shop.brand?.colors.primary[0].background
+  }}>
+    <div className="carousel-background" style={{
+      backgroundColor: shop.brand?.colors.primary[0].background,
+      backgroundImage: `url(${shop.brand?.coverImage?.image?.carouselUrl})`
+    }} />
+    <Carousel.Caption className="text-end" style={{
+      color: shop.brand?.colors.primary[0].foreground
+    }}>
+      <Container>
+        <h1 className="display-1">{shop.name}</h1>
+        <p className="lead">{shop.brand?.slogan}</p>
+        <Button
+          variant="more"
+          size="lg"
+          as="a"
+          href={shop.primaryDomain.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            '--bs-btn-color': shop.brand?.colors.primary[0].foreground
+          } as React.CSSProperties}
+        >
+          Learn more
+        </Button>
+      </Container>
+    </Carousel.Caption>
+  </Carousel.Item>
+)));
 
 /**
  * Home page showing brand highlights and latest news.
@@ -43,35 +75,7 @@ function Home(props: HomeProps) {
             </Carousel.Caption>
           </Carousel.Item>
         ) : props.shops.map(shop => (
-          <Carousel.Item key={shop.id} className="carousel-item-large" style={{
-            backgroundColor: shop.brand?.colors.primary[0].background
-          }}>
-            <div className="carousel-background" style={{
-              backgroundColor: shop.brand?.colors.primary[0].background,
-              backgroundImage: `url(${shop.brand?.coverImage?.image?.carouselUrl})`
-            }} />
-            <Carousel.Caption className="text-end" style={{
-              color: shop.brand?.colors.primary[0].foreground
-            }}>
-              <Container>
-                <h1 className="display-1">{shop.name}</h1>
-                <p className="lead">{shop.brand?.slogan}</p>
-                <Button
-                  variant="more"
-                  size="lg"
-                  as="a"
-                  href={shop.primaryDomain.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    '--bs-btn-color': shop.brand?.colors.primary[0].foreground
-                  } as React.CSSProperties}
-                >
-                  Learn more
-                </Button>
-              </Container>
-            </Carousel.Caption>
-          </Carousel.Item>
+          <ShopCarouselItem key={shop.id} shop={shop} />
         ))}
       </Carousel>
       <Block className="text-bg-primary">
