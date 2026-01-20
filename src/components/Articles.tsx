@@ -4,9 +4,15 @@ import random from 'lodash/random';
 import { ArticleProps } from '../App';
 
 function Articles(props: ArticleProps) {
+  const skeletons = React.useMemo(() => Array.from({ length: 6 }).map(() => ({
+    title: Array.from({ length: random(2, 8) }).map(() => random(1, 6)),
+    text: Array.from({ length: random(3, 12) }).map(() => random(1, 6)),
+    footer: [random(1), random(1, 3)]
+  })), []);
+
   return (
     <>
-      {props.loading || props.error ? Array.from({ length: 6 }).map((_, index) => (
+      {props.loading || props.error ? skeletons.map((skeleton, index) => (
         <Col key={index} border="light">
           <Card border="light">
             <Ratio aspectRatio="16x9">
@@ -16,16 +22,16 @@ function Articles(props: ArticleProps) {
             </Ratio>
             <Card.Body>
               <Placeholder animation="wave" as={Card.Title}>
-                {Array.from({ length: random(2, 8) }).map((_, i) => (
+                {skeleton.title.map((width, i) => (
                     <React.Fragment key={i}>
-                      <Placeholder xs={random(1, 6)} />{' '}
+                      <Placeholder xs={width} />{' '}
                     </React.Fragment>
                   ))}
               </Placeholder>
               <Placeholder animation="wave" as={Card.Text}>
-                {Array.from({ length: random(3, 12) }).map((_, i) => (
+                {skeleton.text.map((width, i) => (
                   <React.Fragment key={i}>
-                    <Placeholder xs={random(1, 6)} />{' '}
+                    <Placeholder xs={width} />{' '}
                   </React.Fragment>
                 ))}
               </Placeholder>
@@ -35,7 +41,7 @@ function Articles(props: ArticleProps) {
             </Card.Body>
             <Card.Footer className="text-muted">
               <Placeholder animation="wave">
-                <Placeholder xs={random(1)} /> <Placeholder xs={random(1, 3)} /> <Placeholder xs={2} />
+                <Placeholder xs={skeleton.footer[0]} /> <Placeholder xs={skeleton.footer[1]} /> <Placeholder xs={2} />
               </Placeholder>
             </Card.Footer>
           </Card>

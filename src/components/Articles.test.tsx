@@ -18,3 +18,12 @@ test('article links have security attributes', () => {
   expect(link).toHaveAttribute('rel', 'noopener noreferrer');
 });
 
+test('Articles loading state is stable across re-renders', () => {
+  const { asFragment, rerender } = render(<Articles loading={true} error={false} articles={[]} />);
+  const firstRender = asFragment();
+
+  rerender(<Articles loading={true} error={false} articles={[]} />);
+  const secondRender = asFragment();
+
+  expect(secondRender).toMatchObject(firstRender);
+});
