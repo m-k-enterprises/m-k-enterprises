@@ -2,11 +2,11 @@ import React from 'react';
 import { Button, Carousel, Container } from 'react-bootstrap';
 import { Shop } from '../App';
 
-export interface ShopCarouselItemProps extends React.ComponentProps<typeof Carousel.Item> {
+export interface ShopCarouselItemProps extends Omit<React.ComponentProps<typeof Carousel.Item>, 'children'> {
   shop: Shop;
 }
 
-const ShopCarouselItem = React.memo(React.forwardRef<HTMLDivElement, { shop: Shop } & Omit<React.ComponentProps<typeof Carousel.Item>, 'children'>>(({ shop, className, style, ...props }, ref) => (
+const ShopCarouselItem = React.memo(React.forwardRef<HTMLDivElement, ShopCarouselItemProps>(({ shop, className, style, ...props }, ref) => (
   <Carousel.Item
     ref={ref}
     {...props}
