@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { ShopCarouselItem } from './Home';
+import ShopCarouselItem from './ShopCarouselItem';
 import { Shop } from '../App';
 import { Carousel } from 'react-bootstrap';
 
