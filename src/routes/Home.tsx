@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Carousel, Container, Placeholder, Row } from 'react-bootstrap';
+import { Carousel, Container, Placeholder, Row } from 'react-bootstrap';
 import { Block } from '@smolpack/react-bootstrap-extensions';
 import { random } from 'lodash';
 import { Articles, ShopCarouselItem } from '../components';
