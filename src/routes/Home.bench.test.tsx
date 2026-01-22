@@ -32,7 +32,6 @@ test('Home does NOT re-render Carousel.Item on re-render with same props', () =>
 
   const MockItem = Carousel.Item as jest.Mock;
   expect(MockItem).toHaveBeenCalledTimes(1);
-  const firstRenderStyle = MockItem.mock.calls[0][0].style;
 
   // Rerender with SAME props
   rerender(
