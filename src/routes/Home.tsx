@@ -7,10 +7,16 @@ import { ArticleProps, ShopProps, Shop } from '../App';
 
 interface HomeProps extends ShopProps, ArticleProps {}
 
-const ShopCarouselItem = React.memo(React.forwardRef<HTMLDivElement, { shop: Shop } & React.ComponentProps<typeof Carousel.Item>>(({ shop, ...props }, ref) => (
-  <Carousel.Item ref={ref} {...props} className="carousel-item-large" style={{
-    backgroundColor: shop.brand?.colors.primary[0].background
-  }}>
+export const ShopCarouselItem = React.memo(React.forwardRef<HTMLDivElement, { shop: Shop } & Omit<React.ComponentProps<typeof Carousel.Item>, 'children'>>(({ shop, className, style, ...props }, ref) => (
+  <Carousel.Item
+    ref={ref}
+    {...props}
+    className={`carousel-item-large ${className || ''}`.trim()}
+    style={{
+      ...style,
+      backgroundColor: shop.brand?.colors.primary[0].background
+    }}
+  >
     <div className="carousel-background" style={{
       backgroundColor: shop.brand?.colors.primary[0].background,
       backgroundImage: `url(${shop.brand?.coverImage?.image?.carouselUrl})`
