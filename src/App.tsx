@@ -3,7 +3,8 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Container, Image as Img, Nav, Navbar, Spinner } from 'react-bootstrap';
 import { loader } from 'graphql.macro';
-import { ApolloError, useQuery } from '@apollo/client';
+import type { ApolloError } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { Block } from '@smolpack/react-bootstrap-extensions';
 
 import { clients } from './clients';
