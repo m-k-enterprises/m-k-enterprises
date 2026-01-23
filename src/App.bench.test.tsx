@@ -50,7 +50,7 @@ const mockData = {
 
 describe('App performance benchmark', () => {
   beforeEach(() => {
-    mockUseQuery.mockClear();
+    mockUseQuery.mockReset();
   });
 
   test('App renders efficiently when data is cached (immediate load)', () => {
