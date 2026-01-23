@@ -1,4 +1,3 @@
-import React from 'react';
 import { render } from '@testing-library/react';
 import ShopCarouselItem from './ShopCarouselItem';
 import { Shop } from '../App';
