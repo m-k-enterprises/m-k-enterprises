@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Container, Image as Img, Nav, Navbar, Spinner } from 'react-bootstrap';
 import { loader } from 'graphql.macro';
-import { useQuery } from '@apollo/client';
+import { ApolloError, useQuery } from '@apollo/client';
 import { Block } from '@smolpack/react-bootstrap-extensions';
 
 import { clients } from './clients';
@@ -92,45 +92,52 @@ function App() {
   const queryMythicalMoods = useQuery<StorefrontData>(storefrontQuery, { client: clients.mythicalMoods });
   const queryAuraEssence = useQuery<StorefrontData>(storefrontQuery, { client: clients.auraEssence });
 
-  const queries = [queryBearBelts, queryPocketBearsApparel, queryMythicalMoods, queryAuraEssence];
+  const queries = React.useMemo(() => [
+    queryBearBelts,
+    queryPocketBearsApparel,
+    queryMythicalMoods,
+    queryAuraEssence,
+  ], [queryBearBelts, queryPocketBearsApparel, queryMythicalMoods, queryAuraEssence]);
 
   const loading = queries.some((query) => query.loading);
   const error = queries.some((query) => query.error);
 
+  const prevErrorsRef = React.useRef<(ApolloError | undefined)[]>([]);
+
   React.useEffect(() => {
-    if (error) {
-      queries.forEach((query) => {
-        if (query.error) {
-          console.error(query.error);
-        }
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [error, queryBearBelts.error, queryPocketBearsApparel.error, queryMythicalMoods.error, queryAuraEssence.error]);
+    const currentErrors = queries.map((query) => query.error);
+    const prevErrors = prevErrorsRef.current;
 
-  const { shops, articles } = React.useMemo(() => {
-    const shopData: Shop[] = [];
-    let articlesData: Article[] = [];
-
-    queries.forEach((query) => {
-      if (query.data) {
-        shopData.push(query.data.shop);
-        if (query.data.articles.nodes) {
-          articlesData.push(...query.data.articles.nodes);
-        }
+    currentErrors.forEach((err, index) => {
+      if (err && err !== prevErrors[index]) {
+        console.error(err);
       }
     });
 
-    articlesData = articlesData.sort((a, b) => {
-      const aTime = new Date(a.publishedAt).getTime();
-      const bTime = new Date(b.publishedAt).getTime();
+    prevErrorsRef.current = currentErrors;
+  }, [queries]);
 
-      return bTime - aTime;
-    });
+  const shopData: Shop[] = [];
+  let articlesData: Article[] = [];
 
-    return { shops: shopData, articles: articlesData };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [queryBearBelts.data, queryPocketBearsApparel.data, queryMythicalMoods.data, queryAuraEssence.data]);
+  queries.forEach((query) => {
+    if (query.data) {
+      shopData.push(query.data.shop);
+      if (query.data.articles.nodes) {
+        articlesData.push(...query.data.articles.nodes);
+      }
+    }
+  });
+
+  articlesData = articlesData.sort((a, b) => {
+    const aTime = new Date(a.publishedAt).getTime();
+    const bTime = new Date(b.publishedAt).getTime();
+
+    return bTime - aTime;
+  });
+
+  const shops = shopData;
+  const articles = articlesData;
 
   const now = new Date();
 
