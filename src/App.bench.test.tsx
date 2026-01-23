@@ -14,6 +14,16 @@ jest.mock('./clients', () => {
   };
 });
 
+// Mock lazy loaded routes to remove Suspense jitter and make render counts deterministic
+jest.mock('./routes/Home', () => () => <div data-testid="home">Home</div>);
+jest.mock('./routes/About', () => () => <div>About</div>);
+jest.mock('./routes/Brands', () => () => <div>Brands</div>);
+jest.mock('./routes/News', () => () => <div>News</div>);
+jest.mock('./routes/Responsibility', () => () => <div>Responsibility</div>);
+jest.mock('./routes/Contact', () => () => <div>Contact</div>);
+jest.mock('./routes/PrivacyPolicy', () => () => <div>PrivacyPolicy</div>);
+jest.mock('./routes/Links', () => () => <div>Links</div>);
+
 const mockUseQuery = jest.fn();
 
 jest.mock('@apollo/client', () => ({
@@ -86,20 +96,19 @@ describe('App performance benchmark', () => {
     // In a real app, Apollo would trigger this. Here we manually trigger the next render phase.
     rerender(<App />);
 
-    // Counts:
+    // Counts with Mocks (Deterministic):
     // 1. Initial Render (Loading): 4 calls.
-    // 2. Rerender (Loaded): In this test environment, 'rerender' may trigger an immediate extra reconciliation
-    //    or an intermediate state, resulting in 8 additional calls (2 renders).
-    // Total: 12 calls.
+    // 2. Rerender (Loaded): 4 calls.
+    // Total: 8 calls.
 
     // In an unoptimized scenario (with useEffect setState):
     // 1. Initial Render (Loading) -> 4 calls.
     // 2. Effect sets loading -> Render (Loading) -> 4 calls.
-    // 3. Rerender (Loaded) -> 4 (+4 extra likely) -> 8 calls.
+    // 3. Rerender (Loaded) -> 4 calls.
     // 4. Effect sets data -> Render (Loaded) -> 4 calls.
-    // Total would be ~20+ calls.
+    // Total would be 16 calls.
 
-    // So 12 calls confirms the absence of the state-syncing effect loops.
-    expect(mockUseQuery).toHaveBeenCalledTimes(12);
+    // We confirm that we are observing the optimized behavior (8 calls).
+    expect(mockUseQuery).toHaveBeenCalledTimes(8);
   });
 });
