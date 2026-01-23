@@ -4,6 +4,8 @@ import Home from './Home';
 import { Shop } from '../App';
 import { Carousel } from 'react-bootstrap';
 
+// This test verifies memoization stability by counting renders, avoiding flaky timing-based benchmarks.
+
 // Mock react-bootstrap to spy on Carousel.Item and Carousel.Caption
 jest.mock('react-bootstrap', () => {
   const original = jest.requireActual('react-bootstrap');
