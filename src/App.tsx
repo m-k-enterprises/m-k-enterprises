@@ -86,19 +86,13 @@ export interface ArticleProps extends QueryProps {
 
 const storefrontQuery = loader('./storefront.gql');
 
-const shopConfigs = [
-  { key: 'bearBelts', client: clients.bearBelts },
-  { key: 'pocketBearsApparel', client: clients.pocketBearsApparel },
-  { key: 'mythicalMoods', client: clients.mythicalMoods },
-  { key: 'auraEssence', client: clients.auraEssence },
-] as const;
-
 function App() {
-  const queries = shopConfigs.map(
-    (shopConfig) =>
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-      useQuery<StorefrontData>(storefrontQuery, { client: shopConfig.client })
-  );
+  const queryBearBelts = useQuery<StorefrontData>(storefrontQuery, { client: clients.bearBelts });
+  const queryPocketBearsApparel = useQuery<StorefrontData>(storefrontQuery, { client: clients.pocketBearsApparel });
+  const queryMythicalMoods = useQuery<StorefrontData>(storefrontQuery, { client: clients.mythicalMoods });
+  const queryAuraEssence = useQuery<StorefrontData>(storefrontQuery, { client: clients.auraEssence });
+
+  const queries = [queryBearBelts, queryPocketBearsApparel, queryMythicalMoods, queryAuraEssence];
 
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(false);
