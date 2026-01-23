@@ -92,30 +92,37 @@ function App() {
   const queryMythicalMoods = useQuery<StorefrontData>(storefrontQuery, { client: clients.mythicalMoods });
   const queryAuraEssence = useQuery<StorefrontData>(storefrontQuery, { client: clients.auraEssence });
 
-  const queries = React.useMemo(() => [
+  const queries = [
     queryBearBelts,
     queryPocketBearsApparel,
     queryMythicalMoods,
     queryAuraEssence,
-  ], [queryBearBelts, queryPocketBearsApparel, queryMythicalMoods, queryAuraEssence]);
+  ];
 
   const loading = queries.some((query) => query.loading);
-  const error = queries.some((query) => query.error);
+
+  const queryErrors = React.useMemo(() => [
+    queryBearBelts.error,
+    queryPocketBearsApparel.error,
+    queryMythicalMoods.error,
+    queryAuraEssence.error,
+  ], [queryBearBelts.error, queryPocketBearsApparel.error, queryMythicalMoods.error, queryAuraEssence.error]);
+
+  const error = queryErrors.some((err) => !!err);
 
   const prevErrorsRef = React.useRef<(ApolloError | undefined)[]>([]);
 
   React.useEffect(() => {
-    const currentErrors = queries.map((query) => query.error);
     const prevErrors = prevErrorsRef.current;
 
-    currentErrors.forEach((err, index) => {
+    queryErrors.forEach((err, index) => {
       if (err && err !== prevErrors[index]) {
         console.error(err);
       }
     });
 
-    prevErrorsRef.current = currentErrors;
-  }, [queries]);
+    prevErrorsRef.current = queryErrors;
+  }, [queryErrors]);
 
   // Memoize derived data to ensure stability even when loading/error changes.
   // We explicitly list the data dependencies here (instead of using 'queries')
