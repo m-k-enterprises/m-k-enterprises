@@ -94,33 +94,21 @@ function App() {
 
   const queries = [queryBearBelts, queryPocketBearsApparel, queryMythicalMoods, queryAuraEssence];
 
-  const [loading, setLoading] = React.useState(true);
-  const [error, setError] = React.useState(false);
-  const [shops, setShops] = React.useState<Shop[]>([]);
-  const [articles, setArticles] = React.useState<Article[]>([]);
+  const loading = queries.some((query) => query.loading);
+  const error = queries.some((query) => query.error);
 
   React.useEffect(() => {
-    setLoading(queries.some((query) => query.loading));
-  },
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  queries.map((query) => query.loading));
-
-  React.useEffect(() => {
-    const hasError = queries.some((query) => query.error);
-
-    if (hasError) {
+    if (error) {
       queries.forEach((query) => {
         if (query.error) {
           console.error(query.error);
         }
       });
     }
-    setError(hasError);
-  },
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  queries.map((query) => query.error));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [error, queryBearBelts.error, queryPocketBearsApparel.error, queryMythicalMoods.error, queryAuraEssence.error]);
 
-  React.useEffect(() => {
+  const { shops, articles } = React.useMemo(() => {
     const shopData: Shop[] = [];
     let articlesData: Article[] = [];
 
@@ -140,11 +128,9 @@ function App() {
       return bTime - aTime;
     });
 
-    setShops(shopData);
-    setArticles(articlesData);
-  },
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  queries.map((query) => query.data));
+    return { shops: shopData, articles: articlesData };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [queryBearBelts.data, queryPocketBearsApparel.data, queryMythicalMoods.data, queryAuraEssence.data]);
 
   const now = new Date();
 
