@@ -117,27 +117,39 @@ function App() {
     prevErrorsRef.current = currentErrors;
   }, [queries]);
 
-  const shopData: Shop[] = [];
-  let articlesData: Article[] = [];
+  // Memoize derived data to ensure stability even when loading/error changes.
+  // We explicitly list the data dependencies here (instead of using 'queries')
+  // to avoid recomputing when loading state changes but data remains the same.
+  const { shops, articles } = React.useMemo(() => {
+    const shopData: Shop[] = [];
+    let articlesData: Article[] = [];
 
-  queries.forEach((query) => {
-    if (query.data) {
-      shopData.push(query.data.shop);
-      if (query.data.articles.nodes) {
-        articlesData.push(...query.data.articles.nodes);
+    // Construct a local array of data to iterate, matching the dependency list order
+    const dataSources = [
+      queryBearBelts.data,
+      queryPocketBearsApparel.data,
+      queryMythicalMoods.data,
+      queryAuraEssence.data
+    ];
+
+    dataSources.forEach((data) => {
+      if (data) {
+        shopData.push(data.shop);
+        if (data.articles.nodes) {
+          articlesData.push(...data.articles.nodes);
+        }
       }
-    }
-  });
+    });
 
-  articlesData = articlesData.sort((a, b) => {
-    const aTime = new Date(a.publishedAt).getTime();
-    const bTime = new Date(b.publishedAt).getTime();
+    articlesData = articlesData.sort((a, b) => {
+      const aTime = new Date(a.publishedAt).getTime();
+      const bTime = new Date(b.publishedAt).getTime();
 
-    return bTime - aTime;
-  });
+      return bTime - aTime;
+    });
 
-  const shops = shopData;
-  const articles = articlesData;
+    return { shops: shopData, articles: articlesData };
+  }, [queryBearBelts.data, queryPocketBearsApparel.data, queryMythicalMoods.data, queryAuraEssence.data]);
 
   const now = new Date();
 
