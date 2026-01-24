@@ -142,10 +142,7 @@ function App() {
 
     return { shops: shopData, articles: articlesData };
   }, [
-    queries[0]?.data,
-    queries[1]?.data,
-    queries[2]?.data,
-    queries[3]?.data,
+    ...queryData,
   ]);
 
   const now = new Date();
