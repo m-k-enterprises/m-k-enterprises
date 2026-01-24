@@ -100,50 +100,41 @@ function App() {
   ];
 
   const loading = queries.some((query) => query.loading);
-
-  const queryErrors = React.useMemo(() => [
-    queryBearBelts.error,
-    queryPocketBearsApparel.error,
-    queryMythicalMoods.error,
-    queryAuraEssence.error,
-  ], [queryBearBelts.error, queryPocketBearsApparel.error, queryMythicalMoods.error, queryAuraEssence.error]);
-
-  const error = queryErrors.some((err) => !!err);
+  const error = queries.some((query) => query.error);
 
   const prevErrorsRef = React.useRef<(ApolloError | undefined)[]>([]);
 
   React.useEffect(() => {
     const prevErrors = prevErrorsRef.current;
 
-    queryErrors.forEach((err, index) => {
-      if (err && err !== prevErrors[index]) {
-        console.error(err);
+    queries.forEach((query, index) => {
+      if (query.error && query.error !== prevErrors[index]) {
+        console.error(query.error);
       }
     });
 
-    prevErrorsRef.current = queryErrors;
-  }, [queryErrors]);
+    prevErrorsRef.current = queries.map((query) => query.error);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [queries]);
 
-  // Memoize derived data to ensure stability even when loading/error changes.
-  // We explicitly list the data dependencies here (instead of using 'queries')
-  // to avoid recomputing when loading state changes but data remains the same.
-  const { shops, articles } = React.useMemo(() => {
+  // Manual memoization for data aggregation to avoid re-sorting when only loading/error changes
+  // while keeping 'queries' as the single source of truth.
+  const prevDataRef = React.useRef<(StorefrontData | undefined)[]>([]);
+  const prevResultRef = React.useRef<{ shops: Shop[], articles: Article[] }>({ shops: [], articles: [] });
+
+  const currentDataList = queries.map((q) => q.data);
+  const isDataChanged = currentDataList.length !== prevDataRef.current.length ||
+    currentDataList.some((data, i) => data !== prevDataRef.current[i]);
+
+  if (isDataChanged) {
     const shopData: Shop[] = [];
     let articlesData: Article[] = [];
 
-    // Construct a local array of data to iterate, matching the dependency list order
-    const dataSources = [
-      queryBearBelts.data,
-      queryPocketBearsApparel.data,
-      queryMythicalMoods.data,
-      queryAuraEssence.data
-    ];
-
-    dataSources.forEach((data) => {
-      if (data) {
-        shopData.push(data.shop);
-        if (data.articles.nodes) {
-          articlesData.push(...data.articles.nodes);
+    queries.forEach((query) => {
+      if (query.data) {
+        shopData.push(query.data.shop);
+        if (query.data.articles.nodes) {
+          articlesData.push(...query.data.articles.nodes);
         }
       }
     });
@@ -155,8 +146,11 @@ function App() {
       return bTime - aTime;
     });
 
-    return { shops: shopData, articles: articlesData };
-  }, [queryBearBelts.data, queryPocketBearsApparel.data, queryMythicalMoods.data, queryAuraEssence.data]);
+    prevResultRef.current = { shops: shopData, articles: articlesData };
+    prevDataRef.current = currentDataList;
+  }
+
+  const { shops, articles } = prevResultRef.current;
 
   const now = new Date();
 
