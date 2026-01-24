@@ -9,6 +9,8 @@ jest.mock('react', () => {
     ...originalReact,
     // Replace lazy with a function that returns a simple component synchronously
     lazy: () => () => <div>MockedRoute</div>,
+    // Replace Suspense with a simple fragment to avoid any suspense-related reconciliation
+    Suspense: ({ children }: { children: React.ReactNode }) => <>{children}</>,
   };
 });
 
@@ -100,15 +102,8 @@ describe('App performance benchmark', () => {
     // 1. Initial Render (Loading): 4 calls.
     // 2. Rerender (Loaded): 4 calls.
     // Total: 8 calls.
-    // Note: In some environments (e.g., CI with coverage), 'rerender' may trigger an intermediate
-    // reconciliation pass, resulting in 4 extra calls (Total: 12).
-    // An unoptimized implementation (with state syncing effects) would result in 16+ calls.
+    // Note: By mocking Suspense as a fragment, we ensure no intermediate renders occur.
 
-    // We assert that we are well below the unoptimized baseline.
-    // Allow for up to 12 calls to account for environment-specific intermediate renders
-    // while still enforcing the optimization (avoiding the 16+ baseline).
-    const callCount = mockUseQuery.mock.calls.length;
-    expect(callCount).toBeLessThanOrEqual(12);
-    expect(callCount).toBeGreaterThanOrEqual(8);
+    expect(mockUseQuery).toHaveBeenCalledTimes(8);
   });
 });
