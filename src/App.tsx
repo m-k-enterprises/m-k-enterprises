@@ -119,12 +119,19 @@ function App() {
 
   // Memoize derived data keyed off the query data values to ensure stability and purity.
   // This avoids re-sorting when loading/error changes but data remains the same.
-  const queryData = queries.map((q) => q.data);
   const { shops, articles } = React.useMemo(() => {
     const shopData: Shop[] = [];
     let articlesData: Article[] = [];
 
-    queryData.forEach((data) => {
+    // Construct the data list inside the memo to keep dependencies explicit and safe
+    const dataList = [
+      queryBearBelts.data,
+      queryPocketBearsApparel.data,
+      queryMythicalMoods.data,
+      queryAuraEssence.data
+    ];
+
+    dataList.forEach((data) => {
       if (data) {
         shopData.push(data.shop);
         if (data.articles.nodes) {
@@ -141,9 +148,7 @@ function App() {
     });
 
     return { shops: shopData, articles: articlesData };
-  }, [
-    ...queryData,
-  ]);
+  }, [queryBearBelts.data, queryPocketBearsApparel.data, queryMythicalMoods.data, queryAuraEssence.data]);
 
   const now = new Date();
 
