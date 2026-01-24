@@ -52,7 +52,7 @@ const mockData = {
 
 describe('App performance benchmark', () => {
   beforeEach(() => {
-    mockUseQuery.mockReset();
+    mockUseQuery.mockClear();
   });
 
   // Note: These tests run without React.StrictMode.

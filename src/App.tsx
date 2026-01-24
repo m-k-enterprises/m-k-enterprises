@@ -3,8 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Container, Image as Img, Nav, Navbar, Spinner } from 'react-bootstrap';
 import { loader } from 'graphql.macro';
-import type { ApolloError } from '@apollo/client';
-import { useQuery } from '@apollo/client';
+import { ApolloError, useQuery } from '@apollo/client';
 import { Block } from '@smolpack/react-bootstrap-extensions';
 
 import { clients } from './clients';
@@ -107,16 +106,21 @@ function App() {
 
   React.useEffect(() => {
     const prevErrors = prevErrorsRef.current;
+    const errors = [
+      queryBearBelts.error,
+      queryPocketBearsApparel.error,
+      queryMythicalMoods.error,
+      queryAuraEssence.error,
+    ];
 
-    queries.forEach((query, index) => {
-      if (query.error && query.error !== prevErrors[index]) {
-        console.error(query.error);
+    errors.forEach((err, index) => {
+      if (err && err !== prevErrors[index]) {
+        console.error(err);
       }
     });
 
-    prevErrorsRef.current = queries.map((query) => query.error);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [queries]);
+    prevErrorsRef.current = errors;
+  }, [queryBearBelts.error, queryPocketBearsApparel.error, queryMythicalMoods.error, queryAuraEssence.error]);
 
   // Memoize derived data keyed off the query data values to ensure stability and purity.
   // This avoids re-sorting when loading/error changes but data remains the same.
