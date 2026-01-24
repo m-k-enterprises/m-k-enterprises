@@ -2,16 +2,6 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import App from './App';
 
-// Mock React to bypass lazy loading and Suspense
-jest.mock('react', () => {
-  const originalReact = jest.requireActual('react');
-  return {
-    ...originalReact,
-    // Replace lazy with a function that returns a simple component synchronously
-    lazy: () => () => <div>MockedRoute</div>,
-  };
-});
-
 // Mock the clients module
 jest.mock('./clients', () => {
   return {
