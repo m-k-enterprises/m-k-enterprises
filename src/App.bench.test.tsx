@@ -55,6 +55,10 @@ describe('App performance benchmark', () => {
     mockUseQuery.mockClear();
   });
 
+  // Note: These tests run without React.StrictMode.
+  // If StrictMode were enabled, expected call counts would be doubled (8 and 16).
+  // We use standard rendering to ensure deterministic baselines.
+
   test('App renders efficiently when data is cached (immediate load)', () => {
     // Setup mock to return loaded data immediately
     // This simulates a "hot cache" scenario where data is available on the first render.
