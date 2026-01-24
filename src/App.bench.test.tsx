@@ -2,6 +2,16 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import App from './App';
 
+// Mock React to bypass lazy loading and Suspense
+jest.mock('react', () => {
+  const originalReact = jest.requireActual('react');
+  return {
+    ...originalReact,
+    // Replace lazy with a function that returns a simple component synchronously
+    lazy: () => () => <div>MockedRoute</div>,
+  };
+});
+
 // Mock the clients module
 jest.mock('./clients', () => {
   return {
@@ -13,16 +23,6 @@ jest.mock('./clients', () => {
     }
   };
 });
-
-// Mock lazy loaded routes to remove Suspense jitter and make render counts deterministic
-jest.mock('./routes/Home', () => () => <div data-testid="home">Home</div>);
-jest.mock('./routes/About', () => () => <div>About</div>);
-jest.mock('./routes/Brands', () => () => <div>Brands</div>);
-jest.mock('./routes/News', () => () => <div>News</div>);
-jest.mock('./routes/Responsibility', () => () => <div>Responsibility</div>);
-jest.mock('./routes/Contact', () => () => <div>Contact</div>);
-jest.mock('./routes/PrivacyPolicy', () => () => <div>PrivacyPolicy</div>);
-jest.mock('./routes/Links', () => () => <div>Links</div>);
 
 const mockUseQuery = jest.fn();
 
@@ -50,7 +50,7 @@ const mockData = {
 
 describe('App performance benchmark', () => {
   beforeEach(() => {
-    mockUseQuery.mockReset();
+    mockUseQuery.mockClear();
   });
 
   test('App renders efficiently when data is cached (immediate load)', () => {
@@ -64,9 +64,9 @@ describe('App performance benchmark', () => {
 
     render(<App />);
 
-    // Optimized implementation:
-    // 1. Initial Render (Data loaded immediately)
-    // Derived state calculated during render. No useEffect setting state -> No re-render.
+    // Optimized implementation with bypassed Suspense:
+    // 1. Initial Render (Data loaded immediately) -> Render App -> Render Route (Sync).
+    // Derived state calculated during render.
     // Expect 1 render. 4 queries per render.
     // So 4 calls to useQuery.
     expect(mockUseQuery).toHaveBeenCalledTimes(4);
@@ -96,19 +96,12 @@ describe('App performance benchmark', () => {
     // In a real app, Apollo would trigger this. Here we manually trigger the next render phase.
     rerender(<App />);
 
-    // Counts with Mocks (Deterministic):
+    // Counts with Bypassed Suspense (Deterministic):
     // 1. Initial Render (Loading): 4 calls.
     // 2. Rerender (Loaded): 4 calls.
     // Total: 8 calls.
+    // Note: Without Suspense, we avoid intermediate renders, so 8 is the hard limit for a perfect single-pass update.
 
-    // In an unoptimized scenario (with useEffect setState):
-    // 1. Initial Render (Loading) -> 4 calls.
-    // 2. Effect sets loading -> Render (Loading) -> 4 calls.
-    // 3. Rerender (Loaded) -> 4 calls.
-    // 4. Effect sets data -> Render (Loaded) -> 4 calls.
-    // Total would be 16 calls.
-
-    // We confirm that we are observing the optimized behavior (8 calls).
     expect(mockUseQuery).toHaveBeenCalledTimes(8);
   });
 });
