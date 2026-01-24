@@ -9,7 +9,7 @@ Tech stack: **Create React App**, React-Router, Apollo Client (Shopify Storefron
 
 | Step | Command |
 |------|---------|
-| Install deps | `yarn install` or `npm install` |
+| Install deps | `yarn install` (preferred; keep `yarn.lock` authoritative) |
 | Start dev server | `yarn start` → http://localhost:3000 (hot-reload) |
 | Run tests | `yarn test` (React Testing Library + Jest, watch mode) |
 | Lint (optional) | `yarn lint` |
@@ -75,6 +75,7 @@ public/
 ### 🤖 Agent Notes
 
 - Put new page components in `src/routes/` and export them from `index.ts` re-export barrel.  
-- Add env secrets (if ever required) via `.env` *before* running `yarn start`; CRA auto-loads `REACT_APP_*` vars.
+- Add env secrets via `.env` (local) or CI secrets before running `yarn start`; CRA auto-loads `REACT_APP_*` vars.
+- Never log Shopify tokens; keep disabled brands (Sizzle & Soak, Aura & Essence) out of routes and API calls.
 
 Happy shipping!

@@ -18,6 +18,13 @@ REACT_APP_SHOPIFY_TOKEN_MYTHICAL_MOODS=<token>
 # REACT_APP_SHOPIFY_TOKEN_AURA_ESSENCE=<token> # optional, currently disabled
 ```
 
+**Secrets hygiene**: never log or surface Shopify tokens in UI. Tokens live only
+in `.env` (local) or CI secret stores (pipeline); `.env.example` must contain
+placeholders only. CI should inject `REACT_APP_*` values via encrypted secrets.
+
+**Brand matrix**: Bear Belts, Pocket Bears Apparel, and Mythical Moods are
+active. Sizzle & Soak and Aura & Essence are disabled (no UI routes or calls).
+
 ## Available Scripts
 
 In the project directory, you can run:
