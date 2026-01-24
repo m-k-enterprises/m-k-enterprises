@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Container, Image as Img, Nav, Navbar, Spinner } from 'react-bootstrap';
 import { loader } from 'graphql.macro';
-import { useQuery } from '@apollo/client';
+import { ApolloError, useQuery } from '@apollo/client';
 import { Block } from '@smolpack/react-bootstrap-extensions';
 
 import { clients } from './clients';
@@ -92,43 +92,55 @@ function App() {
   const queryMythicalMoods = useQuery<StorefrontData>(storefrontQuery, { client: clients.mythicalMoods });
   const queryAuraEssence = useQuery<StorefrontData>(storefrontQuery, { client: clients.auraEssence });
 
-  const queries = [queryBearBelts, queryPocketBearsApparel, queryMythicalMoods, queryAuraEssence];
+  const queries = [
+    queryBearBelts,
+    queryPocketBearsApparel,
+    queryMythicalMoods,
+    queryAuraEssence,
+  ];
 
-  const [loading, setLoading] = React.useState(true);
-  const [error, setError] = React.useState(false);
-  const [shops, setShops] = React.useState<Shop[]>([]);
-  const [articles, setArticles] = React.useState<Article[]>([]);
+  const loading = queries.some((query) => query.loading);
+  const error = queries.some((query) => query.error);
 
-  React.useEffect(() => {
-    setLoading(queries.some((query) => query.loading));
-  },
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  queries.map((query) => query.loading));
-
-  React.useEffect(() => {
-    const hasError = queries.some((query) => query.error);
-
-    if (hasError) {
-      queries.forEach((query) => {
-        if (query.error) {
-          console.error(query.error);
-        }
-      });
-    }
-    setError(hasError);
-  },
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  queries.map((query) => query.error));
+  const prevErrorsRef = React.useRef<(ApolloError | undefined)[]>([]);
 
   React.useEffect(() => {
+    const prevErrors = prevErrorsRef.current;
+    const errors = [
+      queryBearBelts.error,
+      queryPocketBearsApparel.error,
+      queryMythicalMoods.error,
+      queryAuraEssence.error,
+    ];
+
+    errors.forEach((err, index) => {
+      if (err && err !== prevErrors[index]) {
+        console.error(err);
+      }
+    });
+
+    prevErrorsRef.current = errors;
+  }, [queryBearBelts.error, queryPocketBearsApparel.error, queryMythicalMoods.error, queryAuraEssence.error]);
+
+  // Memoize derived data keyed off the query data values to ensure stability and purity.
+  // This avoids re-sorting when loading/error changes but data remains the same.
+  const { shops, articles } = React.useMemo(() => {
     const shopData: Shop[] = [];
     let articlesData: Article[] = [];
 
-    queries.forEach((query) => {
-      if (query.data) {
-        shopData.push(query.data.shop);
-        if (query.data.articles.nodes) {
-          articlesData.push(...query.data.articles.nodes);
+    // Construct the data list inside the memo to keep dependencies explicit and safe
+    const dataList = [
+      queryBearBelts.data,
+      queryPocketBearsApparel.data,
+      queryMythicalMoods.data,
+      queryAuraEssence.data
+    ];
+
+    dataList.forEach((data) => {
+      if (data) {
+        shopData.push(data.shop);
+        if (data.articles.nodes) {
+          articlesData.push(...data.articles.nodes);
         }
       }
     });
@@ -140,11 +152,8 @@ function App() {
       return bTime - aTime;
     });
 
-    setShops(shopData);
-    setArticles(articlesData);
-  },
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  queries.map((query) => query.data));
+    return { shops: shopData, articles: articlesData };
+  }, [queryBearBelts.data, queryPocketBearsApparel.data, queryMythicalMoods.data, queryAuraEssence.data]);
 
   const now = new Date();
 
