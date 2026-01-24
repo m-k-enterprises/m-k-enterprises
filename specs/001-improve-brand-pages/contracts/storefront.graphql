@@ -1,0 +1,77 @@
+# Storefront contract for brand + articles
+
+schema {
+  query: Query
+}
+
+type Query {
+  shop: Shop!
+  articles(first: Int!): ArticleConnection!
+}
+
+type Shop {
+  id: ID!
+  name: String!
+  primaryDomain: Domain!
+  shipsToCountries: [String!]!
+  brand: Brand
+}
+
+type Domain {
+  url: String!
+}
+
+type Brand {
+  shortDescription: String
+  colors: BrandColors!
+  logo: BrandLogo
+  coverImage: BrandImage
+}
+
+type BrandColors {
+  primary: [BrandColor!]!
+}
+
+type BrandColor {
+  background: String!
+  foreground: String!
+}
+
+type BrandLogo {
+  image: BrandLogoImage
+}
+
+type BrandLogoImage {
+  url: String
+  logoUrl: String
+  altText: String
+  width: Int
+  height: Int
+}
+
+type BrandImage {
+  image: BrandCoverImage
+}
+
+type BrandCoverImage {
+  url: String
+  carouselUrl: String
+}
+
+type ArticleConnection {
+  nodes: [Article!]!
+}
+
+type Article {
+  id: ID!
+  title: String!
+  handle: String!
+  excerpt: String
+  publishedAt: String!
+  image: ArticleImage
+}
+
+type ArticleImage {
+  url: String
+  altText: String
+}
