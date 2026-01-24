@@ -117,24 +117,18 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [queries]);
 
-  // Manual memoization for data aggregation to avoid re-sorting when only loading/error changes
-  // while keeping 'queries' as the single source of truth.
-  const prevDataRef = React.useRef<(StorefrontData | undefined)[]>([]);
-  const prevResultRef = React.useRef<{ shops: Shop[], articles: Article[] }>({ shops: [], articles: [] });
-
-  const currentDataList = queries.map((q) => q.data);
-  const isDataChanged = currentDataList.length !== prevDataRef.current.length ||
-    currentDataList.some((data, i) => data !== prevDataRef.current[i]);
-
-  if (isDataChanged) {
+  // Memoize derived data keyed off the query data values to ensure stability and purity.
+  // This avoids re-sorting when loading/error changes but data remains the same.
+  const queryData = queries.map((q) => q.data);
+  const { shops, articles } = React.useMemo(() => {
     const shopData: Shop[] = [];
     let articlesData: Article[] = [];
 
-    queries.forEach((query) => {
-      if (query.data) {
-        shopData.push(query.data.shop);
-        if (query.data.articles.nodes) {
-          articlesData.push(...query.data.articles.nodes);
+    queryData.forEach((data) => {
+      if (data) {
+        shopData.push(data.shop);
+        if (data.articles.nodes) {
+          articlesData.push(...data.articles.nodes);
         }
       }
     });
@@ -146,11 +140,9 @@ function App() {
       return bTime - aTime;
     });
 
-    prevResultRef.current = { shops: shopData, articles: articlesData };
-    prevDataRef.current = currentDataList;
-  }
-
-  const { shops, articles } = prevResultRef.current;
+    return { shops: shopData, articles: articlesData };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, queryData);
 
   const now = new Date();
 
