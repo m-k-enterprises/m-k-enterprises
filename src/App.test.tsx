@@ -18,7 +18,7 @@ jest.mock('./clients', () => {
       bearBelts: createMockClient(),
       pocketBearsApparel: createMockClient(),
       mythicalMoods: createMockClient(),
-      auraEssence: createMockClient(),
+      // auraEssence: createMockClient(),
     }
   };
 });

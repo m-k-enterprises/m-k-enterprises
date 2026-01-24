@@ -21,7 +21,7 @@ jest.mock('./clients', () => {
       bearBelts: {},
       pocketBearsApparel: {},
       mythicalMoods: {},
-      auraEssence: {},
+      // auraEssence: {},
     }
   };
 });

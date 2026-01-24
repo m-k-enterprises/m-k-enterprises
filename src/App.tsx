@@ -90,13 +90,13 @@ function App() {
   const queryBearBelts = useQuery<StorefrontData>(storefrontQuery, { client: clients.bearBelts });
   const queryPocketBearsApparel = useQuery<StorefrontData>(storefrontQuery, { client: clients.pocketBearsApparel });
   const queryMythicalMoods = useQuery<StorefrontData>(storefrontQuery, { client: clients.mythicalMoods });
-  const queryAuraEssence = useQuery<StorefrontData>(storefrontQuery, { client: clients.auraEssence });
+  // const queryAuraEssence = useQuery<StorefrontData>(storefrontQuery, { client: clients.auraEssence });
 
   const queries = [
     queryBearBelts,
     queryPocketBearsApparel,
     queryMythicalMoods,
-    queryAuraEssence,
+    // queryAuraEssence,
   ];
 
   const loading = queries.some((query) => query.loading);
@@ -110,7 +110,7 @@ function App() {
       queryBearBelts.error,
       queryPocketBearsApparel.error,
       queryMythicalMoods.error,
-      queryAuraEssence.error,
+      // queryAuraEssence.error,
     ];
 
     errors.forEach((err, index) => {
@@ -120,7 +120,12 @@ function App() {
     });
 
     prevErrorsRef.current = errors;
-  }, [queryBearBelts.error, queryPocketBearsApparel.error, queryMythicalMoods.error, queryAuraEssence.error]);
+  }, [
+    queryBearBelts.error,
+    queryPocketBearsApparel.error,
+    queryMythicalMoods.error,
+    // queryAuraEssence.error
+  ]);
 
   // Memoize derived data keyed off the query data values to ensure stability and purity.
   // This avoids re-sorting when loading/error changes but data remains the same.
@@ -133,7 +138,7 @@ function App() {
       queryBearBelts.data,
       queryPocketBearsApparel.data,
       queryMythicalMoods.data,
-      queryAuraEssence.data
+      // queryAuraEssence.data
     ];
 
     dataList.forEach((data) => {
@@ -153,7 +158,12 @@ function App() {
     });
 
     return { shops: shopData, articles: articlesData };
-  }, [queryBearBelts.data, queryPocketBearsApparel.data, queryMythicalMoods.data, queryAuraEssence.data]);
+  }, [
+    queryBearBelts.data,
+    queryPocketBearsApparel.data,
+    queryMythicalMoods.data,
+    // queryAuraEssence.data
+  ]);
 
   const now = new Date();
 

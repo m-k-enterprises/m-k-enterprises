@@ -25,15 +25,16 @@ const clientOptions: Record<string, ClientOptions> = {
     uri: 'mythical-moods',
     shopifyStorefrontAccessToken: requireEnvVar('REACT_APP_SHOPIFY_TOKEN_MYTHICAL_MOODS')
   },
-  auraEssence: {
-    uri: 'aura-and-essence',
-    shopifyStorefrontAccessToken: requireEnvVar('REACT_APP_SHOPIFY_TOKEN_AURA_ESSENCE')
-  },
   // sizzleSoak temporarily disabled
   // sizzleSoak: {
   //   uri: 'sizzle-soak',
   //   shopifyStorefrontAccessToken: requireEnvVar('REACT_APP_SHOPIFY_TOKEN_SIZZLE_SOAK'),
-  // }
+  // },
+  // auraEssence temporarily disabled
+  // auraEssence: {
+  //   uri: 'aura-and-essence',
+  //   shopifyStorefrontAccessToken: requireEnvVar('REACT_APP_SHOPIFY_TOKEN_AURA_ESSENCE')
+  // },
 };
 
 function newClient(options: ClientOptions) {
@@ -53,6 +54,6 @@ export const clients = {
   bearBelts: newClient(clientOptions.bearBelts),
   pocketBearsApparel: newClient(clientOptions.pocketBearsApparel),
   mythicalMoods: newClient(clientOptions.mythicalMoods),
-  auraEssence: newClient(clientOptions.auraEssence),
   // sizzleSoak: newClient(clientOptions.sizzleSoak),
+  // auraEssence: newClient(clientOptions.auraEssence),
 };
