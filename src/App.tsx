@@ -141,8 +141,12 @@ function App() {
     });
 
     return { shops: shopData, articles: articlesData };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, queryData);
+  }, [
+    queries[0]?.data,
+    queries[1]?.data,
+    queries[2]?.data,
+    queries[3]?.data,
+  ]);
 
   const now = new Date();
 
