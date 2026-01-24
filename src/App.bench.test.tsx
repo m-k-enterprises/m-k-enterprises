@@ -59,7 +59,7 @@ describe('App performance benchmark', () => {
   // If StrictMode were enabled, expected call counts would be doubled (8 and 16).
   // We use standard rendering to ensure deterministic baselines.
 
-  test('App renders efficiently when data is cached (immediate load)', () => {
+  test('App renders exactly once when data is cached (Hot Cache Optimization)', () => {
     // Setup mock to return loaded data immediately
     // This simulates a "hot cache" scenario where data is available on the first render.
     mockUseQuery.mockReturnValue({
@@ -73,12 +73,18 @@ describe('App performance benchmark', () => {
     // Optimized implementation with bypassed Suspense:
     // 1. Initial Render (Data loaded immediately) -> Render App -> Render Route (Sync).
     // Derived state calculated during render.
-    // Expect 1 render. 4 queries per render.
-    // So 4 calls to useQuery.
+
+    // Baseline (Unoptimized):
+    // 1. Initial Render.
+    // 2. Effect runs -> Sets state -> Re-render.
+    // Total: 2 renders (8 calls).
+
+    // Optimized Result:
+    // Total: 1 render (4 calls).
     expect(mockUseQuery).toHaveBeenCalledTimes(4);
   });
 
-  test('App renders efficiently during data loading transition', () => {
+  test('App renders exactly twice during loading sequence (Render Loop Optimization)', () => {
     // 1. Setup mock for INITIAL render (Loading state)
     // We expect 4 queries, so we mock the first 4 calls to return loading.
     mockUseQuery.mockReturnValueOnce({ loading: true, error: undefined, data: undefined }); // query 1
@@ -102,12 +108,18 @@ describe('App performance benchmark', () => {
     // In a real app, Apollo would trigger this. Here we manually trigger the next render phase.
     rerender(<App />);
 
-    // Counts with Bypassed Suspense (Deterministic):
-    // 1. Initial Render (Loading): 4 calls.
-    // 2. Rerender (Loaded): 4 calls.
-    // Total: 8 calls.
-    // Note: By mocking Suspense as a fragment, we ensure no intermediate renders occur.
+    // Optimized:
+    // 1. Initial Render (Loading).
+    // 2. Rerender (Loaded). Derived state computed immediately.
+    // Total: 2 renders (8 calls).
 
+    // Baseline (Unoptimized):
+    // 1. Initial Render (Loading).
+    // 2. Rerender (Loaded).
+    // 3. Effect runs -> Sets state -> Re-render.
+    // Total: 3 renders (12 calls).
+
+    // Note: By mocking Suspense as a fragment, we ensure no intermediate renders occur.
     expect(mockUseQuery).toHaveBeenCalledTimes(8);
   });
 });
