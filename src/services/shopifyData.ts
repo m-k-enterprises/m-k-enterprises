@@ -111,7 +111,7 @@ function withTimeout<T>(promise: Promise<T>, timeoutMs: number, context?: string
  * - If the timeout elapses first, the returned Promise rejects with a timeout
  *   `Error` created by this helper.
  *
- * @param clientKey - Brand identifier used to select the Shopify client.
+ * @param clientKey - BrandKey identifier used to select the Shopify client.
  * @param options - Optional cache control settings.
  * @returns The storefront data for the requested brand.
  */
