@@ -5,6 +5,8 @@ interface PageMetadata {
   description: string;
 }
 
+const SITE_NAME = 'M-K Enterprises';
+
 /**
  * React hook that synchronizes the page's metadata with the provided values.
  *
@@ -19,7 +21,7 @@ export default function usePageMetadata({ title, description }: PageMetadata) {
   const lastMetadata = useRef<{ title: string; description: string } | null>(null);
 
   useEffect(() => {
-    const nextTitle = `M-K Enterprises | ${title}`;
+    const nextTitle = `${SITE_NAME} | ${title}`;
     const previous = lastMetadata.current;
 
     if (!previous || previous.title !== nextTitle) {
