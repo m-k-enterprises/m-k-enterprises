@@ -10,14 +10,14 @@
       slogan
       shortDescription
       # Image URLs:
-      # - originalUrl: unmodified, source image
+      # - url: unmodified, source image
       # - displayUrl: resized/optimized image for UI use (2880px supports 4K/retina layouts)
       # - width/height: dimensions of the returned image after transforms
       # We keep both to avoid repeated transforms in the UI and to preserve access to originals when needed.
       logo {
         image {
           altText
-          originalUrl: url
+          url
           displayUrl: url(transform: {maxWidth: 2880})
           width
           height
@@ -29,7 +29,7 @@
       squareLogo {
         image {
           altText
-          originalUrl: url
+          url
           displayUrl: url(transform: {maxWidth: 2880})
           width
           height
@@ -44,7 +44,7 @@
       coverImage {
         image {
           altText
-          originalUrl: url
+          url
           heroUrl: url(transform: {crop: CENTER, maxWidth: 5760, maxHeight: 3240})
           width
           height
@@ -62,7 +62,7 @@
       excerptHtml
       image {
         altText
-        originalUrl: url
+        url
         cardImageUrl: url(transform: {crop: CENTER, maxWidth: 1920, maxHeight: 1080})
         width
         height

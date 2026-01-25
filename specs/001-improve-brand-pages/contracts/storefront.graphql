@@ -43,7 +43,7 @@ type BrandLogo {
 }
 
 type BrandLogoImage {
-  originalUrl: String
+  url: String
   displayUrl: String
   altText: String
   width: Int
@@ -55,7 +55,7 @@ type BrandImage {
 }
 
 type BrandCoverImage {
-  originalUrl: String
+  url: String
   heroUrl: String
 }
 
@@ -73,7 +73,7 @@ type Article {
 }
 
 type ArticleImage {
-  originalUrl: String
+  url: String
   cardImageUrl: String
   altText: String
 }
