@@ -20,11 +20,16 @@ const CACHE_TTL_MS = CACHE_TTL_MINUTES * 60 * 1000;
 const cache = new Map<string, { data: StorefrontData; expiresAt: number }>();
 const inflight = new Map<string, Promise<StorefrontData>>();
 
-if (process.env.NODE_ENV === 'development' && typeof module !== 'undefined' && module?.hot) {
-  module.hot.dispose(() => {
-    cache.clear();
-    inflight.clear();
-  });
+if (process.env.NODE_ENV === 'development') {
+  // Reset in-memory caches on Webpack/Cra hot reloads so each fresh dev bundle
+  // starts from a clean state. `module.hot` is injected only in development builds.
+  const hot = (module as any).hot;
+  if (hot) {
+    hot.dispose(() => {
+      cache.clear();
+      inflight.clear();
+    });
+  }
 }
 
 function getClient(clientKey: BrandKey): ApolloClient<NormalizedCacheObject> {
@@ -35,10 +40,11 @@ function getCacheKey(clientKey: BrandKey): string {
   return `storefront:${clientKey}`;
 }
 
-function withTimeout<T>(promise: Promise<T>, timeoutMs: number): Promise<T> {
+function withTimeout<T>(promise: Promise<T>, timeoutMs: number, context?: string): Promise<T> {
   return new Promise((resolve, reject) => {
     const timeoutId = setTimeout(() => {
-      reject(new Error('Shopify request timed out'));
+      const suffix = context ? ` (${context})` : '';
+      reject(new Error(`Shopify request timed out${suffix}`));
     }, timeoutMs);
 
     promise
@@ -75,7 +81,8 @@ export async function fetchStorefrontData(
       query: storefrontQuery,
       fetchPolicy: 'network-only',
     }).then((result) => result.data),
-    TIMEOUT_MS
+    TIMEOUT_MS,
+    `client: ${clientKey}`
   ).then((data) => {
     cache.set(cacheKey, {
       data,
