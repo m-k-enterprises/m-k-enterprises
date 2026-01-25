@@ -76,6 +76,15 @@ function withTimeout<T>(promise: Promise<T>, timeoutMs: number, context?: string
   });
 }
 
+function toError(error: unknown, context: string): Error {
+  if (error instanceof Error) {
+    return error;
+  }
+
+  const details = typeof error === 'string' ? error : JSON.stringify(error);
+  return new Error(`${context}: ${details || 'Unknown error'}`);
+}
+
 /**
  * Fetch Shopify storefront data for the given brand.
  *
@@ -183,7 +192,7 @@ export function useStorefrontData(clientKey: BrandKey): StorefrontResponse {
         const data = await fetchStorefrontData(clientKey, { force });
         setState({ data, error: null, loading: false });
       } catch (error) {
-        setState({ data: null, error: error as Error, loading: false });
+        setState({ data: null, error: toError(error, 'Failed to load storefront data'), loading: false });
       }
     },
     [clientKey]
@@ -203,7 +212,7 @@ export function useStorefrontData(clientKey: BrandKey): StorefrontResponse {
         if (!active) {
           return;
         }
-        setState({ data: null, error: error as Error, loading: false });
+        setState({ data: null, error: toError(error, 'Failed to load storefront data'), loading: false });
       });
 
     return () => {
