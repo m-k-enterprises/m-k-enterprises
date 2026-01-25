@@ -10,7 +10,7 @@
       slogan
       shortDescription
       # Image URLs:
-      # - url: original, unmodified source image (full-resolution; use for exports/reprocessing, not direct UI rendering)
+      # - url: original, unmodified source image (full-resolution; use for exports/reprocessing or archival; avoid direct UI rendering)
       # - displayUrl: transformed/optimized image for UI rendering (maxWidth 2880px; preserves aspect ratio; height scales automatically)
       # - width/height: dimensions of the returned image after transforms
       # We keep both to avoid repeated transforms in the UI while still preserving access to the original source image when needed.
