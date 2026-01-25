@@ -36,3 +36,7 @@ Implement homepage brand focus, shared layout and status messaging, and SEO meta
 - **Tests**: `CI=true yarn test --watchAll=false` passed; React Suspense act warning observed in `App.test.tsx`.
 - **Build**: `yarn build` completed; Browserslist and TypeScript parser warnings observed.
 - **Bundle analysis**: `npx source-map-explorer 'build/static/js/*.js' --no-border-checks --json specs/001-improve-brand-pages/bundle-analysis.json` completed with partial map warnings; output saved to `specs/001-improve-brand-pages/bundle-analysis.json`.
+- **Keyboard/ARIA review**: Checked updated routes for native interactive elements (buttons/links), navbar toggle has aria-controls, status spinners include visually-hidden text. No blockers found.
+- **QA click path**: Homepage brand tiles link directly to external storefronts (≤2 clicks from homepage).
+- **QA route map**: Verified routes in `src/App.tsx` match existing paths: `/`, `/about`, `/brands`, `/news`, `/responsibility`, `/contact`, `/links`, `/privacy-policy`.
+- **QA URL paths**: Confirmed no changes to top-level URL paths (same set as route map).
