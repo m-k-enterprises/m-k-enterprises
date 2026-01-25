@@ -20,18 +20,15 @@ const CACHE_TTL_MS = CACHE_TTL_MINUTES * 60 * 1000;
 const cache = new Map<string, { data: StorefrontData; expiresAt: number }>();
 const inflight = new Map<string, Promise<StorefrontData>>();
 
-if (process.env.NODE_ENV === 'development' && typeof module !== 'undefined') {
+if (process.env.NODE_ENV === 'development' && (module as any).hot) {
   // Reset in-memory caches on Webpack/Cra hot reloads so each fresh dev bundle
   // starts from a clean state. `module.hot` is injected only in development builds.
   const hot = (module as any).hot;
-  if (hot) {
-    hot.dispose(() => {
-      cache.clear();
-      inflight.clear();
-    });
-  }
+  hot.dispose(() => {
+    cache.clear();
+    inflight.clear();
+  });
 }
-
 function getClient(clientKey: BrandKey): ApolloClient<NormalizedCacheObject> {
   return clients[clientKey];
 }

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 interface PageMetadata {
   title: string;
@@ -6,16 +6,27 @@ interface PageMetadata {
 }
 
 export default function usePageMetadata({ title, description }: PageMetadata) {
-  useEffect(() => {
-    document.title = `M-K Enterprises | ${title}`;
+  const lastMetadata = useRef<{ title: string; description: string } | null>(null);
 
-    let meta = document.querySelector('meta[name="description"]') as HTMLMetaElement | null;
-    if (!meta) {
-      meta = document.createElement('meta');
-      meta.name = 'description';
-      document.head.appendChild(meta);
+  useEffect(() => {
+    const nextTitle = `M-K Enterprises | ${title}`;
+    const previous = lastMetadata.current;
+
+    if (!previous || previous.title !== nextTitle) {
+      document.title = nextTitle;
     }
 
-    meta.content = description;
+    if (!previous || previous.description !== description) {
+      let meta = document.querySelector('meta[name="description"]') as HTMLMetaElement | null;
+      if (!meta) {
+        meta = document.createElement('meta');
+        meta.name = 'description';
+        document.head.appendChild(meta);
+      }
+
+      meta.content = description;
+    }
+
+    lastMetadata.current = { title: nextTitle, description };
   }, [title, description]);
 }
