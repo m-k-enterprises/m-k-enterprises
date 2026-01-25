@@ -50,6 +50,7 @@ export interface Brand {
   slogan?: string;
   shortDescription?: string;
   colors: BrandColors;
+  // `logo` and `squareLogo` share the same structure, differing only by aspect ratio.
   logo?: BrandLogo;
   squareLogo?: BrandLogo;
   coverImage?: BrandImage;
