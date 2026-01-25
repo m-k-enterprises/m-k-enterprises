@@ -18,6 +18,7 @@
           height
         }
       }
+      # Square variant of the brand logo for contexts that require a square asset (e.g. avatars, icons); use `logo` by default elsewhere.
       squareLogo {
         image {
           altText

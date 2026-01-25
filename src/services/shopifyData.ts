@@ -14,6 +14,15 @@ const TIMEOUT_MS = 10 * 1000;
 const cache = new Map<string, { data: StorefrontData; expiresAt: number }>();
 const inflight = new Map<string, Promise<StorefrontData>>();
 
+declare const module: { hot?: { dispose: (cb: () => void) => void } };
+
+if (process.env.NODE_ENV === 'development' && module?.hot) {
+  module.hot.dispose(() => {
+    cache.clear();
+    inflight.clear();
+  });
+}
+
 function getClient(clientKey: BrandKey): ApolloClient<NormalizedCacheObject> {
   return clients[clientKey];
 }
@@ -24,17 +33,17 @@ function getCacheKey(clientKey: BrandKey): string {
 
 function withTimeout<T>(promise: Promise<T>, timeoutMs: number): Promise<T> {
   return new Promise((resolve, reject) => {
-    const timeoutId = window.setTimeout(() => {
+    const timeoutId = setTimeout(() => {
       reject(new Error('Shopify request timed out'));
     }, timeoutMs);
 
     promise
       .then((result) => {
-        window.clearTimeout(timeoutId);
+        clearTimeout(timeoutId);
         resolve(result);
       })
       .catch((error) => {
-        window.clearTimeout(timeoutId);
+        clearTimeout(timeoutId);
         reject(error);
       });
   });
