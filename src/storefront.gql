@@ -12,7 +12,7 @@
       logo {
         image {
           altText
-          # url: original, unmodified source image (full-resolution; use for exports/reprocessing or archival; avoid direct UI rendering)
+          # url: original, full-resolution source image (avoid direct UI rendering; prefer displayUrl)
           url
           # displayUrl: transformed/optimized image for UI rendering (maxWidth 2880px; preserves aspect ratio; height scales automatically)
           displayUrl: url(transform: {maxWidth: 2880})
@@ -25,7 +25,7 @@
       squareLogo {
         image {
           altText
-          # url: original, unmodified source image (full-resolution; use for exports/reprocessing or archival; avoid direct UI rendering)
+          # url: original, full-resolution source image (avoid direct UI rendering; prefer displayUrl)
           url
           # displayUrl: transformed/optimized image for UI rendering (maxWidth 2880px; preserves aspect ratio; height scales automatically)
           displayUrl: url(transform: {maxWidth: 2880})

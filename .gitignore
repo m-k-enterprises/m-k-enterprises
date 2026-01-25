@@ -13,6 +13,10 @@
 
 # misc
 .DS_Store
+Thumbs.db
+*.tmp
+*.swp
+.idea/
 .env
 .env*
 .env.local
