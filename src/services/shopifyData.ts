@@ -63,7 +63,7 @@ function withTimeout<T>(
   onTimeout?: () => void
 ): Promise<T> {
   return new Promise((resolve, reject) => {
-    // Note: the timeout fires after timeoutMs unless the promise settles first and we clear it via clearTimeout(timeoutId).
+    // Enforce a fail-fast deadline for Shopify requests; canceled if the wrapped promise settles first.
     const timeoutId = setTimeout(() => {
       const suffix = context ? ` (${context})` : '';
       onTimeout?.();
@@ -156,7 +156,13 @@ export async function fetchStorefrontData(
     }).then((result) => result.data),
     TIMEOUT_MS,
     `client: ${clientKey}`,
-    controller ? () => controller.abort() : undefined
+    controller
+      ? () => {
+          if (!controller.signal.aborted) {
+            controller.abort();
+          }
+        }
+      : undefined
   );
 
   const requestWithCache = request.then((data) => {
