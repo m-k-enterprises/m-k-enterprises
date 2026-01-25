@@ -9,6 +9,9 @@
     brand {
       slogan
       shortDescription
+      # Image URLs:
+      # - originalUrl: unmodified, source image
+      # - displayUrl: resized/optimized image for UI use
       logo {
         image {
           altText
