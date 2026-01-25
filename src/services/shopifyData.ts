@@ -20,7 +20,7 @@ const CACHE_TTL_MS = CACHE_TTL_MINUTES * 60 * 1000;
 const cache = new Map<string, { data: StorefrontData; expiresAt: number }>();
 const inflight = new Map<string, Promise<StorefrontData>>();
 
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === 'development' && typeof module !== 'undefined') {
   // Reset in-memory caches on Webpack/Cra hot reloads so each fresh dev bundle
   // starts from a clean state. `module.hot` is injected only in development builds.
   const hot = (module as any).hot;
@@ -42,6 +42,7 @@ function getCacheKey(clientKey: BrandKey): string {
 
 function withTimeout<T>(promise: Promise<T>, timeoutMs: number, context?: string): Promise<T> {
   return new Promise((resolve, reject) => {
+    // Note: this timeout only clears when the promise settles; it will fire for long-lived promises.
     const timeoutId = setTimeout(() => {
       const suffix = context ? ` (${context})` : '';
       reject(new Error(`Shopify request timed out${suffix}`));
