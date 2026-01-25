@@ -14,8 +14,6 @@ const TIMEOUT_MS = 10 * 1000;
 const cache = new Map<string, { data: StorefrontData; expiresAt: number }>();
 const inflight = new Map<string, Promise<StorefrontData>>();
 
-declare const module: { hot?: { dispose: (cb: () => void) => void } };
-
 if (process.env.NODE_ENV === 'development' && module?.hot) {
   module.hot.dispose(() => {
     cache.clear();
