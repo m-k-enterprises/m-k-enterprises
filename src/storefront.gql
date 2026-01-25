@@ -12,7 +12,7 @@
       logo {
         image {
           altText
-          originalUrl: url
+          fullSizeUrl: url
           displayUrl: url(transform: {maxWidth: 2880})
           width
           height
@@ -21,7 +21,7 @@
       squareLogo {
         image {
           altText
-          originalUrl: url
+          fullSizeUrl: url
           displayUrl: url(transform: {maxWidth: 2880})
           width
           height
@@ -36,7 +36,7 @@
       coverImage {
         image {
           altText
-          originalUrl: url
+          fullSizeUrl: url
           heroUrl: url(transform: {crop: CENTER, maxWidth: 5760, maxHeight: 3240})
           width
           height
@@ -54,7 +54,7 @@
       excerptHtml
       image {
         altText
-        originalUrl: url
+        fullSizeUrl: url
         newsImageUrl: url(transform: {crop: CENTER, maxWidth: 1920, maxHeight: 1080})
         width
         height

@@ -31,7 +31,7 @@ interface LinkCardProps {
  */
 export default function LinkCard(props: LinkCardProps) {
   const { item } = props;
-  const logoAlt = item.logo?.alt || (item.name ? `${item.name} logo` : `${item.name} logo`);
+  const logoAlt = item.logo?.alt || (item.name ? `${item.name} logo` : `Logo`);
 
   return (
     <Card className="card-link flex-fill text-center" style={{
