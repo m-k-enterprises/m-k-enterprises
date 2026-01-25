@@ -137,23 +137,24 @@ export async function fetchStorefrontData(
   const cacheKey = getCacheKey(clientKey);
   const cached = cache.get(cacheKey);
 
-  if (!options.force && cached && cached.expiresAt > Date.now()) {
-    return cached.data;
-  }
-
   const existing = inflight.get(cacheKey);
   if (existing) {
     return existing;
   }
 
+  if (!options.force && cached && cached.expiresAt > Date.now()) {
+    return cached.data;
+  }
   const client = getClient(clientKey);
   const controller = typeof AbortController !== 'undefined' ? new AbortController() : undefined;
   const request = withTimeout(
-    client.query<StorefrontData>({
-      query: storefrontQuery,
-      fetchPolicy: 'network-only',
-      context: controller ? { fetchOptions: { signal: controller.signal } } : undefined,
-    }).then((result) => result.data),
+    client
+      .query<StorefrontData>({
+        query: storefrontQuery,
+        fetchPolicy: 'no-cache',
+        context: controller ? { fetchOptions: { signal: controller.signal } } : undefined,
+      })
+      .then((result) => result.data),
     TIMEOUT_MS,
     `client: ${clientKey}`,
     controller
@@ -166,15 +167,18 @@ export async function fetchStorefrontData(
   );
 
   const requestWithCache = request.then((data) => {
-    cache.set(cacheKey, {
-      data,
-      expiresAt: Date.now() + CACHE_TTL_MS,
-    });
+    try {
+      cache.set(cacheKey, {
+        data,
+        expiresAt: Date.now() + CACHE_TTL_MS,
+      });
+    } catch {
+      // Ignore cache population errors so they don't affect callers.
+    }
     return data;
   });
 
-  inflight.set(cacheKey, requestWithCache);
-
+  inflight.set(cacheKey, request);
   const requestWithCleanup = requestWithCache.finally(() => {
     inflight.delete(cacheKey);
   });
