@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Card, Col, Placeholder, Ratio } from 'react-bootstrap';
 import random from 'lodash/random';
 import { ArticleProps } from '../App';
+import { getBrandBorderStyle } from './brandStyles';
 
 function Articles(props: ArticleProps) {
   const skeletons = React.useMemo(() => Array.from({ length: 6 }).map(() => ({
@@ -58,10 +59,10 @@ function Articles(props: ArticleProps) {
                 height={article.image?.height}
               />
             </Ratio>
-            <Card.Body className="d-flex flex-column align-items-start"
-              style={{
-                borderColor: article.brand?.colors.primary[0].background ? `${article.brand.colors.primary[0].background}` : undefined,
-              }}>
+            <Card.Body
+              className="d-flex flex-column align-items-start"
+              style={getBrandBorderStyle(article.brand)}
+            >
               <Card.Title>{article.title}</Card.Title>
               <Card.Text>{article.excerpt || ''}</Card.Text>
               <Button

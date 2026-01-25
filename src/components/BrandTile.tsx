@@ -1,15 +1,16 @@
 import React from 'react';
 import { Button, Card, Image } from 'react-bootstrap';
 import { Shop } from '../App';
+import { getBrandBorderStyle } from './brandStyles';
 
 interface BrandTileProps {
   shop: Shop;
 }
 
 function BrandTile({ shop }: BrandTileProps) {
-  const brandColor = shop.brand?.colors.primary[0];
   const logoUrl = shop.brand?.squareLogo?.image?.displayUrl;
   const logoAlt = shop.brand?.squareLogo?.image?.altText || `${shop.name} logo`;
+  const borderStyle = getBrandBorderStyle(shop.brand);
 
   return (
     <Card className="card-profile border-0">
@@ -19,9 +20,7 @@ function BrandTile({ shop }: BrandTileProps) {
       }} />
       <Card.Body
         className="d-flex flex-column align-items-start"
-        style={{
-          borderColor: brandColor?.background ? `${brandColor.background}` : undefined,
-        }}
+        style={borderStyle}
       >
         {logoUrl ? (
           <Image src={logoUrl} alt={logoAlt} className="card-profile-img" />
