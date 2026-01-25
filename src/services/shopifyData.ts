@@ -42,7 +42,7 @@ function getCacheKey(clientKey: BrandKey): string {
 
 function withTimeout<T>(promise: Promise<T>, timeoutMs: number, context?: string): Promise<T> {
   return new Promise((resolve, reject) => {
-    // Note: this timeout only clears when the promise settles; it will fire for long-lived promises.
+    // Note: the timeout fires after timeoutMs unless the promise settles first and clears it.
     const timeoutId = setTimeout(() => {
       const suffix = context ? ` (${context})` : '';
       reject(new Error(`Shopify request timed out${suffix}`));
