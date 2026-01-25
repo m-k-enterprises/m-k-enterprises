@@ -23,9 +23,7 @@
           height
         }
       }
-      # Use `squareLogo` when the container has a 1:1 (square) aspect ratio (e.g., avatars, app icons, profile images).
-      # Use `logo` when the container is not 1:1—especially wider than tall (e.g., headers, navigation bars, banners)—and as the default elsewhere.
-      # In short: squareLogo → square containers; logo → non-square containers (preferably wide).
+      # (See logo vs squareLogo guidance above.)
       squareLogo {
         image {
           altText
