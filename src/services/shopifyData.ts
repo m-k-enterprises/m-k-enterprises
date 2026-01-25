@@ -139,18 +139,22 @@ export async function fetchStorefrontData(
     }).then((result) => result.data),
     TIMEOUT_MS,
     `client: ${clientKey}`
-  ).then((data) => {
+  );
+
+  const requestWithCache = request.then((data) => {
     cache.set(cacheKey, {
       data,
       expiresAt: Date.now() + CACHE_TTL_MS,
     });
     return data;
-  }).finally(() => {
+  });
+
+  const requestWithCleanup = requestWithCache.finally(() => {
     inflight.delete(cacheKey);
   });
 
-  inflight.set(cacheKey, request);
-  return request;
+  inflight.set(cacheKey, requestWithCleanup);
+  return requestWithCleanup;
 }
 
 export function clearStorefrontCache(clientKey?: BrandKey) {
