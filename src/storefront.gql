@@ -13,6 +13,7 @@
       # - originalUrl: unmodified, source image
       # - displayUrl: resized/optimized image for UI use
       # - width/height: dimensions of the returned image after transforms
+      # We keep both to avoid repeated transforms in the UI and to preserve access to originals when needed.
       logo {
         image {
           altText
