@@ -25,6 +25,7 @@
       }
       # Use `squareLogo` for square-aspect-ratio contexts (e.g., avatars, app icons, profile images).
       # Use `logo` for rectangular or flexible-aspect contexts (e.g., headers, navigation bars, banners) and as the default elsewhere.
+      # squareLogo: preferred for square containers; logo: preferred for wide containers.
       squareLogo {
         image {
           altText
