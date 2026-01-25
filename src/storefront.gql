@@ -11,7 +11,7 @@
       shortDescription
       # Image URLs:
       # - originalUrl: unmodified, source image
-      # - displayUrl: resized/optimized image for UI use
+      # - displayUrl: resized/optimized image for UI use (2880px supports 4K/retina layouts)
       # - width/height: dimensions of the returned image after transforms
       # We keep both to avoid repeated transforms in the UI and to preserve access to originals when needed.
       logo {
