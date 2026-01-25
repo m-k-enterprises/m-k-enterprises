@@ -25,6 +25,7 @@ type Brand {
   shortDescription: String
   colors: BrandColors!
   logo: BrandLogo
+  squareLogo: BrandLogo
   coverImage: BrandImage
 }
 
@@ -42,8 +43,8 @@ type BrandLogo {
 }
 
 type BrandLogoImage {
-  url: String
-  logoUrl: String
+  originalUrl: String
+  displayUrl: String
   altText: String
   width: Int
   height: Int
@@ -54,8 +55,8 @@ type BrandImage {
 }
 
 type BrandCoverImage {
-  url: String
-  carouselUrl: String
+  originalUrl: String
+  heroUrl: String
 }
 
 type ArticleConnection {
@@ -72,6 +73,7 @@ type Article {
 }
 
 type ArticleImage {
-  url: String
+  originalUrl: String
+  newsImageUrl: String
   altText: String
 }
