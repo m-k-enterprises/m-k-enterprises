@@ -25,7 +25,7 @@ interface WebpackHotModule {
   };
 }
 
-function hasWebpackHotModuleInterface(value: unknown): value is WebpackHotModule {
+function hasHotModule(value: unknown): value is WebpackHotModule {
   return (
     typeof value === 'object' &&
     value !== null &&
@@ -37,7 +37,7 @@ function hasWebpackHotModuleInterface(value: unknown): value is WebpackHotModule
 if (
   process.env.NODE_ENV === 'development' &&
   typeof module !== 'undefined' &&
-  hasWebpackHotModuleInterface(module) &&
+  hasHotModule(module) &&
   module.hot
 ) {
   // Reset in-memory caches on Webpack/Cra hot reloads so each fresh dev bundle
