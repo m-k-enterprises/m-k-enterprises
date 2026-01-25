@@ -23,6 +23,7 @@ function Home(props: HomeProps) {
   const hasArticles = props.articles.length > 0;
   const brandStatus = props.loading ? 'loading' : props.error ? 'error' : !hasBrands ? 'empty' : 'ready';
   const newsStatus = props.loading ? 'loading' : props.error ? 'error' : !hasArticles ? 'empty' : 'ready';
+  const brandGridColumns = props.shops.length % 2 === 0 ? 2 : 3;
 
   return (
     <>
@@ -66,7 +67,7 @@ function Home(props: HomeProps) {
         <Container>
           <h2>Our Brands</h2>
           {brandStatus === 'loading' ? (
-            <Row className="g-3" xs={1} md={props.shops.length % 2 === 0 ? 2 : 3}>
+            <Row className="g-3" xs={1} md={brandGridColumns}>
               {Array.from({ length: 3 }).map((_, i) => (
                 <Col key={i} className="text-center">
                   <Spinner animation="border" role="status">
@@ -76,7 +77,7 @@ function Home(props: HomeProps) {
               ))}
             </Row>
           ) : brandStatus === 'ready' || hasBrands ? (
-            <Row className="g-3" xs={1} md={props.shops.length % 2 === 0 ? 2 : 3} data-testid="brand-tiles">
+            <Row className="g-3" xs={1} md={brandGridColumns} data-testid="brand-tiles">
               {props.shops.map((shop) => (
                 <Col key={shop.id}>
                   <BrandTile shop={shop} />

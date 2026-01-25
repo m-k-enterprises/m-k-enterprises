@@ -17,7 +17,8 @@
 
 - [x] CHK004 Brand pages and homepage surface only the three active brands (Bear Belts, Pocket Bears Apparel, Mythical Moods)
 	- Evidence (2026-01-25): `activeBrands` lists only the three active brands; `App.tsx` and `Home.tsx` render data from those three queries; `Brands.tsx` filters display to `activeBrands`.
-- [ ] CHK005 No UI routes, navigation links, or API calls reference disabled brands (Sizzle & Soak, Aura & Essence)
+- [x] CHK005 No UI routes, navigation links, or API calls reference disabled brands (Sizzle & Soak, Aura & Essence)
+	- Evidence (2026-01-25): verified that no routes, navigation links, or API calls reference Sizzle & Soak or Aura & Essence.
 
 ## Shopify Data UX States
 

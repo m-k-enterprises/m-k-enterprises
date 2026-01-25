@@ -8,7 +8,13 @@ import { BrandKey } from './brandConfig';
 
 const storefrontQuery = loader('../storefront.gql');
 
-const CACHE_TTL_MS = 2 * 60 * 1000;
+// Cache Shopify storefront responses for a short period to reduce network and API load
+// 10s network timeout for Shopify storefront requests: long enough for typical responses,
+// but short enough to fail fast and surface errors promptly in the UI.
+const TIMEOUT_MS = 10 * 1000;
+
+const cache = new Map<string, { data: StorefrontData; expiresAt: number }>>();
+const CACHE_TTL_MS = CACHE_TTL_MINUTES * 60 * 1000;
 const TIMEOUT_MS = 10 * 1000;
 
 const cache = new Map<string, { data: StorefrontData; expiresAt: number }>();

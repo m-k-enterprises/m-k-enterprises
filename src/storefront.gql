@@ -18,7 +18,8 @@
           height
         }
       }
-      # Square variant of the brand logo for contexts that require a square asset (e.g. avatars, icons); use `logo` by default elsewhere.
+      # Use `squareLogo` for square-aspect-ratio contexts (e.g., avatars, app icons, profile images).
+      # Use `logo` for rectangular or flexible-aspect contexts (e.g., headers, navigation bars, banners) and as the default elsewhere.
       squareLogo {
         image {
           altText
