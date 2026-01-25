@@ -20,7 +20,7 @@ const CACHE_TTL_MS = CACHE_TTL_MINUTES * 60 * 1000;
 const cache = new Map<string, { data: StorefrontData; expiresAt: number }>();
 const inflight = new Map<string, Promise<StorefrontData>>();
 
-if (process.env.NODE_ENV === 'development' && module?.hot) {
+if (process.env.NODE_ENV === 'development' && typeof module !== 'undefined' && module?.hot) {
   module.hot.dispose(() => {
     cache.clear();
     inflight.clear();
