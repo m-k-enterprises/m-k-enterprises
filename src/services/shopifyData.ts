@@ -56,11 +56,17 @@ function getCacheKey(clientKey: BrandKey): string {
   return `storefront:${clientKey}`;
 }
 
-function withTimeout<T>(promise: Promise<T>, timeoutMs: number, context?: string): Promise<T> {
+function withTimeout<T>(
+  promise: Promise<T>,
+  timeoutMs: number,
+  context?: string,
+  onTimeout?: () => void
+): Promise<T> {
   return new Promise((resolve, reject) => {
     // Note: the timeout fires after timeoutMs unless the promise settles first and we clear it via clearTimeout(timeoutId).
     const timeoutId = setTimeout(() => {
       const suffix = context ? ` (${context})` : '';
+      onTimeout?.();
       reject(new Error(`Shopify request timed out${suffix}`));
     }, timeoutMs);
 
@@ -141,13 +147,16 @@ export async function fetchStorefrontData(
   }
 
   const client = getClient(clientKey);
+  const controller = typeof AbortController !== 'undefined' ? new AbortController() : undefined;
   const request = withTimeout(
     client.query<StorefrontData>({
       query: storefrontQuery,
       fetchPolicy: 'network-only',
+      context: controller ? { fetchOptions: { signal: controller.signal } } : undefined,
     }).then((result) => result.data),
     TIMEOUT_MS,
-    `client: ${clientKey}`
+    `client: ${clientKey}`,
+    controller ? () => controller.abort() : undefined
   );
 
   const requestWithCache = request.then((data) => {
