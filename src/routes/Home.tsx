@@ -7,6 +7,13 @@ import { ArticleProps, ShopProps } from '../App';
 
 interface HomeProps extends ShopProps, ArticleProps {}
 
+const getBrandGridColumns = (shopCount: number) => {
+  // Use 2 columns for an even number of shops and 3 columns for an odd number.
+  // This keeps even counts in a balanced 2-column grid (e.g., 4 shops → 2×2)
+  // and uses 3 columns for odd counts to reduce the visual impact of a short final row (e.g., 5 shops → 3+2).
+  return shopCount % 2 === 0 ? 2 : 3;
+};
+
 /**
  * Home page showing brand highlights and latest news.
  *
@@ -23,10 +30,7 @@ function Home(props: HomeProps) {
   const hasArticles = props.articles.length > 0;
   const brandStatus = props.loading ? 'loading' : props.error ? 'error' : !hasBrands ? 'empty' : 'ready';
   const newsStatus = props.loading ? 'loading' : props.error ? 'error' : !hasArticles ? 'empty' : 'ready';
-  // Use 2 columns for an even number of shops and 3 columns for an odd number.
-  // This keeps even counts in a balanced 2-column grid (e.g., 4 shops → 2×2)
-  // and uses 3 columns for odd counts to reduce the visual impact of a short final row (e.g., 5 shops → 3+2).
-  const brandGridColumns = props.shops.length % 2 === 0 ? 2 : 3;
+  const brandGridColumns = getBrandGridColumns(props.shops.length);
 
   return (
     <>
