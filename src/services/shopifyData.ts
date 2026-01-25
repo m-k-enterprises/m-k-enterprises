@@ -16,7 +16,6 @@ const TIMEOUT_MS = 10 * 1000;
 const CACHE_TTL_MINUTES = 5;
 const CACHE_TTL_MS = CACHE_TTL_MINUTES * 60 * 1000;
 
-
 const cache = new Map<string, { data: StorefrontData; expiresAt: number }>();
 const inflight = new Map<string, Promise<StorefrontData>>();
 
@@ -57,6 +56,26 @@ function getCacheKey(clientKey: BrandKey): string {
   return `storefront:${clientKey}`;
 }
 
+function withTimeout<T>(promise: Promise<T>, timeoutMs: number, context?: string): Promise<T> {
+  return new Promise((resolve, reject) => {
+    // Note: the timeout fires after timeoutMs unless the promise settles first and clears it.
+    const timeoutId = setTimeout(() => {
+      const suffix = context ? ` (${context})` : '';
+      reject(new Error(`Shopify request timed out${suffix}`));
+    }, timeoutMs);
+
+    promise
+      .then((result) => {
+        clearTimeout(timeoutId);
+        resolve(result);
+      })
+      .catch((error) => {
+        clearTimeout(timeoutId);
+        reject(error);
+      });
+  });
+}
+
 /**
  * Fetch Shopify storefront data for the given brand.
  *
@@ -88,59 +107,14 @@ function getCacheKey(clientKey: BrandKey): string {
  *
  * Error conditions:
  * - Network, GraphQL, or other runtime errors produced by `client.query` are
- *   propagated and cause the returned Promise to reject with the original error.
- * - A timeout results in a rejection with the timeout `Error` created by
- *   {@link withTimeout}.
+ *   propagated and causes the returned Promise to reject with the same error.
+ * - If the timeout elapses first, the returned Promise rejects with a timeout
+ *   `Error` created by this helper.
  *
- * @param clientKey - Brand identifier used to select the appropriate Apollo
- *   client instance and to derive the cache key.
- * @param options.force - When true, bypasses any cached value and forces a
- *   fresh network request.
- * @returns A Promise that resolves with the {@link StorefrontData} for the
- *   specified brand, or rejects if the request fails or times out.
+ * @param clientKey - Brand identifier used to select the Shopify client.
+ * @param options - Optional cache control settings.
+ * @returns The storefront data for the requested brand.
  */
-function withTimeout<T>(promise: Promise<T>, timeoutMs: number, context?: string): Promise<T> {
-  return new Promise((resolve, reject) => {
-    // Note: the timeout fires after timeoutMs unless the promise settles first and clears it.
-
-/**
- * React hook for loading Shopify storefront data for a given brand.
- *
- * The hook manages the lifecycle of the underlying network request and exposes
- * a simple state object to consumers:
- *
- * - `loading` is `true` during the initial fetch and while a retry is in progress.
- * - `data` is `null` while the initial request is in flight and after a failed
- *   request; it is populated with `StorefrontData` once a request completes
- *   successfully.
- * - `error` is `null` when there is no error (including while loading) and set
- *   to the last `Error` instance when a request fails.
- *
- * The `retry` function can be called to force a re-fetch of the storefront data,
- * bypassing any in-memory cache. Calling `retry` will set `loading` to `true`,
- * clear any previous `error`, and update `data` / `error` when the request
- * settles.
- *
- * @param clientKey Brand identifier used to select the appropriate storefront client.
- * @returns An object containing the latest `data`, any `error`, the `loading` flag,
- *          and a `retry` function to trigger a forced refresh of the data.
- */
-      const suffix = context ? ` (${context})` : '';
-      reject(new Error(`Shopify request timed out${suffix}`));
-    }, timeoutMs);
-
-    promise
-      .then((result) => {
-        clearTimeout(timeoutId);
-        resolve(result);
-      })
-      .catch((error) => {
-        clearTimeout(timeoutId);
-        reject(error);
-      });
-  });
-}
-
 export async function fetchStorefrontData(
   clientKey: BrandKey,
   options: { force?: boolean } = {}
