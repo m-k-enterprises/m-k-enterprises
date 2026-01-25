@@ -1,6 +1,6 @@
 export interface ArticleImage {
   originalUrl?: string;
-  newsImageUrl?: string;
+  cardImageUrl?: string;
   altText?: string;
 }
 

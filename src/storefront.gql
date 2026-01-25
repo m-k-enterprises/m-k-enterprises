@@ -63,7 +63,7 @@
       image {
         altText
         originalUrl: url
-        newsImageUrl: url(transform: {crop: CENTER, maxWidth: 1920, maxHeight: 1080})
+        cardImageUrl: url(transform: {crop: CENTER, maxWidth: 1920, maxHeight: 1080})
         width
         height
       }

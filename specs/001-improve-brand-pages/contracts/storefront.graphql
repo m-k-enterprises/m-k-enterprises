@@ -74,6 +74,6 @@ type Article {
 
 type ArticleImage {
   originalUrl: String
-  newsImageUrl: String
+  cardImageUrl: String
   altText: String
 }

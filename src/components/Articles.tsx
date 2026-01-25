@@ -50,7 +50,7 @@ function Articles(props: ArticleProps) {
         <Col key={article.id}>
           <Card className="border-0" border="light">
             <Ratio aspectRatio="16x9">
-              <Card.Img variant="top" src={article.image?.newsImageUrl} alt={article.image?.altText || article.title} />
+              <Card.Img variant="top" src={article.image?.cardImageUrl} alt={article.image?.altText || article.title} />
             </Ratio>
             <Card.Body className="d-flex flex-column align-items-start"
               style={{
