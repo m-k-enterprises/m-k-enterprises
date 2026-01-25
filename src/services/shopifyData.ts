@@ -13,9 +13,9 @@ const storefrontQuery = loader('../storefront.gql');
 // but short enough to fail fast and surface errors promptly in the UI.
 const TIMEOUT_MS = 10 * 1000;
 
-const cache = new Map<string, { data: StorefrontData; expiresAt: number }>>();
-const CACHE_TTL_MS = CACHE_TTL_MINUTES * 60 * 1000;
-const TIMEOUT_MS = 10 * 1000;
+
+const CACHE_TTL_MINUTES = 5;
+
 
 const cache = new Map<string, { data: StorefrontData; expiresAt: number }>();
 const inflight = new Map<string, Promise<StorefrontData>>();
