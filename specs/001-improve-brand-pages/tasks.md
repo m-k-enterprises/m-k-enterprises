@@ -122,7 +122,7 @@
 - [x] T043 [P] Run `yarn build` (scripts in `/workspaces/m-k-enterprises/package.json`)
 - [x] T044 [P] Assess bundle size regression (`yarn build && npx source-map-explorer 'build/static/js/*.js'`) and note results in `/workspaces/m-k-enterprises/specs/001-improve-brand-pages/quickstart.md`
 - [x] T045 [P] Perform basic keyboard/ARIA checks on updated routes in `src/routes/*.tsx`
-- [ ] T046 [P] Verify homepage payload ≤250KB and log result in `/workspaces/m-k-enterprises/specs/001-improve-brand-pages/quickstart.md`
+- [x] T046 [P] Verify homepage payload ≤250KB and log result in `/workspaces/m-k-enterprises/specs/001-improve-brand-pages/quickstart.md`
 - [x] T047 [P] Validate token hygiene in `src/clients.ts` and `/workspaces/m-k-enterprises/.env.example`
 - [x] T048 [P] QA check: confirm homepage → brand storefront path is ≤2 clicks; record result in `/workspaces/m-k-enterprises/specs/001-improve-brand-pages/quickstart.md`
 - [x] T049 [P] QA check: confirm top-level route map unchanged (Home, About, Brands, News, Responsibility, Contact, Privacy Policy, Links) and note result in `/workspaces/m-k-enterprises/specs/001-improve-brand-pages/quickstart.md`

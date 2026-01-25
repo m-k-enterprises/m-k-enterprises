@@ -40,3 +40,4 @@ Implement homepage brand focus, shared layout and status messaging, and SEO meta
 - **QA click path**: Homepage brand tiles link directly to external storefronts (≤2 clicks from homepage).
 - **QA route map**: Verified routes in `src/App.tsx` match existing paths: `/`, `/about`, `/brands`, `/news`, `/responsibility`, `/contact`, `/links`, `/privacy-policy`.
 - **QA URL paths**: Confirmed no changes to top-level URL paths (same set as route map).
+- **Homepage payload**: Shopify response sizes (bytes) = bearBelts 9980, pocketBearsApparel 2511, mythicalMoods 4221. Total 16712 bytes (≤250KB).
