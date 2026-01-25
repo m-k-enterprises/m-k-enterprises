@@ -50,17 +50,21 @@ function Articles(props: ArticleProps) {
         <Col key={article.id}>
           <Card className="border-0" border="light">
             <Ratio aspectRatio="16x9">
-              <Card.Img variant="top" src={article.image?.newsUrl} alt={article.image?.altText} width={article.image?.width} height={article.image?.height} />
+              <Card.Img variant="top" src={article.image?.newsUrl} alt={article.image?.altText} />
             </Ratio>
-            <Card.Body>
+            <Card.Body className="d-flex flex-column align-items-start"
+              style={{
+                borderColor: article.brand?.colors.primary[0].background ? `${article.brand.colors.primary[0].background}` : undefined,
+              }}>
               <Card.Title>{article.title}</Card.Title>
-              <Card.Text dangerouslySetInnerHTML={{ __html: article.excerptHtml || '' }} />
+              <Card.Text>{article.excerpt || ''}</Card.Text>
               <Button
                 variant="more"
                 as="a"
                 href={article.onlineStoreUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                className="mt-auto"
               >
                 Read more
               </Button>

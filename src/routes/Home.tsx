@@ -1,8 +1,8 @@
 import React from 'react';
-import { Button, Carousel, Container, Placeholder, Row } from 'react-bootstrap';
+import { Carousel, Col, Container, Placeholder, Row, Spinner } from 'react-bootstrap';
 import { Block } from '@smolpack/react-bootstrap-extensions';
 import { random } from 'lodash';
-import { Articles, ShopCarouselItem } from '../components';
+import { Articles, BrandTile, ShopCarouselItem, StatusMessage, usePageMetadata } from '../components';
 import { ArticleProps, ShopProps } from '../App';
 
 interface HomeProps extends ShopProps, ArticleProps {}
@@ -14,10 +14,20 @@ interface HomeProps extends ShopProps, ArticleProps {}
  * @returns JSX for the home route.
  */
 function Home(props: HomeProps) {
+  usePageMetadata({
+    title: 'Home',
+    description: 'Explore the active M-K Enterprises brands and the latest company news.',
+  });
+
+  const hasBrands = props.shops.length > 0;
+  const hasArticles = props.articles.length > 0;
+  const brandStatus = props.loading ? 'loading' : props.error ? 'error' : !hasBrands ? 'empty' : 'ready';
+  const newsStatus = props.loading ? 'loading' : props.error ? 'error' : !hasArticles ? 'empty' : 'ready';
+
   return (
     <>
       <Carousel>
-        {props.loading || props.error ? (
+        {brandStatus === 'loading' ? (
           <Carousel.Item className="carousel-item-large">
             <div className="carousel-background" />
             <Carousel.Caption className="text-end text-primary">
@@ -53,10 +63,52 @@ function Home(props: HomeProps) {
       </Block>
       <Block>
         <Container>
-          <h1>Latest News</h1>
-          <Row className="g-3" xs={1} md={2} xl={3}>
-            <Articles loading={props.loading} error={props.error} articles={props.articles} />
-          </Row>
+          <h2>Our Brands</h2>
+          {brandStatus === 'loading' ? (
+            <Row className="g-3" xs={1} md={props.shops.length === 0 % 2 ? 2 : 3}>
+              {Array.from({ length: 3 }).map((_, i) => (
+                <Col key={i} className="text-center">
+                  <Spinner animation="border" role="status">
+                    <span className="visually-hidden">Loading&hellip;</span>
+                  </Spinner>
+                </Col>
+              ))}
+            </Row>
+          ) : brandStatus === 'ready' || hasBrands ? (
+            <Row className="g-3" xs={1} md={props.shops.length === 0 % 2 ? 2 : 3} data-testid="brand-tiles">
+              {props.shops.map((shop) => (
+                <Col key={shop.id}>
+                  <BrandTile shop={shop} />
+                </Col>
+              ))}
+            </Row>
+          ) : (
+            <StatusMessage
+              state={brandStatus === 'error' ? 'error' : 'empty'}
+              message={brandStatus === 'error'
+                  ? 'We ran into trouble loading brand details.'
+                  : 'No brand details are available right now.'}
+              onRetry={brandStatus === 'error' ? props.onRetry : undefined}
+            />
+          )}
+        </Container>
+      </Block>
+      <Block>
+        <Container>
+          <h2>Latest News</h2>
+          {newsStatus === 'loading' || newsStatus === 'ready' || hasArticles ? (
+            <Row className="g-3" xs={1} md={2} xl={3}>
+              <Articles loading={props.loading} error={props.error} articles={props.articles} />
+            </Row>
+          ) : (
+            <StatusMessage
+              state={newsStatus === 'error' ? 'error' : 'empty'}
+              message={newsStatus === 'error'
+                  ? 'We ran into trouble loading news updates.'
+                  : 'No news updates are available right now.'}
+              onRetry={newsStatus === 'error' ? props.onRetry : undefined}
+            />
+          )}
         </Container>
       </Block>
     </>

@@ -6,6 +6,7 @@ import union from 'lodash/union';
 import Gravatar from 'react-gravatar';
 
 import { ShopProps } from '../App';
+import { PageLayout, usePageMetadata } from '../components';
 import about from './about.jpg';
 
 /**
@@ -15,6 +16,11 @@ import about from './about.jpg';
  * @returns JSX for the about route.
  */
 function About(props: ShopProps) {
+  usePageMetadata({
+    title: 'About',
+    description: 'Learn about the M-K Enterprises story, mission, and leadership team.',
+  });
+
   const shipsToCountriesMin = useMemo(
     () => intersection(...props.shops.map(shop => shop.shipsToCountries)).length,
     [props.shops]
@@ -42,18 +48,13 @@ function About(props: ShopProps) {
   ];
 
   return (
-    <>
-      <Block className="text-bg-primary">
-        <Container>
-          <Block.Title>About Us</Block.Title>
-        </Container>
-      </Block>
+    <PageLayout title="About Us">
       <Block>
         <Row>
           <Col>
             <StatCard className="text-center">
               <StatCard.Desc>Ships to</StatCard.Desc>
-              {props.loading || props.error ? (
+              {(props.loading || props.error) && props.shops.length === 0 ? (
                 <Placeholder className="statcard-number text-primary" as="h2" animation="wave">
                   <Placeholder xs={1} />
                 </Placeholder>
@@ -140,7 +141,7 @@ function About(props: ShopProps) {
           ))}
         </Row>
       </Container>
-    </>
+    </PageLayout>
   );
 }
 

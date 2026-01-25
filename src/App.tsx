@@ -1,15 +1,15 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
-import { Container, Image as Img, Nav, Navbar, Spinner } from 'react-bootstrap';
-import { loader } from 'graphql.macro';
-import { ApolloError, useQuery } from '@apollo/client';
+import { Container, Image, Nav, Navbar, Spinner } from 'react-bootstrap';
 import { Block } from '@smolpack/react-bootstrap-extensions';
 
-import { clients } from './clients';
+import { Article, Shop, useStorefrontData } from './services';
 import logo from './logo.svg';
 
 import './App.scss';
+
+export type { Article, Shop } from './services';
 
 const Home = React.lazy(() => import('./routes/Home'));
 const About = React.lazy(() => import('./routes/About'));
@@ -20,60 +20,10 @@ const Contact = React.lazy(() => import('./routes/Contact'));
 const PrivacyPolicy = React.lazy(() => import('./routes/PrivacyPolicy'));
 const Links = React.lazy(() => import('./routes/Links'));
 
-interface StorefrontData {
-  shop: Shop
-  articles: {
-    nodes: Article[]
-  }
-}
-
-export interface Shop {
-  id: string
-  name: string
-  shipsToCountries: string[]
-  primaryDomain: {
-    url: string
-  }
-  brand?: {
-    logo?: MediaImage
-    slogan?: string
-    coverImage?: MediaImage
-    shortDescription?: string
-    colors: {
-      primary: [{
-        background?: string
-        foreground?: string
-      }]
-    }
-  }
-}
-
-interface Article {
-  id: string
-  title: string
-  excerptHtml?: string
-  onlineStoreUrl?: string
-  image?: Image
-  publishedAt: string
-}
-
-interface MediaImage {
-  image?: Image
-}
-
-interface Image {
-  altText?: string
-  url: string
-  carouselUrl?: string
-  logoUrl?: string
-  newsUrl?: string
-  width?: number
-  height?: number
-}
-
 interface QueryProps {
   loading: boolean
   error: boolean
+  onRetry?: () => Promise<void>
 }
 
 export interface ShopProps extends QueryProps {
@@ -84,48 +34,27 @@ export interface ArticleProps extends QueryProps {
   articles: Article[]
 }
 
-const storefrontQuery = loader('./storefront.gql');
-
 function App() {
-  const queryBearBelts = useQuery<StorefrontData>(storefrontQuery, { client: clients.bearBelts });
-  const queryPocketBearsApparel = useQuery<StorefrontData>(storefrontQuery, { client: clients.pocketBearsApparel });
-  const queryMythicalMoods = useQuery<StorefrontData>(storefrontQuery, { client: clients.mythicalMoods });
-  // const queryAuraEssence = useQuery<StorefrontData>(storefrontQuery, { client: clients.auraEssence });
+  const queryBearBelts = useStorefrontData('bearBelts');
+  const queryPocketBearsApparel = useStorefrontData('pocketBearsApparel');
+  const queryMythicalMoods = useStorefrontData('mythicalMoods');
 
   const queries = [
     queryBearBelts,
     queryPocketBearsApparel,
     queryMythicalMoods,
-    // queryAuraEssence,
   ];
 
   const loading = queries.some((query) => query.loading);
   const error = queries.some((query) => query.error);
 
-  const prevErrorsRef = React.useRef<(ApolloError | undefined)[]>([]);
-
-  React.useEffect(() => {
-    const prevErrors = prevErrorsRef.current;
-    const errors = [
-      queryBearBelts.error,
-      queryPocketBearsApparel.error,
-      queryMythicalMoods.error,
-      // queryAuraEssence.error,
-    ];
-
-    errors.forEach((err, index) => {
-      if (err && err !== prevErrors[index]) {
-        console.error(err);
-      }
-    });
-
-    prevErrorsRef.current = errors;
-  }, [
-    queryBearBelts.error,
-    queryPocketBearsApparel.error,
-    queryMythicalMoods.error,
-    // queryAuraEssence.error
-  ]);
+  const retryAll = React.useCallback(async () => {
+    await Promise.all([
+      queryBearBelts.retry(),
+      queryPocketBearsApparel.retry(),
+      queryMythicalMoods.retry(),
+    ]);
+  }, [queryBearBelts, queryPocketBearsApparel, queryMythicalMoods]);
 
   // Memoize derived data keyed off the query data values to ensure stability and purity.
   // This avoids re-sorting when loading/error changes but data remains the same.
@@ -138,14 +67,16 @@ function App() {
       queryBearBelts.data,
       queryPocketBearsApparel.data,
       queryMythicalMoods.data,
-      // queryAuraEssence.data
     ];
 
     dataList.forEach((data) => {
       if (data) {
         shopData.push(data.shop);
         if (data.articles.nodes) {
-          articlesData.push(...data.articles.nodes);
+          articlesData.push(...data.articles.nodes.map((article) => ({
+            ...article,
+            brand: data.shop.brand,
+          })));
         }
       }
     });
@@ -162,7 +93,6 @@ function App() {
     queryBearBelts.data,
     queryPocketBearsApparel.data,
     queryMythicalMoods.data,
-    // queryAuraEssence.data
   ]);
 
   const now = new Date();
@@ -172,7 +102,7 @@ function App() {
       <Navbar bg="light" expand="lg" sticky="top">
         <Container className="justify-content-between" fluid>
           <Navbar.Brand href="/">
-            <Img className="d-inline-block align-top" src={logo} alt="M-K" fluid /> Enterprises
+            <Image className="d-inline-block align-top" src={logo} alt="M-K" fluid /> Enterprises
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="main-navbar-nav" />
           <Navbar.Collapse id="main-navbar-nav">
@@ -217,10 +147,10 @@ function App() {
         </Spinner>
       )}>
         <Routes>
-          <Route path="/" element={<Home loading={loading} error={error} shops={shops} articles={articles} />} />
+          <Route path="/" element={<Home loading={loading} error={error} onRetry={retryAll} shops={shops} articles={articles} />} />
           <Route path="/about" element={<About loading={loading} error={error} shops={shops} />} />
-          <Route path="/brands" element={<Brands loading={loading} error={error} shops={shops} />} />
-          <Route path="/news" element={<News loading={loading} error={error} articles={articles} />} />
+          <Route path="/brands" element={<Brands loading={loading} error={error} onRetry={retryAll} shops={shops} />} />
+          <Route path="/news" element={<News loading={loading} error={error} onRetry={retryAll} articles={articles} />} />
           <Route path="/responsibility" element={<Responsibility />} />
           <Route path="/contact" element={<Contact loading={loading} error={error} shops={shops} />} />
           <Route path="/links" element={<Links loading={loading} error={error} shops={shops} />} />

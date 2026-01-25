@@ -14,24 +14,15 @@ jest.mock('react', () => {
   };
 });
 
-// Mock the clients module
-jest.mock('./clients', () => {
+const mockUseStorefrontData = jest.fn();
+
+jest.mock('./services', () => {
+  const actual = jest.requireActual('./services');
   return {
-    clients: {
-      bearBelts: {},
-      pocketBearsApparel: {},
-      mythicalMoods: {},
-      // auraEssence: {},
-    }
+    ...actual,
+    useStorefrontData: (...args: any[]) => mockUseStorefrontData(...args),
   };
 });
-
-const mockUseQuery = jest.fn();
-
-jest.mock('@apollo/client', () => ({
-  ...jest.requireActual('@apollo/client'),
-  useQuery: (...args: any[]) => mockUseQuery(...args),
-}));
 
 // Mock data
 const mockShop = {
@@ -52,7 +43,7 @@ const mockData = {
 
 describe('App performance benchmark', () => {
   beforeEach(() => {
-    mockUseQuery.mockClear();
+    mockUseStorefrontData.mockClear();
   });
 
   // Note: These tests run without React.StrictMode.
@@ -62,10 +53,11 @@ describe('App performance benchmark', () => {
   test('App renders exactly once when data is cached (Hot Cache Optimization)', () => {
     // Setup mock to return loaded data immediately
     // This simulates a "hot cache" scenario where data is available on the first render.
-    mockUseQuery.mockReturnValue({
+    mockUseStorefrontData.mockReturnValue({
       loading: false,
-      error: undefined,
+      error: null,
       data: mockData,
+      retry: jest.fn(),
     });
 
     render(<App />);
@@ -81,28 +73,27 @@ describe('App performance benchmark', () => {
 
     // Optimized Result:
     // Total: 1 render (4 calls).
-    expect(mockUseQuery).toHaveBeenCalledTimes(4);
+    expect(mockUseStorefrontData).toHaveBeenCalledTimes(3);
   });
 
   test('App renders exactly twice during loading sequence (Render Loop Optimization)', () => {
     // 1. Setup mock for INITIAL render (Loading state)
-    // We expect 4 queries, so we mock the first 4 calls to return loading.
-    mockUseQuery.mockReturnValueOnce({ loading: true, error: undefined, data: undefined }); // query 1
-    mockUseQuery.mockReturnValueOnce({ loading: true, error: undefined, data: undefined }); // query 2
-    mockUseQuery.mockReturnValueOnce({ loading: true, error: undefined, data: undefined }); // query 3
-    mockUseQuery.mockReturnValueOnce({ loading: true, error: undefined, data: undefined }); // query 4
+    mockUseStorefrontData
+      .mockReturnValueOnce({ loading: true, error: null, data: null, retry: jest.fn() })
+      .mockReturnValueOnce({ loading: true, error: null, data: null, retry: jest.fn() })
+      .mockReturnValueOnce({ loading: true, error: null, data: null, retry: jest.fn() });
 
     // 2. Setup mock for SUBSEQUENT renders (Loaded state)
-    // Any calls after the first 4 will return loaded data.
-    mockUseQuery.mockReturnValue({
+    mockUseStorefrontData.mockReturnValue({
       loading: false,
-      error: undefined,
+      error: null,
       data: mockData,
+      retry: jest.fn(),
     });
 
     const { rerender } = render(<App />);
 
-    // Initial render should trigger 4 calls (Loading).
+    // Initial render should trigger 3 calls (Loading).
 
     // Simulate data arrival by forcing a re-render.
     // In a real app, Apollo would trigger this. Here we manually trigger the next render phase.
@@ -120,6 +111,6 @@ describe('App performance benchmark', () => {
     // Total: 3 renders (12 calls).
 
     // Note: By mocking Suspense as a fragment, we ensure no intermediate renders occur.
-    expect(mockUseQuery).toHaveBeenCalledTimes(8);
+    expect(mockUseStorefrontData).toHaveBeenCalledTimes(6);
   });
 });

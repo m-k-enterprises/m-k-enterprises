@@ -29,3 +29,10 @@ Implement homepage brand focus, shared layout and status messaging, and SEO meta
 ## Notes
 - Keep CRA + TypeScript + Yarn conventions intact.
 - Do not log Shopify tokens.
+
+## Validation Log
+
+- **Lint**: `yarn lint` completed with a TypeScript version warning from eslint parser.
+- **Tests**: `CI=true yarn test --watchAll=false` passed; React Suspense act warning observed in `App.test.tsx`.
+- **Build**: `yarn build` completed; Browserslist and TypeScript parser warnings observed.
+- **Bundle analysis**: `npx source-map-explorer 'build/static/js/*.js' --no-border-checks --json specs/001-improve-brand-pages/bundle-analysis.json` completed with partial map warnings; output saved to `specs/001-improve-brand-pages/bundle-analysis.json`.

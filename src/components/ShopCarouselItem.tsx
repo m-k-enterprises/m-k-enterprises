@@ -27,7 +27,7 @@ const ShopCarouselItem = React.memo(React.forwardRef<HTMLDivElement, ShopCarouse
     }}>
       <Container>
         <h1 className="display-1">{shop.name}</h1>
-        <p className="lead">{shop.brand?.slogan}</p>
+        <p className="lead">{shop.brand?.shortDescription}</p>
         <Button
           variant="more"
           size="lg"

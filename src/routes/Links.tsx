@@ -1,9 +1,9 @@
 import React from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Spinner } from 'react-bootstrap';
 import { Block } from '@smolpack/react-bootstrap-extensions';
 
 import { Shop, ShopProps } from '../App';
-import { LinkCard } from '../components';
+import { LinkCard, usePageMetadata } from '../components';
 import { LinkItem } from '../components/LinkCard';
 
 interface LinksProps extends ShopProps {}
@@ -11,7 +11,7 @@ interface LinksProps extends ShopProps {}
 const mapShopToLinkItem = (shop: Shop): LinkItem => ({
   id: shop.id,
   url: shop.primaryDomain.url,
-  slogan: shop.brand?.slogan,
+  slogan: shop.brand?.shortDescription,
   logo: {
     url: shop.brand?.logo?.image?.logoUrl,
     alt: shop.brand?.logo?.image?.altText,
@@ -33,6 +33,11 @@ const mapShopToLinkItem = (shop: Shop): LinkItem => ({
  */
 
 function Links(props: LinksProps) {
+  usePageMetadata({
+    title: 'Links',
+    description: 'Direct links to each active M-K Enterprises brand storefront.',
+  });
+
   const items = props.shops.map(mapShopToLinkItem);
 
   return (
@@ -40,7 +45,15 @@ function Links(props: LinksProps) {
       <Block>
         <Container className="links">
           <Row className="g-3">
-            {items.map(item => (
+            {props.loading ? (
+              Array.from({ length: 3 }).map((_, i) => (
+                <Col key={i} xs={12} md={6} className="text-center">
+                  <Spinner animation="border" role="status">
+                    <span className="visually-hidden">Loading&hellip;</span>
+                  </Spinner>
+                </Col>
+              ))
+            ) : items.map(item => (
               <Col key={item.id} xs={12} md={6} className="d-flex">
                 <LinkCard item={item} />
               </Col>

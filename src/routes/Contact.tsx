@@ -1,6 +1,7 @@
 import React from 'react';
 import { Col, Container, Image, Placeholder, Ratio, Row } from 'react-bootstrap';
 import { Block } from '@smolpack/react-bootstrap-extensions';
+import { PageLayout, usePageMetadata } from '../components';
 import { ShopProps } from '../App';
 
 /**
@@ -10,18 +11,18 @@ import { ShopProps } from '../App';
  * @returns JSX for the contact route.
  */
 function Contact(props: ShopProps) {
+  usePageMetadata({
+    title: 'Contact',
+    description: 'Get support by connecting with the active M-K Enterprises brands.',
+  });
+
   return (
-    <>
-      <Block className="text-bg-primary">
-        <Container>
-          <Block.Title>Need Support?</Block.Title>
-        </Container>
-      </Block>
+    <PageLayout title="Need Support?">
       <Block>
         <Container>
           <p className="lead">Our in-house customer service team is here to help. Please connect with us by visiting one of our brands below.</p>
           <Row className="align-items-center justify-content-evenly text-center">
-            {props.loading || props.error ? Array.from({ length: 2 }).map((_, i) => (
+            {(props.loading || props.error) && props.shops.length === 0 ? Array.from({ length: 2 }).map((_, i) => (
               <Col key={i} xs={10} md={5} xl={4}>
                 <Ratio aspectRatio="16x9">
                   <Placeholder className="img-fluid" animation="glow">
@@ -39,7 +40,7 @@ function Contact(props: ShopProps) {
           </Row>
         </Container>
       </Block>
-    </>
+    </PageLayout>
   );
 }
 

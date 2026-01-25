@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
 import { Block } from '@smolpack/react-bootstrap-extensions';
+import { PageLayout, usePageMetadata } from '../components';
 
 /**
  * Privacy Policy page.
@@ -8,13 +9,13 @@ import { Block } from '@smolpack/react-bootstrap-extensions';
  * @returns React element containing the policy.
  */
 function PrivacyPolicy() {
+  usePageMetadata({
+    title: 'Privacy Policy',
+    description: 'Read how M-K Enterprises handles personal data and privacy rights.',
+  });
+
   return (
-    <>
-      <Block className="text-bg-primary">
-        <Container>
-          <Block.Title>Privacy Policy 📄</Block.Title>
-        </Container>
-      </Block>
+    <PageLayout title="Privacy Policy">
       <Block>
         <Container>
           <h2>Introduction and Scope</h2>
@@ -83,7 +84,7 @@ function PrivacyPolicy() {
           </p>
         </Container>
       </Block>
-    </>
+    </PageLayout>
   );
 }
 

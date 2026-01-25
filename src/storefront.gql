@@ -18,6 +18,15 @@
           height
         }
       }
+      squareLogo {
+        image {
+          altText
+          url
+          logoUrl: url(transform: {maxWidth: 2880})
+          width
+          height
+        }
+      }
       colors {
         primary {
           background
@@ -39,8 +48,10 @@
     nodes {
       id
       title
-      excerptHtml
       onlineStoreUrl
+      handle
+      excerpt
+      excerptHtml
       image {
         altText
         url

@@ -5,7 +5,7 @@ import Responsibility from './Responsibility';
 
 test('renders heading', () => {
   render(<Responsibility />);
-  const heading = screen.getByRole('heading', { name: /our commitment/i });
+  const heading = screen.getByRole('heading', { level: 1, name: /our commitment/i });
   expect(heading).toBeInTheDocument();
 });
 
