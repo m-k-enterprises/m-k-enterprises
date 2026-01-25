@@ -26,7 +26,7 @@ function StatusMessage({ state, message, onRetry }: StatusMessageProps) {
         <>
           <hr />
           <div className="d-flex justify-content-end">
-            <Button variant={`${variant}`} onClick={onRetry} size="sm">
+            <Button variant={variant} onClick={onRetry} size="sm">
               Retry
             </Button>
           </div>

@@ -10,10 +10,10 @@
       slogan
       shortDescription
       # Image URLs:
-      # - url: unmodified, source image
-      # - displayUrl: resized/optimized image for UI use (2880px supports 4K/retina layouts)
+      # - url: original, unmodified source image (full-resolution; use for exports/reprocessing, not direct UI rendering)
+      # - displayUrl: transformed/optimized image specifically for UI rendering (2880px supports 4K/retina layouts)
       # - width/height: dimensions of the returned image after transforms
-      # We keep both to avoid repeated transforms in the UI and to preserve access to originals when needed.
+      # We keep both to avoid repeated transforms in the UI while still preserving access to the original source image when needed.
       logo {
         image {
           altText

@@ -49,11 +49,21 @@ function App() {
   const error = queries.some((query) => query.error);
 
   const retryAll = React.useCallback(async () => {
-    await Promise.all([
+    const results = await Promise.allSettled([
       queryBearBelts.retry(),
       queryPocketBearsApparel.retry(),
       queryMythicalMoods.retry(),
     ]);
+
+    const rejected = results.filter(
+      (result): result is PromiseRejectedResult => result.status === 'rejected',
+    );
+
+    if (rejected.length > 0) {
+      // Re-throw the first error so callers still see a failure,
+      // but only after all retries have been attempted.
+      throw rejected[0].reason;
+    }
   }, [queryBearBelts, queryPocketBearsApparel, queryMythicalMoods]);
 
   // Memoize derived data keyed off the query data values to ensure stability and purity.

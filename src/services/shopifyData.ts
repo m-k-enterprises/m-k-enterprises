@@ -20,10 +20,30 @@ const CACHE_TTL_MS = CACHE_TTL_MINUTES * 60 * 1000;
 const cache = new Map<string, { data: StorefrontData; expiresAt: number }>();
 const inflight = new Map<string, Promise<StorefrontData>>();
 
-if (process.env.NODE_ENV === 'development' && (module as any).hot) {
+interface WebpackHotModule {
+  hot: {
+    dispose(callback: () => void): void;
+  };
+}
+
+function isWebpackHotModule(value: unknown): value is WebpackHotModule {
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    'hot' in (value as { hot?: unknown }) &&
+    typeof (value as { hot?: { dispose?: unknown } }).hot?.dispose === 'function'
+  );
+}
+
+if (
+  process.env.NODE_ENV === 'development' &&
+  typeof module !== 'undefined' &&
+  isWebpackHotModule(module) &&
+  module.hot
+) {
   // Reset in-memory caches on Webpack/Cra hot reloads so each fresh dev bundle
   // starts from a clean state. `module.hot` is injected only in development builds.
-  const hot = (module as any).hot;
+  const hot = module.hot;
   hot.dispose(() => {
     cache.clear();
     inflight.clear();
@@ -37,10 +57,74 @@ function getCacheKey(clientKey: BrandKey): string {
   return `storefront:${clientKey}`;
 }
 
+/**
+ * Fetch Shopify storefront data for the given brand.
+ *
+ * This function applies a per-brand, in-memory cache with a fixed TTL to reduce
+ * network and API load. Results are cached under a key derived from the
+ * {@link BrandKey} and reused for subsequent calls until the entry expires.
+ *
+ * Caching behavior:
+ * - If a non-expired cached entry exists and {@link options.force} is not set,
+ *   the cached {@link StorefrontData} is returned without issuing a network request.
+ * - If {@link options.force} is true, the cache is bypassed and a fresh network
+ *   request is made; the new result then replaces any existing cache entry.
+ * - Cache entries expire after {@link CACHE_TTL_MS} (currently
+ *   {@link CACHE_TTL_MINUTES} minutes) from the time they are stored.
+ *
+ * Request de-duplication:
+ * - Concurrent calls for the same {@link BrandKey} share a single inflight
+ *   network request. The first call creates the request; subsequent calls made
+ *   before it settles receive the same Promise instance from the `inflight` map.
+ * - When the request settles (either success or failure), the `inflight` entry
+ *   for that key is cleared.
+ *
+ * Timeout handling:
+ * - The underlying Apollo `client.query` call is wrapped by {@link withTimeout}
+ *   with a timeout of {@link TIMEOUT_MS} milliseconds. If the request does not
+ *   complete within this time, the returned Promise rejects with an
+ *   `Error` whose message includes "Shopify request timed out" and, when
+ *   available, the client context.
+ *
+ * Error conditions:
+ * - Network, GraphQL, or other runtime errors produced by `client.query` are
+ *   propagated and cause the returned Promise to reject with the original error.
+ * - A timeout results in a rejection with the timeout `Error` created by
+ *   {@link withTimeout}.
+ *
+ * @param clientKey - Brand identifier used to select the appropriate Apollo
+ *   client instance and to derive the cache key.
+ * @param options.force - When true, bypasses any cached value and forces a
+ *   fresh network request.
+ * @returns A Promise that resolves with the {@link StorefrontData} for the
+ *   specified brand, or rejects if the request fails or times out.
+ */
 function withTimeout<T>(promise: Promise<T>, timeoutMs: number, context?: string): Promise<T> {
   return new Promise((resolve, reject) => {
     // Note: the timeout fires after timeoutMs unless the promise settles first and clears it.
-    const timeoutId = setTimeout(() => {
+
+/**
+ * React hook for loading Shopify storefront data for a given brand.
+ *
+ * The hook manages the lifecycle of the underlying network request and exposes
+ * a simple state object to consumers:
+ *
+ * - `loading` is `true` during the initial fetch and while a retry is in progress.
+ * - `data` is `null` while the initial request is in flight and after a failed
+ *   request; it is populated with `StorefrontData` once a request completes
+ *   successfully.
+ * - `error` is `null` when there is no error (including while loading) and set
+ *   to the last `Error` instance when a request fails.
+ *
+ * The `retry` function can be called to force a re-fetch of the storefront data,
+ * bypassing any in-memory cache. Calling `retry` will set `loading` to `true`,
+ * clear any previous `error`, and update `data` / `error` when the request
+ * settles.
+ *
+ * @param clientKey Brand identifier used to select the appropriate storefront client.
+ * @returns An object containing the latest `data`, any `error`, the `loading` flag,
+ *          and a `retry` function to trigger a forced refresh of the data.
+ */
       const suffix = context ? ` (${context})` : '';
       reject(new Error(`Shopify request timed out${suffix}`));
     }, timeoutMs);
