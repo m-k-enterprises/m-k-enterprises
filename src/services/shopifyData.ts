@@ -40,7 +40,7 @@ if (
   hasHotModule(module) &&
   module.hot
 ) {
-  // Reset in-memory caches on Webpack/Cra hot reloads so each fresh dev bundle
+  // Reset in-memory caches on Webpack/CRA hot reloads so each fresh dev bundle
   // starts from a clean state. `module.hot` is injected only in development builds.
   const hot = module.hot;
   hot.dispose(() => {
@@ -58,7 +58,7 @@ function getCacheKey(clientKey: BrandKey): string {
 
 function withTimeout<T>(promise: Promise<T>, timeoutMs: number, context?: string): Promise<T> {
   return new Promise((resolve, reject) => {
-    // Note: the timeout fires after timeoutMs unless the promise settles first and clears it.
+    // Note: the timeout fires after timeoutMs unless the promise settles first and we clear it via clearTimeout(timeoutId).
     const timeoutId = setTimeout(() => {
       const suffix = context ? ` (${context})` : '';
       reject(new Error(`Shopify request timed out${suffix}`));
@@ -121,7 +121,7 @@ function toError(error: unknown, context: string): Error {
  *   `Error` created by this helper.
  *
  * @param clientKey - BrandKey identifier used to select the Shopify client.
- * @param options - Optional cache control settings.
+ * @param options - Optional cache control settings (use `force` to bypass cache).
  * @returns The storefront data for the requested brand.
  */
 export async function fetchStorefrontData(
