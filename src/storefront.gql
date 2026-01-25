@@ -12,6 +12,7 @@
       # Image URLs:
       # - originalUrl: unmodified, source image
       # - displayUrl: resized/optimized image for UI use
+      # - width/height: dimensions of the returned image after transforms
       logo {
         image {
           altText
