@@ -8,7 +8,7 @@ import { BrandKey } from './brandConfig';
 
 const storefrontQuery = loader('../storefront.gql');
 
-const CACHE_TTL_MS = 0//2 * 60 * 1000;
+const CACHE_TTL_MS = 2 * 60 * 1000;
 const TIMEOUT_MS = 10 * 1000;
 
 const cache = new Map<string, { data: StorefrontData; expiresAt: number }>();
