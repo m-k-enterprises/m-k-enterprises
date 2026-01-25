@@ -1,6 +1,6 @@
 export interface ArticleImage {
-  url?: string;
-  newsUrl?: string;
+  originalUrl?: string;
+  newsImageUrl?: string;
   altText?: string;
 }
 
@@ -12,13 +12,12 @@ export interface Article {
   excerpt?: string;
   publishedAt: string;
   image?: ArticleImage;
-  newsUrl?: string;
   brand?: Brand;
 }
 
 export interface BrandLogoImage {
-  url?: string;
-  logoUrl?: string;
+  originalUrl?: string;
+  displayUrl?: string;
   altText?: string;
   width?: number;
   height?: number;
@@ -39,8 +38,8 @@ export interface BrandColors {
 
 export interface BrandImage {
   image?: {
-    url?: string;
-    carouselUrl?: string;
+    originalUrl?: string;
+    heroUrl?: string;
     altText?: string;
     width?: number;
     height?: number;

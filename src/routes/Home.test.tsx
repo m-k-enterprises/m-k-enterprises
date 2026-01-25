@@ -32,10 +32,16 @@ test('renders brand links with correct hrefs', () => {
   });
 });
 
-test('shows loading messages for brands and news', () => {
-  render(<Home loading={true} error={false} shops={[]} articles={[]} />);
-  expect(screen.getByText(/loading brand highlights/i)).toBeInTheDocument();
-  expect(screen.getByText(/loading the latest news/i)).toBeInTheDocument();
+test('shows loading UI for brands and news', () => {
+  const { container } = render(<Home loading={true} error={false} shops={[]} articles={[]} />);
+
+  const statusIndicators = screen.getAllByRole('status');
+  expect(statusIndicators).toHaveLength(3);
+
+  const newsHeading = screen.getByRole('heading', { name: /latest news/i });
+  const newsContainer = newsHeading.closest('.container');
+  expect(newsContainer).not.toBeNull();
+  expect(newsContainer?.querySelectorAll('.placeholder').length).toBeGreaterThan(0);
 });
 
 test('shows error messages with retry', () => {

@@ -26,13 +26,14 @@ function Home(props: HomeProps) {
 
   return (
     <>
+      <h1 className="visually-hidden">M-K Enterprises Home</h1>
       <Carousel>
         {brandStatus === 'loading' ? (
           <Carousel.Item className="carousel-item-large">
             <div className="carousel-background" />
             <Carousel.Caption className="text-end text-primary">
               <Container>
-                <Placeholder className="display-1" animation="wave" as="h1">
+                <Placeholder className="display-1" animation="wave" as="h2">
                   {Array.from({ length: random(2, 3) }).map((_, i) => (
                     <React.Fragment key={i}>
                       <Placeholder xs={random(1, 3)} />{' '}

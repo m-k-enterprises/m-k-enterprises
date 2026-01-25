@@ -8,15 +8,15 @@ interface BrandTileProps {
 
 function BrandTile({ shop }: BrandTileProps) {
   const brandColor = shop.brand?.colors.primary[0];
-  const logoUrl = shop.brand?.squareLogo?.image?.logoUrl;
+  const logoUrl = shop.brand?.squareLogo?.image?.displayUrl;
   const logoAlt = shop.brand?.squareLogo?.image?.altText || `${shop.name} logo`;
 
   return (
     <Card className="card-profile border-0">
       <Card.Header style={{
-      backgroundColor: shop.brand?.colors.primary[0].background,
-      backgroundImage: `url(${shop.brand?.coverImage?.image?.carouselUrl})`
-    }} />
+        backgroundColor: shop.brand?.colors.primary[0].background,
+        backgroundImage: `url(${shop.brand?.coverImage?.image?.heroUrl})`
+      }} />
       <Card.Body
         className="d-flex flex-column align-items-start"
         style={{

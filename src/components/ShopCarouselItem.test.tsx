@@ -37,7 +37,7 @@ const shop: Shop = {
   brand: {
     colors: { primary: [{ background: '#ffffff', foreground: '#000000' }] },
     shortDescription: 'A short description',
-    coverImage: { image: { carouselUrl: 'test.jpg' } }
+    coverImage: { image: { heroUrl: 'test.jpg' } }
   },
 };
 

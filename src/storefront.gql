@@ -12,8 +12,8 @@
       logo {
         image {
           altText
-          url
-          logoUrl: url(transform: {maxWidth: 2880})
+          originalUrl: url
+          displayUrl: url(transform: {maxWidth: 2880})
           width
           height
         }
@@ -21,8 +21,8 @@
       squareLogo {
         image {
           altText
-          url
-          logoUrl: url(transform: {maxWidth: 2880})
+          originalUrl: url
+          displayUrl: url(transform: {maxWidth: 2880})
           width
           height
         }
@@ -36,8 +36,8 @@
       coverImage {
         image {
           altText
-          url
-          carouselUrl: url(transform: {crop: CENTER, maxWidth: 5760, maxHeight: 3240})
+          originalUrl: url
+          heroUrl: url(transform: {crop: CENTER, maxWidth: 5760, maxHeight: 3240})
           width
           height
         }
@@ -54,8 +54,8 @@
       excerptHtml
       image {
         altText
-        url
-        newsUrl: url(transform: {crop: CENTER, maxWidth: 1920, maxHeight: 1080})
+        originalUrl: url
+        newsImageUrl: url(transform: {crop: CENTER, maxWidth: 1920, maxHeight: 1080})
         width
         height
       }

@@ -5,6 +5,7 @@ import LinkCard, { LinkItem } from './LinkCard';
 
 const linkItem: LinkItem = {
   id: '1',
+  name: 'Bear Belts',
   url: 'https://example.com',
   slogan: 'Be awesome',
   logo: {

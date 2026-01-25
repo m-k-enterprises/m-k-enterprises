@@ -12,10 +12,10 @@ const shops: Shop[] = [
     primaryDomain: { url: 'https://example1.com' },
     brand: {
       shortDescription: 'Description 1',
-      coverImage: { image: { carouselUrl: 'cover1.jpg' } },
+      coverImage: { image: { heroUrl: 'cover1.jpg' } },
       logo: {
         image: {
-          logoUrl: 'logo1.png',
+          displayUrl: 'logo1.png',
           altText: 'Logo 1',
           width: 1,
           height: 1,
@@ -31,10 +31,10 @@ const shops: Shop[] = [
     primaryDomain: { url: 'https://example2.com' },
     brand: {
       shortDescription: 'Description 2',
-      coverImage: { image: { carouselUrl: 'cover2.jpg' } },
+      coverImage: { image: { heroUrl: 'cover2.jpg' } },
       logo: {
         image: {
-          logoUrl: 'logo2.png',
+          displayUrl: 'logo2.png',
           altText: 'Logo 2',
           width: 1,
           height: 1,
@@ -50,10 +50,10 @@ const shops: Shop[] = [
     primaryDomain: { url: 'https://example3.com' },
     brand: {
       shortDescription: 'Description 3',
-      coverImage: { image: { carouselUrl: 'cover3.jpg' } },
+      coverImage: { image: { heroUrl: 'cover3.jpg' } },
       logo: {
         image: {
-          logoUrl: 'logo3.png',
+          displayUrl: 'logo3.png',
           altText: 'Logo 3',
           width: 1,
           height: 1,

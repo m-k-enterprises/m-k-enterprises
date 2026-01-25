@@ -71,7 +71,7 @@ function Brands(props: ShopProps) {
                 <Ratio aspectRatio="16x9">
                   <div style={{
                     backgroundColor: shop.brand?.colors.primary[0].background,
-                    backgroundImage: `url(${shop.brand?.coverImage?.image?.carouselUrl})`,
+                    backgroundImage: `url(${shop.brand?.coverImage?.image?.heroUrl})`,
                     backgroundPosition: 'center',
                     backgroundSize: 'cover'
                   }} />
@@ -80,7 +80,13 @@ function Brands(props: ShopProps) {
             </Row>
             <Row className="justify-content-center">
               <Col className="mb-3" xs={10} md={2}>
-                <Image src={shop.brand?.logo?.image?.logoUrl} alt={shop.brand?.logo?.image?.altText} width={shop.brand?.logo?.image?.width} height={shop.brand?.logo?.image?.height} fluid />
+                <Image
+                  src={shop.brand?.logo?.image?.displayUrl}
+                  alt={shop.brand?.logo?.image?.altText || `${shop.name} logo`}
+                  width={shop.brand?.logo?.image?.width}
+                  height={shop.brand?.logo?.image?.height}
+                  fluid
+                />
               </Col>
               <Col className="mb-3" xs={12} md={10}>
                 <p className="lead">{shop.brand?.shortDescription}</p>

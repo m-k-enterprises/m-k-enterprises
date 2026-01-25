@@ -20,13 +20,13 @@ const ShopCarouselItem = React.memo(React.forwardRef<HTMLDivElement, ShopCarouse
   >
     <div className="carousel-background" style={{
       backgroundColor: shop.brand?.colors.primary[0].background,
-      backgroundImage: `url(${shop.brand?.coverImage?.image?.carouselUrl})`
+      backgroundImage: `url(${shop.brand?.coverImage?.image?.heroUrl})`
     }} />
     <Carousel.Caption className="text-end" style={{
       color: shop.brand?.colors.primary[0].foreground
     }}>
       <Container>
-        <h1 className="display-1">{shop.name}</h1>
+        <h2 className="display-1">{shop.name}</h2>
         <p className="lead">{shop.brand?.shortDescription}</p>
         <Button
           variant="more"

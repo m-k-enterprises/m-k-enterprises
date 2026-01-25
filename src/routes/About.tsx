@@ -122,7 +122,14 @@ function About(props: ShopProps) {
           {team.map(member => (
             <Col key={member.email} xs={6} md={4} xl={3}>
               <Card className="border-0" border="light">
-                <Gravatar className="card-img-top img-fluid" email={member.email} rating="g" size={1920} default="blank" />
+                <Gravatar
+                  className="card-img-top img-fluid"
+                  email={member.email}
+                  rating="g"
+                  size={1920}
+                  default="blank"
+                  alt={`${member.firstName} ${member.lastName}`}
+                />
                 <Card.Body>
                   <Card.Title>{member.firstName} {member.lastName}</Card.Title>
                   <Card.Text>{member.job}</Card.Text>

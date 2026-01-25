@@ -3,6 +3,7 @@ import { Button, Card, Col, Image } from 'react-bootstrap';
 
 export interface LinkItem {
   id: string;
+  name?: string;
   url: string;
   slogan?: string;
   logo?: {
@@ -30,6 +31,7 @@ interface LinkCardProps {
  */
 export default function LinkCard(props: LinkCardProps) {
   const { item } = props;
+  const logoAlt = item.logo?.alt || (item.name ? `${item.name} logo` : `${item.name} logo`);
 
   return (
     <Card className="card-link flex-fill text-center" style={{
@@ -43,7 +45,7 @@ export default function LinkCard(props: LinkCardProps) {
         color: item.colors?.foreground
       }}>
         <Col className="mb-3 mx-auto" xs={10} md={2}>
-          <Image src={item.logo?.url} alt={item.logo?.alt} width={item.logo?.width} height={item.logo?.height} fluid />
+          <Image src={item.logo?.url} alt={logoAlt} width={item.logo?.width} height={item.logo?.height} fluid />
         </Col>
         <Card.Text>{item.slogan}</Card.Text>
         <Button

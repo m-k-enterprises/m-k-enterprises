@@ -33,7 +33,13 @@ function Contact(props: ShopProps) {
             )) : props.shops.map(shop => (
               <Col key={shop.id} xs={10} md={5} xl={4}>
                 <a href={shop.primaryDomain.url}>
-                  <Image src={shop.brand?.logo?.image?.logoUrl} alt={shop.brand?.logo?.image?.altText} width={shop.brand?.logo?.image?.width} height={shop.brand?.logo?.image?.height} fluid />
+                  <Image
+                    src={shop.brand?.logo?.image?.displayUrl}
+                    alt={shop.brand?.logo?.image?.altText || `${shop.name} logo`}
+                    width={shop.brand?.logo?.image?.width}
+                    height={shop.brand?.logo?.image?.height}
+                    fluid
+                  />
                 </a>
               </Col>
             ))}
