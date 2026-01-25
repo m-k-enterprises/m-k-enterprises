@@ -1,5 +1,5 @@
 export interface ArticleImage {
-  fullSizeUrl?: string;
+  originalUrl?: string;
   newsImageUrl?: string;
   altText?: string;
 }
@@ -16,7 +16,7 @@ export interface Article {
 }
 
 export interface BrandLogoImage {
-  fullSizeUrl?: string;
+  originalUrl?: string;
   displayUrl?: string;
   altText?: string;
   width?: number;
@@ -38,7 +38,7 @@ export interface BrandColors {
 
 export interface BrandImage {
   image?: {
-    fullSizeUrl?: string;
+    originalUrl?: string;
     heroUrl?: string;
     altText?: string;
     width?: number;
