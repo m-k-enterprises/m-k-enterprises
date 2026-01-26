@@ -56,6 +56,15 @@ function getCacheKey(clientKey: BrandKey): string {
   return `storefront:${clientKey}`;
 }
 
+function getTimeoutSignal(timeoutMs: number): AbortSignal | undefined {
+  if (typeof AbortSignal === 'undefined') {
+    return undefined;
+  }
+
+  const timeout = (AbortSignal as { timeout?: (ms: number) => AbortSignal }).timeout;
+  return typeof timeout === 'function' ? timeout(timeoutMs) : undefined;
+}
+
 function withTimeout<T>(
   promise: Promise<T>,
   timeoutMs: number,
@@ -146,11 +155,7 @@ export async function fetchStorefrontData(
     return cached.data;
   }
   const client = getClient(clientKey);
-  const timeoutSignal =
-    typeof AbortSignal !== 'undefined' &&
-    typeof (AbortSignal as { timeout?: (ms: number) => AbortSignal }).timeout === 'function'
-      ? (AbortSignal as { timeout: (ms: number) => AbortSignal }).timeout(TIMEOUT_MS)
-      : undefined;
+  const timeoutSignal = getTimeoutSignal(TIMEOUT_MS);
   const controller =
     !timeoutSignal && typeof AbortController !== 'undefined' ? new AbortController() : undefined;
   const signal = timeoutSignal ?? controller?.signal;
