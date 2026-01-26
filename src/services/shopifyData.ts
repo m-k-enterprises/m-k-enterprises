@@ -10,7 +10,9 @@ const storefrontQuery = loader('../storefront.gql');
 
 // 10s network timeout for Shopify storefront requests: long enough for typical responses,
 // but short enough to fail fast and surface errors promptly in the UI.
-const TIMEOUT_MS = 10 * 1000;
+const SHOPIFY_REQUEST_TIMEOUT_MS = 10 * 1000;
+// Backwards-compatible alias; prefer SHOPIFY_REQUEST_TIMEOUT_MS for new code.
+const TIMEOUT_MS = SHOPIFY_REQUEST_TIMEOUT_MS;
 
 // Cache Shopify storefront responses for a short period to reduce network and API load
 const CACHE_TTL_MINUTES = 5;
@@ -19,7 +21,7 @@ const STORE_LOAD_ERROR_MESSAGE = 'Failed to load storefront data';
 
 // In-memory cache lives for the lifetime of the JS context (browser tab).
 // In development with Webpack/CRA HMR, caches are cleared on module dispose (see below).
-const cache = new Map<string, { data: StorefrontData; expiresAt: number }>();
+const storefrontDataCache = new Map<string, { data: StorefrontData; expiresAt: number }>();
 // Track in-flight requests per cache key to de-duplicate concurrent fetches.
 const inflight = new Map<string, Promise<StorefrontData>>();
 
@@ -48,7 +50,7 @@ if (
   // starts from a clean state. `module.hot` is injected only in development builds.
   const hot = module.hot;
   hot.dispose(() => {
-    cache.clear();
+    storefrontDataCache.clear();
     inflight.clear();
   });
 }
@@ -169,10 +171,10 @@ export async function fetchStorefrontData(
   options: { force?: boolean } = {}
 ): Promise<StorefrontData> {
   const cacheKey = getCacheKey(clientKey);
-  const cached = cache.get(cacheKey);
+  const cached = storefrontDataCache.get(cacheKey);
   const isCacheValid = cached ? cached.expiresAt > Date.now() : false;
   if (cached && !isCacheValid) {
-    cache.delete(cacheKey);
+    storefrontDataCache.delete(cacheKey);
   }
 
   if (!options.force && cached && isCacheValid) {
@@ -212,7 +214,7 @@ export async function fetchStorefrontData(
 
   const requestWithCache = request.then((data) => {
     try {
-      cache.set(cacheKey, {
+      storefrontDataCache.set(cacheKey, {
         data,
         expiresAt: Date.now() + CACHE_TTL_MS,
       });
@@ -232,10 +234,10 @@ export async function fetchStorefrontData(
 
 export function clearStorefrontCache(clientKey?: BrandKey) {
   if (clientKey) {
-    cache.delete(getCacheKey(clientKey));
+    storefrontDataCache.delete(getCacheKey(clientKey));
     return;
   }
-  cache.clear();
+  storefrontDataCache.clear();
 }
 
 export function useStorefrontData(clientKey: BrandKey): StorefrontResponse {
