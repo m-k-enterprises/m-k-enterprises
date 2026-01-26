@@ -58,30 +58,29 @@ function getCacheKey(clientKey: BrandKey): string {
 }
 
 function getTimeoutSignal(timeoutMs: number): AbortSignal | undefined {
-  if (typeof AbortSignal === 'undefined') {
+  const timeout =
+    typeof AbortSignal !== 'undefined'
+      ? (AbortSignal as { timeout?: (ms: number) => AbortSignal }).timeout
+      : undefined;
+
+  return typeof timeout === 'function' ? timeout(timeoutMs) : createAbortControllerTimeoutSignal(timeoutMs);
+}
+
+function createAbortControllerTimeoutSignal(timeoutMs: number): AbortSignal | undefined {
+  if (typeof AbortController === 'undefined') {
     return undefined;
   }
 
-  const timeout = (AbortSignal as { timeout?: (ms: number) => AbortSignal }).timeout;
-  if (typeof timeout === 'function') {
-    return timeout(timeoutMs);
-  }
-
-  // Fallback for browsers that support AbortController but not AbortSignal.timeout.
-  if (typeof AbortController !== 'undefined') {
-    const controller = new AbortController();
-    setTimeout(() => {
-      // Reason is optional; older browsers will ignore it.
-      try {
-        controller.abort(new Error('Operation timed out'));
-      } catch {
-        // Ignore errors from abort in very old implementations.
-      }
-    }, timeoutMs);
-    return controller.signal;
-  }
-
-  return undefined;
+  const controller = new AbortController();
+  setTimeout(() => {
+    // Reason is optional; older browsers will ignore it.
+    try {
+      controller.abort(new Error('Operation timed out'));
+    } catch {
+      // Ignore errors from abort in very old implementations.
+    }
+  }, timeoutMs);
+  return controller.signal;
 }
 
 function withTimeout<T>(
