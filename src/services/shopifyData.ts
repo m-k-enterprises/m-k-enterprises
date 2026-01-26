@@ -66,7 +66,11 @@ function getTimeoutSignal(timeoutMs: number): AbortSignal | undefined {
       ? (AbortSignal as { timeout?: (ms: number) => AbortSignal }).timeout
       : undefined;
 
-  return typeof timeout === 'function' ? timeout(timeoutMs) : createAbortControllerTimeoutSignal(timeoutMs);
+  if (typeof timeout === 'function') {
+    return timeout(timeoutMs);
+  }
+
+  return createAbortControllerTimeoutSignal(timeoutMs);
 }
 
 function createAbortControllerTimeoutSignal(timeoutMs: number): AbortSignal | undefined {
@@ -166,6 +170,13 @@ export async function fetchStorefrontData(
 ): Promise<StorefrontData> {
   const cacheKey = getCacheKey(clientKey);
   const cached = cache.get(cacheKey);
+  if (cached && cached.expiresAt <= Date.now()) {
+    cache.delete(cacheKey);
+  }
+
+  if (!options.force && cached && cached.expiresAt > Date.now()) {
+    return cached.data;
+  }
 
   const existing = inflight.get(cacheKey);
   if (existing && !options.force) {
@@ -173,10 +184,6 @@ export async function fetchStorefrontData(
   }
   if (existing && options.force) {
     inflight.delete(cacheKey);
-  }
-
-  if (!options.force && cached && cached.expiresAt > Date.now()) {
-    return cached.data;
   }
   const client = getClient(clientKey);
   const timeoutSignal = getTimeoutSignal(TIMEOUT_MS);
