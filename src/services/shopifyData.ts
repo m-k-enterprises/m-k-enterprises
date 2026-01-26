@@ -170,11 +170,12 @@ export async function fetchStorefrontData(
 ): Promise<StorefrontData> {
   const cacheKey = getCacheKey(clientKey);
   const cached = cache.get(cacheKey);
-  if (cached && cached.expiresAt <= Date.now()) {
+  const isCacheValid = cached ? cached.expiresAt > Date.now() : false;
+  if (cached && !isCacheValid) {
     cache.delete(cacheKey);
   }
 
-  if (!options.force && cached && cached.expiresAt > Date.now()) {
+  if (!options.force && cached && isCacheValid) {
     return cached.data;
   }
 
