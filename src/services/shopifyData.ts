@@ -178,10 +178,11 @@ export async function fetchStorefrontData(
     return data;
   });
 
-  inflight.set(cacheKey, request);
   const requestWithCleanup = requestWithCache.finally(() => {
     inflight.delete(cacheKey);
   });
+
+  inflight.set(cacheKey, requestWithCleanup);
   return requestWithCleanup;
 }
 
