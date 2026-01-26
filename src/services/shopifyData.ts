@@ -15,6 +15,7 @@ const TIMEOUT_MS = 10 * 1000;
 // Cache Shopify storefront responses for a short period to reduce network and API load
 const CACHE_TTL_MINUTES = 5;
 const CACHE_TTL_MS = CACHE_TTL_MINUTES * 60 * 1000;
+const STORE_LOAD_ERROR_MESSAGE = 'Failed to load storefront data';
 
 const cache = new Map<string, { data: StorefrontData; expiresAt: number }>();
 const inflight = new Map<string, Promise<StorefrontData>>();
@@ -62,7 +63,25 @@ function getTimeoutSignal(timeoutMs: number): AbortSignal | undefined {
   }
 
   const timeout = (AbortSignal as { timeout?: (ms: number) => AbortSignal }).timeout;
-  return typeof timeout === 'function' ? timeout(timeoutMs) : undefined;
+  if (typeof timeout === 'function') {
+    return timeout(timeoutMs);
+  }
+
+  // Fallback for browsers that support AbortController but not AbortSignal.timeout.
+  if (typeof AbortController !== 'undefined') {
+    const controller = new AbortController();
+    setTimeout(() => {
+      // Reason is optional; older browsers will ignore it.
+      try {
+        controller.abort(new Error('Operation timed out'));
+      } catch {
+        // Ignore errors from abort in very old implementations.
+      }
+    }, timeoutMs);
+    return controller.signal;
+  }
+
+  return undefined;
 }
 
 function withTimeout<T>(
@@ -227,7 +246,7 @@ export function useStorefrontData(clientKey: BrandKey): StorefrontResponse {
         const data = await fetchStorefrontData(clientKey, { force });
         setState({ data, error: null, loading: false });
       } catch (error) {
-        setState({ data: null, error: toError(error, 'Failed to load storefront data'), loading: false });
+        setState({ data: null, error: toError(error, STORE_LOAD_ERROR_MESSAGE), loading: false });
       }
     },
     [clientKey]
@@ -247,7 +266,7 @@ export function useStorefrontData(clientKey: BrandKey): StorefrontResponse {
         if (!active) {
           return;
         }
-        setState({ data: null, error: toError(error, 'Failed to load storefront data'), loading: false });
+        setState({ data: null, error: toError(error, STORE_LOAD_ERROR_MESSAGE), loading: false });
       });
 
     return () => {
