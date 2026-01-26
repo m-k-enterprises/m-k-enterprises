@@ -147,8 +147,11 @@ export async function fetchStorefrontData(
   const cached = cache.get(cacheKey);
 
   const existing = inflight.get(cacheKey);
-  if (existing) {
+  if (existing && !options.force) {
     return existing;
+  }
+  if (existing && options.force) {
+    inflight.delete(cacheKey);
   }
 
   if (!options.force && cached && cached.expiresAt > Date.now()) {
