@@ -14,7 +14,7 @@
           altText
           # url: original, full-resolution source image (avoid direct UI rendering; prefer displayUrl)
           url
-          # displayUrl: transformed/optimized image for UI rendering (maxWidth 2880px; preserves aspect ratio; height scales automatically)
+          # displayUrl: transformed/optimized image for UI rendering (maxWidth 2880px; Shopify transforms preserve aspect ratio, so height scales automatically)
           displayUrl: url(transform: {maxWidth: 2880})
           # width/height: dimensions of the returned image after transforms
           width
@@ -27,7 +27,7 @@
           altText
           # url: original, full-resolution source image (avoid direct UI rendering; prefer displayUrl)
           url
-          # displayUrl: transformed/optimized image for UI rendering (maxWidth 2880px; preserves aspect ratio; height scales automatically)
+          # displayUrl: transformed/optimized image for UI rendering (maxWidth 2880px; Shopify transforms preserve aspect ratio, so height scales automatically)
           displayUrl: url(transform: {maxWidth: 2880})
           # width/height: dimensions of the returned image after transforms
           width
