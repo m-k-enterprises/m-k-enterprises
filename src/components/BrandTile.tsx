@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Card, Image } from 'react-bootstrap';
 import { Shop } from '../App';
-import { getBrandBorderColor } from './brandStyles';
+import { getBrandBorderStyle } from './brandStyles';
 
 interface BrandTileProps {
   shop: Shop;
@@ -10,7 +10,7 @@ interface BrandTileProps {
 function BrandTile({ shop }: BrandTileProps) {
   const logoUrl = shop.brand?.squareLogo?.image?.displayUrl;
   const logoAlt = shop.brand?.squareLogo?.image?.altText || `${shop.name} logo`;
-  const borderStyle = getBrandBorderColor(shop.brand);
+  const borderStyle = getBrandBorderStyle(shop.brand);
 
   return (
     <Card className="card-profile border-0">
