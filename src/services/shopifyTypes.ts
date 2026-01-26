@@ -16,7 +16,7 @@ export interface Article {
 }
 
 export interface BrandLogoImage {
-  originalUrl?: string;
+  sourceUrl?: string;
   displayUrl?: string;
   altText?: string;
   width?: number;
