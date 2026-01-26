@@ -12,8 +12,8 @@
       logo {
         image {
           altText
-          # cdnUrl: Shopify CDN image URL (avoid direct UI rendering; UI uses displayUrl; keep for downloads or high-res previews)
-          cdnUrl: url
+          # rawCdnUrl: Shopify CDN image URL (avoid direct UI rendering; UI uses displayUrl; keep for downloads or high-res previews)
+          rawCdnUrl: url
           # displayUrl: transformed/optimized image for UI rendering (maxWidth 2880px; Shopify transforms preserve aspect ratio, so height scales automatically)
           displayUrl: url(transform: {maxWidth: 2880})
           # width/height: dimensions of the returned image after transforms
@@ -25,8 +25,8 @@
       squareLogo {
         image {
           altText
-          # cdnUrl: Shopify CDN image URL (avoid direct UI rendering; UI uses displayUrl; keep for downloads or high-res previews)
-          cdnUrl: url
+          # rawCdnUrl: Shopify CDN image URL (avoid direct UI rendering; UI uses displayUrl; keep for downloads or high-res previews)
+          rawCdnUrl: url
           # displayUrl: transformed/optimized image for UI rendering (maxWidth 2880px; Shopify transforms preserve aspect ratio, so height scales automatically)
           displayUrl: url(transform: {maxWidth: 2880})
           # width/height: dimensions of the returned image after transforms
