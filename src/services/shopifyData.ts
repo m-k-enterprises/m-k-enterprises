@@ -146,13 +146,20 @@ export async function fetchStorefrontData(
     return cached.data;
   }
   const client = getClient(clientKey);
-  const controller = typeof AbortController !== 'undefined' ? new AbortController() : undefined;
+  const timeoutSignal =
+    typeof AbortSignal !== 'undefined' &&
+    typeof (AbortSignal as { timeout?: (ms: number) => AbortSignal }).timeout === 'function'
+      ? (AbortSignal as { timeout: (ms: number) => AbortSignal }).timeout(TIMEOUT_MS)
+      : undefined;
+  const controller =
+    !timeoutSignal && typeof AbortController !== 'undefined' ? new AbortController() : undefined;
+  const signal = timeoutSignal ?? controller?.signal;
   const request = withTimeout(
     client
       .query<StorefrontData>({
         query: storefrontQuery,
         fetchPolicy: 'no-cache',
-        context: controller ? { fetchOptions: { signal: controller.signal } } : undefined,
+        context: signal ? { fetchOptions: { signal } } : undefined,
       })
       .then((result) => result.data),
     TIMEOUT_MS,
