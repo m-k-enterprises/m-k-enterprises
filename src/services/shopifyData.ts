@@ -17,7 +17,10 @@ const CACHE_TTL_MINUTES = 5;
 const CACHE_TTL_MS = CACHE_TTL_MINUTES * 60 * 1000;
 const STORE_LOAD_ERROR_MESSAGE = 'Failed to load storefront data';
 
+// In-memory cache lives for the lifetime of the JS context (browser tab).
+// In development with Webpack/CRA HMR, caches are cleared on module dispose (see below).
 const cache = new Map<string, { data: StorefrontData; expiresAt: number }>();
+// Track in-flight requests per cache key to de-duplicate concurrent fetches.
 const inflight = new Map<string, Promise<StorefrontData>>();
 
 interface WebpackHotModule {
