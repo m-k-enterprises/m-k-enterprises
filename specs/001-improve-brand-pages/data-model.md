@@ -9,7 +9,7 @@ Represents an active brand displayed on the homepage and brands route.
 - `name` (string): Brand name.
 - `primaryDomainUrl` (string): External storefront URL.
 - `shortDescription` (string): One-paragraph summary.
-- `logo` (object): `{ url, altText, width, height }`.
+- `logo` (object): `{ originalUrl, altText, width, height }`.
 - `colors` (object): `{ primary: [{ background, foreground }] }`.
 - `coverImage` (object): `{ url }`.
 

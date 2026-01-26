@@ -43,7 +43,7 @@ type BrandLogo {
 }
 
 type BrandLogoImage {
-  url: String
+  originalUrl: String
   displayUrl: String
   altText: String
   width: Int
