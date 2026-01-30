@@ -64,7 +64,7 @@ function Articles(props: ArticleProps) {
               style={getBrandBorderStyle(article.brand)}
             >
               <Card.Title>{article.title}</Card.Title>
-              <Card.Text>{article.excerpt}</Card.Text>
+              {article.excerpt ? <Card.Text>{article.excerpt}</Card.Text> : null}
               <Button
                 variant="more"
                 as="a"

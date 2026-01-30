@@ -11,7 +11,7 @@ const storefrontQuery = loader('../storefront.gql');
 // 10s network timeout for Shopify storefront requests: long enough for typical responses,
 // but short enough to fail fast and surface errors promptly in the UI.
 const SHOPIFY_REQUEST_TIMEOUT_MS = 10 * 1000;
-const TIMEOUT_MS = SHOPIFY_REQUEST_TIMEOUT_MS;
+
 
 
 // Cache Shopify storefront responses for a short period to reduce network and API load
@@ -72,10 +72,10 @@ function getTimeoutSignal(timeoutMs: number): AbortSignal | undefined {
     return timeout(timeoutMs);
   }
 
-  return createAbortControllerTimeoutSignal(timeoutMs);
+  return createTimeoutSignal(timeoutMs);
 }
 
-function createAbortControllerTimeoutSignal(timeoutMs: number): AbortSignal | undefined {
+function createTimeoutSignal(timeoutMs: number): AbortSignal | undefined {
   if (typeof AbortController === 'undefined') {
     return undefined;
   }
