@@ -11,8 +11,7 @@ const storefrontQuery = loader('../storefront.gql');
 // 10s network timeout for Shopify storefront requests: long enough for typical responses,
 // but short enough to fail fast and surface errors promptly in the UI.
 const SHOPIFY_REQUEST_TIMEOUT_MS = 10 * 1000;
-// Backwards-compatible alias; prefer SHOPIFY_REQUEST_TIMEOUT_MS for new code.
-const TIMEOUT_MS = SHOPIFY_REQUEST_TIMEOUT_MS;
+
 
 // Cache Shopify storefront responses for a short period to reduce network and API load
 const CACHE_TTL_MINUTES = 5;
@@ -31,7 +30,7 @@ interface WebpackHotModule {
   };
 }
 
-function hasHotModule(value: unknown): value is WebpackHotModule {
+function hasWebpackHotModule(value: unknown): value is WebpackHotModule {
   return (
     typeof value === 'object' &&
     value !== null &&
@@ -43,7 +42,7 @@ function hasHotModule(value: unknown): value is WebpackHotModule {
 if (
   process.env.NODE_ENV === 'development' &&
   typeof module !== 'undefined' &&
-  hasHotModule(module) &&
+  hasWebpackHotModule(module) &&
   module.hot
 ) {
   // Reset in-memory caches on Webpack/CRA hot reloads so each fresh dev bundle
