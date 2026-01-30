@@ -16,7 +16,14 @@ export interface Article {
 }
 
 export interface BrandLogoImage {
+  /**
+   * Shopify base image URL. Avoid direct UI rendering (unoptimized for web delivery).
+   * Prefer displayUrl in UI; keep for downloads or high-res previews.
+   */
   originalUrl?: string;
+  /**
+   * Transformed/optimized image URL intended for UI rendering.
+   */
   displayUrl?: string;
   altText?: string;
   width?: number;
