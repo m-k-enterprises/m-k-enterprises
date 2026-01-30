@@ -15,6 +15,9 @@ export interface Article {
   brand?: Brand;
 }
 
+/**
+ * Usage: prefer displayUrl for UI rendering; reserve originalUrl for downloads/high-res previews.
+ */
 export interface BrandLogoImage {
   /**
    * Shopify base image URL. Avoid direct UI rendering (unoptimized for web delivery).
