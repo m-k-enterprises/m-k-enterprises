@@ -218,8 +218,13 @@ export async function fetchStorefrontData(
         data,
         expiresAt: Date.now() + CACHE_TTL_MS,
       });
-    } catch {
-      // Ignore cache population errors so they don't affect callers.
+    } catch (error) {
+      // Log cache population errors at debug level so they don't affect callers but can be diagnosed.
+      console.debug('Failed to populate storefront data cache', {
+        clientKey,
+        cacheKey,
+        error,
+      });
     }
     return data;
   });

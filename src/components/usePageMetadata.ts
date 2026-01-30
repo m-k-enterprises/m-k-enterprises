@@ -19,6 +19,7 @@ const SITE_NAME = 'M-K Enterprises';
  */
 export default function usePageMetadata({ title, description }: PageMetadata) {
   const lastMetadata = useRef<{ title: string; description: string } | null>(null);
+  const metaRef = useRef<HTMLMetaElement | null>(null);
 
   useEffect(() => {
     const nextTitle = `${SITE_NAME} | ${title}`;
@@ -29,14 +30,17 @@ export default function usePageMetadata({ title, description }: PageMetadata) {
     }
 
     if (!previous || previous.description !== description) {
-      let meta = document.querySelector('meta[name="description"]') as HTMLMetaElement | null;
-      if (!meta) {
-        meta = document.createElement('meta');
-        meta.name = 'description';
-        document.head.appendChild(meta);
+      if (!metaRef.current) {
+        metaRef.current = document.querySelector('meta[name="description"]') as HTMLMetaElement | null;
       }
 
-      meta.content = description;
+      if (!metaRef.current) {
+        metaRef.current = document.createElement('meta');
+        metaRef.current.name = 'description';
+        document.head.appendChild(metaRef.current);
+      }
+
+      metaRef.current.content = description;
     }
 
     lastMetadata.current = { title: nextTitle, description };
