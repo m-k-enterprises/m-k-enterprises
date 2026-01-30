@@ -11,7 +11,6 @@ const storefrontQuery = loader('../storefront.gql');
 // 10s network timeout for Shopify storefront requests: long enough for typical responses,
 // but short enough to fail fast and surface errors promptly in the UI.
 const SHOPIFY_REQUEST_TIMEOUT_MS = 10 * 1000;
-const TIMEOUT_MS = SHOPIFY_REQUEST_TIMEOUT_MS;
 
 
 
@@ -152,7 +151,7 @@ function toError(error: unknown, context: string): Error {
  *
  * Timeout handling:
  * - The underlying Apollo `client.query` call is wrapped by {@link withTimeout}
- *   with a timeout of {@link TIMEOUT_MS} milliseconds. If the request does not
+ *   with a timeout of {@link SHOPIFY_REQUEST_TIMEOUT_MS} milliseconds. If the request does not
  *   complete within this time, the returned Promise rejects with an
  *   `Error` whose message includes "Shopify request timed out" and, when
  *   available, the client context.
@@ -190,7 +189,7 @@ export async function fetchStorefrontData(
     inflight.delete(cacheKey);
   }
   const client = getClient(clientKey);
-  const timeoutSignal = getTimeoutSignal(TIMEOUT_MS);
+  const timeoutSignal = getTimeoutSignal(SHOPIFY_REQUEST_TIMEOUT_MS);
   const controller =
     !timeoutSignal && typeof AbortController !== 'undefined' ? new AbortController() : undefined;
   const signal = timeoutSignal ?? controller?.signal;
@@ -202,7 +201,7 @@ export async function fetchStorefrontData(
         context: signal ? { fetchOptions: { signal } } : undefined,
       })
       .then((result) => result.data),
-    TIMEOUT_MS,
+    SHOPIFY_REQUEST_TIMEOUT_MS,
     `client: ${clientKey}`,
     controller
       ? () => {
