@@ -11,6 +11,7 @@ const storefrontQuery = loader('../storefront.gql');
 // 10s network timeout for Shopify storefront requests: long enough for typical responses,
 // but short enough to fail fast and surface errors promptly in the UI.
 const SHOPIFY_REQUEST_TIMEOUT_MS = 10 * 1000;
+const TIMEOUT_MS = SHOPIFY_REQUEST_TIMEOUT_MS;
 
 
 
