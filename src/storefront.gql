@@ -12,7 +12,7 @@
       logo {
         image {
           altText
-          # originalUrl: Shopify base image URL (avoid direct UI rendering; unoptimized for web delivery; UI uses displayUrl; keep for downloads or high-res previews)
+          # originalUrl: alias for Shopify's base image URL (unoptimized; prefer displayUrl for UI rendering; keep for downloads or high-res previews)
           originalUrl: url
           # displayUrl: transformed/optimized image for UI rendering (maxWidth 2880px; Shopify transforms preserve aspect ratio, so height scales automatically)
           displayUrl: url(transform: {maxWidth: 2880})
@@ -25,7 +25,7 @@
       squareLogo {
         image {
           altText
-          # originalUrl: Shopify base image URL (avoid direct UI rendering; unoptimized for web delivery; UI uses displayUrl; keep for downloads or high-res previews)
+          # originalUrl: alias for Shopify's base image URL (unoptimized; prefer displayUrl for UI rendering; keep for downloads or high-res previews)
           originalUrl: url
           # displayUrl: transformed/optimized image for UI rendering (maxWidth 2880px; Shopify transforms preserve aspect ratio, so height scales automatically)
           displayUrl: url(transform: {maxWidth: 2880})
