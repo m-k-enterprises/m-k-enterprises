@@ -46,7 +46,12 @@ export default function usePageMetadata({ title, description }: PageMetadata) {
         announcer.style.overflow = 'hidden';
         announcer.style.clip = 'rect(0 0 0 0)';
         announcer.style.clipPath = 'inset(50%)';
-        document.body.appendChild(announcer);
+        const body = document.body;
+        if (body.firstChild) {
+          body.insertBefore(announcer, body.firstChild);
+        } else {
+          body.appendChild(announcer);
+        }
         liveRegionRef.current = announcer;
       }
     }

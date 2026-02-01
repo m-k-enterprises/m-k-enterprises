@@ -23,7 +23,7 @@ const STORE_LOAD_ERROR_MESSAGE = 'Failed to load storefront data';
 // In development with Webpack/CRA HMR, caches are cleared on module dispose (see below).
 const storefrontDataCache = new Map<string, { data: StorefrontData; expiresAt: number }>();
 // Track in-flight requests per cache key to de-duplicate concurrent fetches.
-const inflight = new Map<string, Promise<StorefrontData>>();
+const inflightRequests = new Map<string, Promise<StorefrontData>>();
 
 interface WebpackHotModule {
   hot: {
@@ -51,7 +51,7 @@ if (
   const hot = module.hot;
   hot.dispose(() => {
     storefrontDataCache.clear();
-    inflight.clear();
+    inflightRequests.clear();
   });
 }
 function getClient(clientKey: BrandKey): ApolloClient<NormalizedCacheObject> {
@@ -81,17 +81,22 @@ function createTimeoutSignal(timeoutMs: number): AbortSignal | undefined {
   }
 
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => {
+  let timeoutId: ReturnType<typeof setTimeout> | undefined;
+  const cleanup = () => {
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+  };
+  timeoutId = setTimeout(() => {
     // Reason is optional; older browsers will ignore it.
+    cleanup();
     try {
       controller.abort(new Error('Shopify request timed out'));
     } catch {
       // Ignore errors from abort in very old implementations.
     }
   }, timeoutMs);
-  controller.signal.addEventListener('abort', () => {
-    clearTimeout(timeoutId);
-  }, { once: true });
+  controller.signal.addEventListener('abort', cleanup, { once: true });
   return controller.signal;
 }
 
@@ -184,12 +189,12 @@ export async function fetchStorefrontData(
     return cached.data;
   }
 
-  const existing = inflight.get(cacheKey);
+  const existing = inflightRequests.get(cacheKey);
   if (existing && !options.force) {
     return existing;
   }
   if (existing && options.force) {
-    inflight.delete(cacheKey);
+    inflightRequests.delete(cacheKey);
   }
   const client = getClient(clientKey);
   // Use an AbortSignal when available to cancel the underlying request; withTimeout
@@ -237,10 +242,10 @@ export async function fetchStorefrontData(
   });
 
   const requestWithCleanup = requestWithCache.finally(() => {
-    inflight.delete(cacheKey);
+    inflightRequests.delete(cacheKey);
   });
 
-  inflight.set(cacheKey, requestWithCleanup);
+  inflightRequests.set(cacheKey, requestWithCleanup);
   return requestWithCleanup;
 }
 
