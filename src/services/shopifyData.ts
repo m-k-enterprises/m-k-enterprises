@@ -204,7 +204,11 @@ export async function fetchStorefrontData(
         context: signal ? { fetchOptions: { signal } } : undefined,
       })
       .then((result) => result.data),
-    controller ? () => controller.abort() : undefined
+    SHOPIFY_REQUEST_TIMEOUT_MS,
+    `client: ${clientKey}`,
+    controller
+      ? () => {
+          if (!controller.signal.aborted) {
             controller.abort();
           }
         }
