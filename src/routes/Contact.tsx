@@ -35,7 +35,7 @@ function Contact(props: ShopProps) {
                 <a href={shop.primaryDomain.url}>
                   <Image
                     src={shop.brand?.logo?.image?.displayUrl}
-                    alt={shop.brand?.logo?.image?.altText || `${shop.name} logo`}
+                    alt={shop.brand?.logo?.image?.altText || (shop.name ? 'Logo of ' + shop.name : 'Brand logo')}
                     width={shop.brand?.logo?.image?.width}
                     height={shop.brand?.logo?.image?.height}
                     fluid

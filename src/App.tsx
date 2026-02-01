@@ -4,7 +4,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { Container, Image, Nav, Navbar, Spinner } from 'react-bootstrap';
 import { Block } from '@smolpack/react-bootstrap-extensions';
 
-import { Article, Shop, useStorefrontData } from './services';
+import { Article, Shop, StorefrontData, useStorefrontData } from './services';
 import logo from './logo.svg';
 
 import './App.scss';
@@ -33,6 +33,20 @@ export interface ShopProps extends QueryProps {
 export interface ArticleProps extends QueryProps {
   articles: Article[]
 }
+
+const mapStorefrontData = (data: StorefrontData | null) => {
+  if (!data) {
+    return { shop: null as Shop | null, articles: [] as Article[] };
+  }
+
+  return {
+    shop: data.shop,
+    articles: data.articles.nodes.map((article) => ({
+      ...article,
+      brand: data.shop.brand,
+    })),
+  };
+};
 
 function App() {
   const queryBearBelts = useStorefrontData('bearBelts');
@@ -66,28 +80,25 @@ function App() {
     }
   }, [queryBearBelts, queryPocketBearsApparel, queryMythicalMoods]);
 
-  // Memoize derived data keyed off the query data values to ensure stability and purity.
+  const bearBeltsData = React.useMemo(() => mapStorefrontData(queryBearBelts.data), [queryBearBelts.data]);
+  const pocketBearsData = React.useMemo(() => mapStorefrontData(queryPocketBearsApparel.data), [queryPocketBearsApparel.data]);
+  const mythicalMoodsData = React.useMemo(() => mapStorefrontData(queryMythicalMoods.data), [queryMythicalMoods.data]);
+
+  // Memoize derived data keyed off the per-query data values to ensure stability and purity.
   // This avoids re-sorting when loading/error changes but data remains the same.
   const { shops, articles } = React.useMemo(() => {
     const shopData: Shop[] = [];
     let articlesData: Article[] = [];
 
-    // Construct the data list inside the memo to keep dependencies explicit and safe
-    const dataList = [
-      queryBearBelts.data,
-      queryPocketBearsApparel.data,
-      queryMythicalMoods.data,
-    ];
+    const dataList = [bearBeltsData, pocketBearsData, mythicalMoodsData];
 
-    dataList.forEach((data) => {
-      if (data) {
-        shopData.push(data.shop);
-        if (data.articles.nodes) {
-          articlesData.push(...data.articles.nodes.map((article) => ({
-            ...article,
-            brand: data.shop.brand,
-          })));
-        }
+    dataList.forEach(({ shop, articles: shopArticles }) => {
+      if (shop) {
+        shopData.push(shop);
+      }
+
+      if (shopArticles.length > 0) {
+        articlesData.push(...shopArticles);
       }
     });
 
@@ -99,11 +110,7 @@ function App() {
     });
 
     return { shops: shopData, articles: articlesData };
-  }, [
-    queryBearBelts.data,
-    queryPocketBearsApparel.data,
-    queryMythicalMoods.data,
-  ]);
+  }, [bearBeltsData, pocketBearsData, mythicalMoodsData]);
 
   const now = new Date();
 

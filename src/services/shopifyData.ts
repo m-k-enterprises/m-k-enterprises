@@ -31,12 +31,12 @@ interface WebpackHotModule {
   };
 }
 
-function hasWebpackHotModule(value: unknown): value is WebpackHotModule {
+function hasWebpackHotModule(moduleRef: unknown): moduleRef is WebpackHotModule {
   return (
-    typeof value === 'object' &&
-    value !== null &&
-    'hot' in (value as { hot?: unknown }) &&
-    typeof (value as { hot?: { dispose?: unknown } }).hot?.dispose === 'function'
+    typeof moduleRef === 'object' &&
+    moduleRef !== null &&
+    'hot' in (moduleRef as { hot?: unknown }) &&
+    typeof (moduleRef as { hot?: { dispose?: unknown } }).hot?.dispose === 'function'
   );
 }
 
@@ -81,7 +81,7 @@ function createTimeoutSignal(timeoutMs: number): AbortSignal | undefined {
   }
 
   const controller = new AbortController();
-  setTimeout(() => {
+  const timeoutId = setTimeout(() => {
     // Reason is optional; older browsers will ignore it.
     try {
       controller.abort(new Error('Operation timed out'));
@@ -89,6 +89,9 @@ function createTimeoutSignal(timeoutMs: number): AbortSignal | undefined {
       // Ignore errors from abort in very old implementations.
     }
   }, timeoutMs);
+  controller.signal.addEventListener('abort', () => {
+    clearTimeout(timeoutId);
+  }, { once: true });
   return controller.signal;
 }
 
@@ -201,11 +204,7 @@ export async function fetchStorefrontData(
         context: signal ? { fetchOptions: { signal } } : undefined,
       })
       .then((result) => result.data),
-    SHOPIFY_REQUEST_TIMEOUT_MS,
-    `client: ${clientKey}`,
-    controller
-      ? () => {
-          if (!controller.signal.aborted) {
+      ? () => controller.abort()
             controller.abort();
           }
         }

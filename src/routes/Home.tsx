@@ -14,6 +14,18 @@ const getBrandGridColumns = (shopCount: number) => {
   return shopCount % 2 === 0 ? 2 : 3;
 };
 
+const getContentStatus = (loading: boolean, error: boolean, hasData: boolean) => {
+  if (loading) {
+    return 'loading';
+  }
+
+  if (error) {
+    return 'error';
+  }
+
+  return hasData ? 'ready' : 'empty';
+};
+
 /**
  * Home page showing brand highlights and latest news.
  *
@@ -28,8 +40,8 @@ function Home(props: HomeProps) {
 
   const hasBrands = props.shops.length > 0;
   const hasArticles = props.articles.length > 0;
-  const brandStatus = props.loading ? 'loading' : props.error ? 'error' : !hasBrands ? 'empty' : 'ready';
-  const newsStatus = props.loading ? 'loading' : props.error ? 'error' : !hasArticles ? 'empty' : 'ready';
+  const brandStatus = getContentStatus(props.loading, props.error, hasBrands);
+  const newsStatus = getContentStatus(props.loading, props.error, hasArticles);
   const brandGridColumns = getBrandGridColumns(props.shops.length);
 
   return (
