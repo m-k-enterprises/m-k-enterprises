@@ -76,7 +76,9 @@ function App() {
     if (rejected.length > 0) {
       // Re-throw the first error so callers still see a failure,
       // but only after all retries have been attempted.
-      throw rejected[0].reason;
+      const reason = rejected[0].reason;
+      const message = reason instanceof Error ? reason.message : String(reason);
+      throw new Error(`Failed to retry storefront data: ${message}`);
     }
   }, [queryBearBelts, queryPocketBearsApparel, queryMythicalMoods]);
 

@@ -20,7 +20,10 @@ function Brands(props: ShopProps) {
     description: 'Learn more about the three active M-K Enterprises brands and their storefronts.',
   });
 
-  const displayShops = props.shops.filter((shop) => activeBrandNames.has(shop.name));
+  const displayShops = React.useMemo(
+    () => props.shops.filter((shop) => activeBrandNames.has(shop.name)),
+    [props.shops],
+  );
   const status = props.loading ? 'loading' : props.error ? 'error' : displayShops.length === 0 ? 'empty' : 'ready';
 
   return (

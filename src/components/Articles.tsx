@@ -5,6 +5,7 @@ import { ArticleProps } from '../App';
 import { getBrandBorderStyle } from './brandStyles';
 
 function Articles(props: ArticleProps) {
+  // Intentionally randomize skeleton widths once per mount for visual variety.
   const skeletons = React.useMemo(() => Array.from({ length: 6 }).map(() => ({
     title: Array.from({ length: random(2, 8) }).map(() => random(1, 6)),
     text: Array.from({ length: random(3, 12) }).map(() => random(1, 6)),

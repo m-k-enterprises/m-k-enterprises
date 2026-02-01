@@ -20,6 +20,7 @@ const SITE_NAME = 'M-K Enterprises';
 export default function usePageMetadata({ title, description }: PageMetadata) {
   const lastMetadata = useRef<{ title: string; description: string } | null>(null);
   const metaRef = useRef<HTMLMetaElement | null>(null);
+  const liveRegionRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const nextTitle = `${SITE_NAME} | ${title}`;
@@ -29,8 +30,32 @@ export default function usePageMetadata({ title, description }: PageMetadata) {
       metaRef.current = document.querySelector('meta[name="description"]') as HTMLMetaElement | null;
     }
 
+    if (!liveRegionRef.current) {
+      liveRegionRef.current = document.getElementById('page-title-announcer') as HTMLDivElement | null;
+      if (!liveRegionRef.current) {
+        const announcer = document.createElement('div');
+        announcer.id = 'page-title-announcer';
+        announcer.setAttribute('aria-live', 'polite');
+        announcer.setAttribute('aria-atomic', 'true');
+        announcer.style.position = 'absolute';
+        announcer.style.width = '1px';
+        announcer.style.height = '1px';
+        announcer.style.margin = '-1px';
+        announcer.style.border = '0';
+        announcer.style.padding = '0';
+        announcer.style.overflow = 'hidden';
+        announcer.style.clip = 'rect(0 0 0 0)';
+        announcer.style.clipPath = 'inset(50%)';
+        document.body.appendChild(announcer);
+        liveRegionRef.current = announcer;
+      }
+    }
+
     if (!previous || previous.title !== nextTitle) {
       document.title = nextTitle;
+      if (liveRegionRef.current) {
+        liveRegionRef.current.textContent = nextTitle;
+      }
     }
 
     if (!previous || previous.description !== description) {

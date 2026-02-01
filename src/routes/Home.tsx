@@ -7,11 +7,14 @@ import { ArticleProps, ShopProps } from '../App';
 
 interface HomeProps extends ShopProps, ArticleProps {}
 
+const EVEN_COLUMN_COUNT = 2;
+const ODD_COLUMN_COUNT = 3;
+
 const getBrandGridColumns = (shopCount: number) => {
   // Use 2 columns for an even number of shops and 3 columns for an odd number.
   // This keeps even counts in a balanced 2-column grid (e.g., 4 shops → 2×2)
   // and uses 3 columns for odd counts to reduce the visual impact of a short final row (e.g., 5 shops → 3+2).
-  return shopCount % 2 === 0 ? 2 : 3;
+  return shopCount % 2 === 0 ? EVEN_COLUMN_COUNT : ODD_COLUMN_COUNT;
 };
 
 const getContentStatus = (loading: boolean, error: boolean, hasData: boolean) => {

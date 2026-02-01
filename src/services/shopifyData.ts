@@ -84,7 +84,7 @@ function createTimeoutSignal(timeoutMs: number): AbortSignal | undefined {
   const timeoutId = setTimeout(() => {
     // Reason is optional; older browsers will ignore it.
     try {
-      controller.abort(new Error('Operation timed out'));
+      controller.abort(new Error('Shopify request timed out'));
     } catch {
       // Ignore errors from abort in very old implementations.
     }
@@ -192,6 +192,10 @@ export async function fetchStorefrontData(
     inflight.delete(cacheKey);
   }
   const client = getClient(clientKey);
+  // Use an AbortSignal when available to cancel the underlying request; withTimeout
+  // still provides a consistent fail-fast error even if the transport ignores aborts.
+  // If the request resolves or rejects early (including via abort), withTimeout clears
+  // its timer so a timeout error will not fire after the fact.
   const timeoutSignal = getTimeoutSignal(SHOPIFY_REQUEST_TIMEOUT_MS);
   const controller =
     !timeoutSignal && typeof AbortController !== 'undefined' ? new AbortController() : undefined;
