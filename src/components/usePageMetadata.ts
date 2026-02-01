@@ -47,11 +47,7 @@ export default function usePageMetadata({ title, description }: PageMetadata) {
         announcer.style.clip = 'rect(0 0 0 0)';
         announcer.style.clipPath = 'inset(50%)';
         const body = document.body;
-        if (body.firstChild) {
-          body.insertBefore(announcer, body.firstChild);
-        } else {
-          body.appendChild(announcer);
-        }
+        body.insertBefore(announcer, body.firstChild);
         liveRegionRef.current = announcer;
       }
     }

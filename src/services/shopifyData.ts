@@ -17,6 +17,7 @@ const SHOPIFY_REQUEST_TIMEOUT_MS = 10 * 1000;
 // Cache Shopify storefront responses for a short period to reduce network and API load
 const CACHE_TTL_MINUTES = 5;
 const CACHE_TTL_MS = CACHE_TTL_MINUTES * 60 * 1000;
+const CACHE_MAX_ENTRIES = 10;
 const STORE_LOAD_ERROR_MESSAGE = 'Failed to load storefront data';
 
 // In-memory cache lives for the lifetime of the JS context (browser tab).
@@ -24,6 +25,21 @@ const STORE_LOAD_ERROR_MESSAGE = 'Failed to load storefront data';
 const storefrontDataCache = new Map<string, { data: StorefrontData; expiresAt: number }>();
 // Track in-flight requests per cache key to de-duplicate concurrent fetches.
 const inflightRequests = new Map<string, Promise<StorefrontData>>();
+
+const touchCacheEntry = (cacheKey: string, value: { data: StorefrontData; expiresAt: number }) => {
+  // Refresh key order for LRU behavior.
+  if (storefrontDataCache.has(cacheKey)) {
+    storefrontDataCache.delete(cacheKey);
+  }
+  storefrontDataCache.set(cacheKey, value);
+
+  if (storefrontDataCache.size > CACHE_MAX_ENTRIES) {
+    const oldestKey = storefrontDataCache.keys().next().value as string | undefined;
+    if (oldestKey) {
+      storefrontDataCache.delete(oldestKey);
+    }
+  }
+};
 
 interface WebpackHotModule {
   hot: {
@@ -186,6 +202,7 @@ export async function fetchStorefrontData(
   }
 
   if (!options.force && cached && isCacheValid) {
+    touchCacheEntry(cacheKey, cached);
     return cached.data;
   }
 
@@ -226,7 +243,7 @@ export async function fetchStorefrontData(
 
   const requestWithCache = request.then((data) => {
     try {
-      storefrontDataCache.set(cacheKey, {
+      touchCacheEntry(cacheKey, {
         data,
         expiresAt: Date.now() + CACHE_TTL_MS,
       });

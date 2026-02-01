@@ -7,9 +7,6 @@ import { ArticleProps, ShopProps } from '../App';
 
 interface HomeProps extends ShopProps, ArticleProps {}
 
-const EVEN_COLUMN_COUNT = 2;
-const ODD_COLUMN_COUNT = 3;
-
 /**
  * Determines how many columns to use for the brand grid based on the number of shops.
  *
@@ -20,11 +17,7 @@ const getBrandGridColumns = (shopCount: number) => {
   // Use 2 columns for an even number of shops and 3 columns for an odd number.
   // This keeps even counts in a balanced 2-column grid (e.g., 4 shops → 2×2)
   // and uses 3 columns for odd counts to reduce the visual impact of a short final row (e.g., 5 shops → 3+2).
-  if (shopCount % 2 === 0) {
-    return EVEN_COLUMN_COUNT;
-  }
-
-  return ODD_COLUMN_COUNT;
+  return shopCount % 2 === 0 ? 2 : 3;
 };
 
 const getContentStatus = (loading: boolean, error: boolean, hasData: boolean) => {
