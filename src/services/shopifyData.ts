@@ -204,7 +204,7 @@ export async function fetchStorefrontData(
         context: signal ? { fetchOptions: { signal } } : undefined,
       })
       .then((result) => result.data),
-      ? () => controller.abort()
+    controller ? () => controller.abort() : undefined
             controller.abort();
           }
         }
