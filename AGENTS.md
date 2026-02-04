@@ -9,7 +9,7 @@ Tech stack: **Create React App**, React-Router, Apollo Client (Shopify Storefron
 
 | Step | Command |
 |------|---------|
-| Install deps | `yarn install` (preferred; keep `yarn.lock` authoritative) |
+| Install deps | `yarn install` (keep `yarn.lock` authoritative) |
 | Start dev server | `yarn start` → http://localhost:3000 (hot-reload) |
 | Run tests | `yarn test` (React Testing Library + Jest, watch mode) |
 | Lint (optional) | `yarn lint` |
@@ -17,7 +17,7 @@ Tech stack: **Create React App**, React-Router, Apollo Client (Shopify Storefron
 | Prod build | `yarn build` → outputs `build/` |
 | Deploy to GH Pages | `yarn deploy` (script runs `gh-pages -d build`) |
 
-> **Node LTS** is recommended. Yarn or npm both work.
+> **Node LTS** is recommended. Use Yarn (packageManager is set to Yarn).
 
 ---
 
@@ -32,7 +32,7 @@ Tech stack: **Create React App**, React-Router, Apollo Client (Shopify Storefron
 
 ```
 
-src/
+src/                 # CRA app source root (no backend/ frontend/ tests dirs)
 ├── components/      # Re-usable UI widgets
 ├── routes/          # Page components, lazy-loaded
 ├── clients.ts       # Apollo Shopify clients
