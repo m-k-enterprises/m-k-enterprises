@@ -7,7 +7,7 @@ export interface ArticleImage {
 export interface Article {
   id: string;
   title: string;
-  onlineStoreUrl: string;
+  onlineStoreUrl?: string;
   handle: string;
   excerpt?: string;
   publishedAt: string;

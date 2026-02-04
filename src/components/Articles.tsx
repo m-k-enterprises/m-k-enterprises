@@ -66,16 +66,18 @@ function Articles(props: ArticleProps) {
             >
               <Card.Title>{article.title}</Card.Title>
               {article.excerpt && <Card.Text>{article.excerpt}</Card.Text>}
-              <Button
-                variant="more"
-                as="a"
-                href={article.onlineStoreUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-auto"
-              >
-                Read more
-              </Button>
+              {article.onlineStoreUrl ? (
+                <Button
+                  variant="more"
+                  as="a"
+                  href={article.onlineStoreUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-auto"
+                >
+                  Read more
+                </Button>
+              ) : null}
             </Card.Body>
             <Card.Footer className="text-muted">{new Date(article.publishedAt).toLocaleDateString(undefined, {
               day: 'numeric',

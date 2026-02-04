@@ -66,6 +66,7 @@ type ArticleConnection {
 type Article {
   id: ID!
   title: String!
+  onlineStoreUrl: String
   handle: String!
   excerpt: String
   excerptHtml: String
