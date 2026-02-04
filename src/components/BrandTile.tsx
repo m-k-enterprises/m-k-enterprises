@@ -15,7 +15,7 @@ function BrandTile({ shop }: BrandTileProps) {
   return (
     <Card className="card-profile border-0">
       <Card.Header style={{
-        backgroundColor: shop.brand?.colors.primary[0].background,
+        backgroundColor: shop.brand?.colors?.primary?.[0]?.background,
         backgroundImage: `url(${shop.brand?.coverImage?.image?.heroUrl})`
       }} />
       <Card.Body

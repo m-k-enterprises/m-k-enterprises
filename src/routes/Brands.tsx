@@ -68,13 +68,13 @@ function Brands(props: ShopProps) {
       ) : status === 'ready' || props.shops.length > 0 ? displayShops.map((shop) => (
         <Block key={shop.id}>
           <Container className="border-bottom border-4" style={{
-            '--bs-border-color': shop.brand?.colors.primary[0].background
+            '--bs-border-color': shop.brand?.colors?.primary?.[0]?.background
           } as React.CSSProperties}>
             <Row className="justify-content-center mb-3">
               <Col md={10}>
                 <Ratio aspectRatio="16x9">
                   <div style={{
-                    backgroundColor: shop.brand?.colors.primary[0].background,
+                    backgroundColor: shop.brand?.colors?.primary?.[0]?.background,
                     backgroundImage: `url(${shop.brand?.coverImage?.image?.heroUrl})`,
                     backgroundPosition: 'center',
                     backgroundSize: 'cover'

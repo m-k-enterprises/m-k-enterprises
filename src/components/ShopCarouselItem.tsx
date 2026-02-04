@@ -15,15 +15,15 @@ const ShopCarouselItem = React.memo(React.forwardRef<HTMLDivElement, ShopCarouse
     className={`carousel-item-large ${className || ''}`.trim()}
     style={{
       ...style,
-      backgroundColor: shop.brand?.colors.primary[0].background
+      backgroundColor: shop.brand?.colors?.primary?.[0]?.background
     }}
   >
     <div className="carousel-background" style={{
-      backgroundColor: shop.brand?.colors.primary[0].background,
+      backgroundColor: shop.brand?.colors?.primary?.[0]?.background,
       backgroundImage: `url(${shop.brand?.coverImage?.image?.heroUrl})`
     }} />
     <Carousel.Caption className="text-end" style={{
-      color: shop.brand?.colors.primary[0].foreground
+      color: shop.brand?.colors?.primary?.[0]?.foreground
     }}>
       <Container>
         <h2 className="display-1">{shop.name}</h2>
@@ -36,7 +36,7 @@ const ShopCarouselItem = React.memo(React.forwardRef<HTMLDivElement, ShopCarouse
           target="_blank"
           rel="noopener noreferrer"
           style={{
-            '--bs-btn-color': shop.brand?.colors.primary[0].foreground
+            '--bs-btn-color': shop.brand?.colors?.primary?.[0]?.foreground
           } as React.CSSProperties}
         >
           Learn more
