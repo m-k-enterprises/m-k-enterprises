@@ -51,15 +51,24 @@ function Articles(props: ArticleProps) {
       )) : props.articles.map(article => (
         <Col key={article.id}>
           <Card className="border-0" border="light">
-            <Ratio aspectRatio="16x9">
-              <Card.Img
-                variant="top"
-                src={article.image?.cardImageUrl}
-                alt={article.image?.altText || article.title}
-                width={article.image?.width}
-                height={article.image?.height}
-              />
-            </Ratio>
+            {(() => {
+              const imageUrl = article.image?.cardImageUrl ?? article.image?.url;
+              if (!imageUrl) {
+                return null;
+              }
+
+              return (
+                <Ratio aspectRatio="16x9">
+                  <Card.Img
+                    variant="top"
+                    src={imageUrl}
+                    alt={article.image?.altText || article.title}
+                    width={article.image?.width}
+                    height={article.image?.height}
+                  />
+                </Ratio>
+              );
+            })()}
             <Card.Body
               className="d-flex flex-column align-items-start"
               style={getBrandBorderStyle(article.brand)}
