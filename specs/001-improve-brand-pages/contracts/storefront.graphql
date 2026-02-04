@@ -68,6 +68,8 @@ type Article {
   title: String!
   handle: String!
   excerpt: String
+  excerptHtml: String
+  onlineStoreUrl: String
   publishedAt: String!
   image: ArticleImage
 }
