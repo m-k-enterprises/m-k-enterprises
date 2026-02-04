@@ -33,7 +33,7 @@ test('renders brand links with correct hrefs', () => {
 });
 
 test('shows loading UI for brands and news', () => {
-  const { container } = render(<Home loading={true} error={false} shops={[]} articles={[]} />);
+  render(<Home loading={true} error={false} shops={[]} articles={[]} />);
 
   const statusIndicators = screen.getAllByRole('status');
   expect(statusIndicators).toHaveLength(3);
