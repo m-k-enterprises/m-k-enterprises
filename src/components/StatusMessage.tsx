@@ -14,11 +14,18 @@ function StatusMessage({ state, message, onRetry }: StatusMessageProps) {
   const variant = state === 'error' ? 'danger' : state === 'loading' ? 'info' : 'secondary';
 
   return (
-    <Alert variant={variant}>
+    <Alert
+      variant={variant}
+      role={state === 'loading' ? 'status' : undefined}
+      aria-live={state === 'loading' ? 'polite' : undefined}
+    >
       {state === 'loading' ? (
-        <Placeholder as={Alert.Heading} animation="glow">
-          <Placeholder xs={random(2, 6)} />
-        </Placeholder>
+        <>
+          <Placeholder as={Alert.Heading} animation="glow">
+            <Placeholder xs={random(2, 6)} />
+          </Placeholder>
+          <span className="visually-hidden">{message}</span>
+        </>
       ) : (
         <Alert.Heading>{message}</Alert.Heading>
       )}
