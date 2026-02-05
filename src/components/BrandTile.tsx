@@ -7,6 +7,12 @@ interface BrandTileProps {
   shop: Shop;
 }
 
+/**
+ * Render a Bootstrap card that displays a shop's brand information (logo, name, short description) and links to the shop's primary domain.
+ *
+ * @param shop - The `Shop` object whose brand and primary domain are used to populate the tile. Optional brand fields (logo, colours, coverImage, shortDescription) may be absent.
+ * @returns A JSX element representing the brand tile card.
+ */
 function BrandTile({ shop }: BrandTileProps) {
   const logoUrl = shop.brand?.squareLogo?.image?.displayUrl;
   const logoAlt = shop.brand?.squareLogo?.image?.altText || `${shop.name} logo`;

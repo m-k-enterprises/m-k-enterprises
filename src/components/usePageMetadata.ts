@@ -8,14 +8,14 @@ interface PageMetadata {
 const SITE_NAME = 'M-K Enterprises';
 
 /**
- * React hook that synchronizes the page's metadata with the provided values.
+ * Synchronises document title and the meta description with the supplied page metadata.
  *
- * Side effects:
- * - Updates `document.title` to include the given title.
- * - Creates or updates the `<meta name="description">` tag in `document.head`.
+ * Updates the document title (prefixed with the site name), creates or updates a `<meta name="description">`
+ * element with the provided description, and updates a hidden ARIA live region so assistive technologies
+ * announce title changes.
  *
- * @param title - The page-specific portion of the document title.
- * @param description - The text to use for the meta description tag.
+ * @param title - The page-specific portion of the document title; it will be prefixed with the site name
+ * @param description - The text to set as the page's meta description
  */
 export default function usePageMetadata({ title, description }: PageMetadata) {
   const lastMetadata = useRef<{ title: string; description: string } | null>(null);

@@ -33,10 +33,10 @@ const getContentStatus = (loading: boolean, error: boolean, hasData: boolean) =>
 };
 
 /**
- * Home page showing brand highlights and latest news.
+ * Render the home page with brand highlights and the latest news.
  *
- * @param props - Shop and article data with loading states.
- * @returns JSX for the home route.
+ * @param props - Home page props containing `shops`, `articles`, `loading`, `error` and `onRetry` handler used to control content rendering.
+ * @returns The rendered Home page element
  */
 function Home(props: HomeProps) {
   usePageMetadata({

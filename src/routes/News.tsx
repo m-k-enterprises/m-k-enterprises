@@ -5,10 +5,14 @@ import { Articles, PageLayout, StatusMessage, usePageMetadata } from '../compone
 import { ArticleProps } from '../App';
 
 /**
- * News route listing recent company articles.
+ * Render the News route showing recent company articles.
  *
- * @param props - Article data with loading state.
- * @returns JSX for the news route.
+ * Sets page metadata (title "News" and a brief description) and displays either
+ * an Articles grid when data is ready or a StatusMessage for loading, error or
+ * empty states.
+ *
+ * @param props - ArticleProps containing `articles`, `loading`, `error` and optional `onRetry`
+ * @returns The rendered React element for the news page
  */
 function News(props: ArticleProps) {
   usePageMetadata({

@@ -48,6 +48,13 @@ const mapStorefrontData = (data: StorefrontData | null) => {
   };
 };
 
+/**
+ * Top-level React application component that composes storefront data, navigation and route layout.
+ *
+ * Aggregates data from multiple storefronts into a unified list of shops and sorted articles, exposes a combined retry handler to route components, and renders the site navigation, lazy-loaded routes and footer.
+ *
+ * @returns The root React element for the application
+ */
 function App() {
   const queryBearBelts = useStorefrontData('bearBelts');
   const queryPocketBearsApparel = useStorefrontData('pocketBearsApparel');
