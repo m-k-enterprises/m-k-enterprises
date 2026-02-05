@@ -9,10 +9,10 @@ import { random } from 'lodash';
 const activeBrandNames = new Set(activeBrands.map((brand) => brand.name));
 
 /**
- * Lists every brand with link to learn more.
+ * Render a list of active brand storefronts with visuals and a link to learn more.
  *
- * @param props - Shop data for all brands.
- * @returns JSX for the brands route.
+ * @param props - ShopProps containing shops and UI state (e.g. `loading`, `error`, `onRetry`)
+ * @returns The JSX element for the "Our Brands" page
  */
 function Brands(props: ShopProps) {
   usePageMetadata({

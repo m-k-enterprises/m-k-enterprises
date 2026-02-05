@@ -10,10 +10,10 @@ import { PageLayout, usePageMetadata } from '../components';
 import about from './about.jpg';
 
 /**
- * About page describing the company and team.
+ * Render the About page for the company, including shipping stats, mission, and team.
  *
- * @param props - Shop data with loading state.
- * @returns JSX for the about route.
+ * @param props - Shop data and UI state; contains `shops`, `loading`, and `error`
+ * @returns The rendered JSX element for the About page
  */
 function About(props: ShopProps) {
   usePageMetadata({

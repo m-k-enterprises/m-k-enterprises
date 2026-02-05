@@ -47,6 +47,12 @@ interface WebpackHotModule {
   };
 }
 
+/**
+ * Type guard that determines whether a value is a Webpack hot module object exposing a `dispose` handler.
+ *
+ * @param moduleRef - Value to test for the Webpack hot-module shape
+ * @returns `true` if `moduleRef` has a `hot.dispose` function, `false` otherwise
+ */
 function hasWebpackHotModule(moduleRef: unknown): moduleRef is WebpackHotModule {
   return (
     typeof moduleRef === 'object' &&
@@ -70,14 +76,32 @@ if (
     inflightRequests.clear();
   });
 }
+/**
+ * Retrieve the Apollo Client instance for a given brand key.
+ *
+ * @param clientKey - The brand key identifying the client
+ * @returns The Apollo Client associated with `clientKey`
+ */
 function getClient(clientKey: BrandKey): ApolloClient<NormalizedCacheObject> {
   return clients[clientKey];
 }
 
+/**
+ * Produce the cache key for a given brand.
+ *
+ * @param clientKey - Brand identifier used to scope the storefront cache entry
+ * @returns The cache key in the form `storefront:<BrandKey>`
+ */
 function getCacheKey(clientKey: BrandKey): string {
   return `storefront:${clientKey}`;
 }
 
+/**
+ * Obtain an AbortSignal that is aborted after the specified timeout in milliseconds.
+ *
+ * @param timeoutMs - Timeout duration in milliseconds
+ * @returns An `AbortSignal` that will be aborted after `timeoutMs`, or `undefined` if no compatible abort mechanism is available
+ */
 function getTimeoutSignal(timeoutMs: number): AbortSignal | undefined {
   const timeout =
     typeof AbortSignal !== 'undefined'
@@ -91,6 +115,12 @@ function getTimeoutSignal(timeoutMs: number): AbortSignal | undefined {
   return createTimeoutSignal(timeoutMs);
 }
 
+/**
+ * Creates an AbortSignal that will be aborted after the given timeout.
+ *
+ * @param timeoutMs - Timeout in milliseconds after which the signal will be aborted
+ * @returns An `AbortSignal` that will be aborted after `timeoutMs` milliseconds; the abort reason is an `Error` with message `"Shopify request timed out"` in environments that support abort reasons. Returns `undefined` if `AbortController` is not available in the runtime.
+ */
 function createTimeoutSignal(timeoutMs: number): AbortSignal | undefined {
   if (typeof AbortController === 'undefined') {
     return undefined;
@@ -116,6 +146,15 @@ function createTimeoutSignal(timeoutMs: number): AbortSignal | undefined {
   return controller.signal;
 }
 
+/**
+ * Enforces a fail-fast timeout for an asynchronous operation, rejecting with a timeout error if the deadline elapses.
+ *
+ * @param promise - The promise representing the asynchronous operation to wrap.
+ * @param timeoutMs - Timeout duration in milliseconds.
+ * @param context - Optional context string appended to the timeout error message in parentheses.
+ * @param onTimeout - Optional callback invoked when the timeout occurs (before the returned promise rejects).
+ * @returns The resolved value of the wrapped operation if it completes before the timeout; otherwise rejects with an `Error` whose message is `Shopify request timed out` optionally followed by ` (context)`.
+ */
 function withTimeout<T>(
   promise: Promise<T>,
   timeoutMs: number,
@@ -142,6 +181,13 @@ function withTimeout<T>(
   });
 }
 
+/**
+ * Normalise an unknown error value into an Error, prefixing its message with context.
+ *
+ * @param error - The value to normalise into an Error; if already an Error it is returned unchanged.
+ * @param context - A short description to prefix the resulting error message with
+ * @returns An Error whose message includes the provided context and the original error details
+ */
 function toError(error: unknown, context: string): Error {
   if (error instanceof Error) {
     return error;
@@ -266,6 +312,11 @@ export async function fetchStorefrontData(
   return requestWithCleanup;
 }
 
+/**
+ * Clears the in-memory storefront cache for a specific brand or for all brands.
+ *
+ * @param clientKey - When provided, removes the cache entry for the given brand; when omitted, clears all cache entries.
+ */
 export function clearStorefrontCache(clientKey?: BrandKey) {
   if (clientKey) {
     storefrontDataCache.delete(getCacheKey(clientKey));
@@ -274,6 +325,16 @@ export function clearStorefrontCache(clientKey?: BrandKey) {
   storefrontDataCache.clear();
 }
 
+/**
+ * React hook that provides Shopify storefront data and loading state for a given brand.
+ *
+ * @param clientKey - The BrandKey identifying which storefront client/brand to load data for
+ * @returns An object with:
+ *  - `data`: the fetched `StorefrontData` or `null` if unavailable,
+ *  - `error`: an `Error` describing the last failure or `null` if none,
+ *  - `loading`: `true` while a fetch is in progress, `false` otherwise,
+ *  - `retry`: a function that re-fetches storefront data bypassing the cache
+ */
 export function useStorefrontData(clientKey: BrandKey): StorefrontResponse {
   const [state, setState] = React.useState<{
     data: StorefrontData | null;

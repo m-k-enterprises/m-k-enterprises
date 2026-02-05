@@ -27,10 +27,10 @@ const mapShopToLinkItem = (shop: Shop): LinkItem => ({
 });
 
 /**
- * External links page.
+ * Render the Brand Links page with storefront link cards and loading placeholders.
  *
- * @param props - Shop data with loading state.
- * @returns React element containing corporate links.
+ * @param props - Contains the `shops` array and a `loading` flag; when `loading` is `true` three centred spinner placeholders are rendered instead of the link cards
+ * @returns A React element that displays a grid of brand storefront link cards or loading spinners
  */
 
 function Links(props: LinksProps) {

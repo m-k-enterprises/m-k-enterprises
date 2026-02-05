@@ -5,10 +5,12 @@ import { PageLayout, usePageMetadata } from '../components';
 import { ShopProps } from '../App';
 
 /**
- * Shows contact information for each brand.
+ * Render the contact page listing each brand as a linked logo.
  *
- * @param props - Shop data with loading state.
- * @returns JSX for the contact route.
+ * Displays each shop's brand logo linking to its primary domain; if no shops are available and the component is loading or in an error state, renders two image placeholders to indicate loading.
+ *
+ * @param props - ShopProps containing the shops array and `loading`/`error` flags
+ * @returns The JSX element for the contact route
  */
 function Contact(props: ShopProps) {
   usePageMetadata({

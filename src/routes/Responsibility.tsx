@@ -4,9 +4,11 @@ import { Block } from '@smolpack/react-bootstrap-extensions';
 import { PageLayout, usePageMetadata } from '../components';
 
 /**
- * Details the company's sustainability efforts.
+ * Render the Responsibility page describing the company's sustainability commitment.
  *
- * @returns JSX for the responsibility route.
+ * Sets the page metadata title to "Responsibility" and a descriptive summary for the route.
+ *
+ * @returns The rendered JSX element for the Responsibility page (PageLayout containing the sustainability content).
  */
 function Responsibility() {
   usePageMetadata({

@@ -10,6 +10,17 @@ interface StatusMessageProps {
   onRetry?: () => Promise<void> | void;
 }
 
+/**
+ * Render a contextual status Alert for 'loading', 'error' or 'empty' states.
+ *
+ * Shows a loading placeholder with accessible text when `state` is 'loading', displays the provided `message` otherwise,
+ * and, when `state` is 'error' and `onRetry` is supplied, renders a right-aligned "Retry" button that invokes `onRetry`.
+ *
+ * @param state - One of 'loading', 'error' or 'empty' indicating the current status
+ * @param message - Text to display in the alert (also exposed to assistive technologies during loading)
+ * @param onRetry - Optional callback invoked when the retry button is clicked; may return `void` or a `Promise<void>`
+ * @returns A React element representing the status alert
+ */
 function StatusMessage({ state, message, onRetry }: StatusMessageProps) {
   const variant = state === 'error' ? 'danger' : state === 'loading' ? 'info' : 'secondary';
 
