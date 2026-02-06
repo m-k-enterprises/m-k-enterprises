@@ -383,6 +383,8 @@ export function useStorefrontData(clientKey: BrandKey): StorefrontResponse {
   React.useEffect(() => {
     let active = true;
 
+    setState((prev) => ({ ...prev, loading: true, error: null }));
+
     fetchStorefrontData(clientKey)
       .then((data) => {
         if (!active) {
