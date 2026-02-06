@@ -74,7 +74,6 @@ type Article {
   handle: String!
   excerpt: String
   excerptHtml: String
-  onlineStoreUrl: String
   publishedAt: String!
   image: ArticleImage
 }
