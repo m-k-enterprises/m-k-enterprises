@@ -1,6 +1,5 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import App from './App';
 
 // Mock React to bypass lazy loading and Suspense
 jest.mock('react', () => {
@@ -16,6 +15,14 @@ jest.mock('react', () => {
 
 const mockUseStorefrontData = jest.fn();
 
+jest.mock('./clients', () => ({
+  clients: {
+    bearBelts: {},
+    pocketBearsApparel: {},
+    mythicalMoods: {},
+  },
+}));
+
 jest.mock('./services', () => {
   const actual = jest.requireActual('./services');
   return {
@@ -23,6 +30,8 @@ jest.mock('./services', () => {
     useStorefrontData: (...args: any[]) => mockUseStorefrontData(...args),
   };
 });
+
+import App from './App';
 
 // Mock data
 const mockShop = {
