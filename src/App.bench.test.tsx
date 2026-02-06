@@ -74,7 +74,7 @@ describe('App performance benchmark', () => {
     // Baseline (Unoptimized):
     // 1. Initial Render.
     // 2. Effect runs -> Sets state -> Re-render.
-    // Total: 2 renders (8 calls).
+    // Total: 2 renders (6 calls).
 
     // Optimized Result:
     // Total: 1 render (3 calls).
