@@ -357,6 +357,7 @@ export function clearStorefrontCache(clientKey?: BrandKey) {
  *  - `retry`: a function that re-fetches storefront data bypassing the cache
  */
 export function useStorefrontData(clientKey: BrandKey): StorefrontResponse {
+  const mountedRef = React.useRef(false);
   const [state, setState] = React.useState<{
     data: StorefrontData | null;
     error: Error | null;
@@ -367,13 +368,29 @@ export function useStorefrontData(clientKey: BrandKey): StorefrontResponse {
     loading: true,
   });
 
+  React.useEffect(() => {
+    mountedRef.current = true;
+    return () => {
+      mountedRef.current = false;
+    };
+  }, []);
+
   const loadData = React.useCallback(
     async (force?: boolean) => {
+      if (!mountedRef.current) {
+        return;
+      }
       setState((prev) => ({ ...prev, loading: true, error: null }));
       try {
         const data = await fetchStorefrontData(clientKey, { force });
+        if (!mountedRef.current) {
+          return;
+        }
         setState({ data, error: null, loading: false });
       } catch (error) {
+        if (!mountedRef.current) {
+          return;
+        }
         setState({ data: null, error: toError(error, STORE_LOAD_ERROR_MESSAGE), loading: false });
       }
     },
@@ -383,17 +400,22 @@ export function useStorefrontData(clientKey: BrandKey): StorefrontResponse {
   React.useEffect(() => {
     let active = true;
 
+    if (!mountedRef.current) {
+      return () => {
+        active = false;
+      };
+    }
     setState((prev) => ({ ...prev, loading: true, error: null }));
 
     fetchStorefrontData(clientKey)
       .then((data) => {
-        if (!active) {
+        if (!active || !mountedRef.current) {
           return;
         }
         setState({ data, error: null, loading: false });
       })
       .catch((error) => {
-        if (!active) {
+        if (!active || !mountedRef.current) {
           return;
         }
         setState({ data: null, error: toError(error, STORE_LOAD_ERROR_MESSAGE), loading: false });
