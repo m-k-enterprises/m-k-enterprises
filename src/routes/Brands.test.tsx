@@ -1,6 +1,14 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 
+jest.mock('../clients', () => ({
+  clients: {
+    bearBelts: {},
+    pocketBearsApparel: {},
+    mythicalMoods: {},
+  },
+}));
+
 import Brands from './Brands';
 import { Shop } from '../App';
 
