@@ -9,9 +9,9 @@ Represents an active brand displayed on the homepage and brands route.
 - `name` (string): Brand name.
 - `primaryDomainUrl` (string): External storefront URL.
 - `shortDescription` (string): One-paragraph summary.
-- `logo` (object): `{ originalUrl, altText, width, height }`.
+- `logo` (object): `{ image: { displayUrl, altText, width, height } }`.
 - `colors` (object): `{ primary: [{ background, foreground }] }`.
-- `coverImage` (object): `{ url }`.
+- `coverImage` (object): `{ image: { heroUrl, altText, width, height } }`.
 
 **Relationships**:
 - One Brand belongs to one Shopify shop.
@@ -31,7 +31,7 @@ Represents a Shopify article displayed on the homepage or news route.
 - `handle` (string)
 - `excerpt` (string)
 - `publishedAt` (string ISO date)
-- `image` (object): `{ url, altText }`
+- `image` (object): `{ url, cardImageUrl, altText, width, height }`
 
 **Validation/Rules**:
 - Articles are sorted by newest published date.

@@ -22,6 +22,7 @@ type Domain {
 }
 
 type Brand {
+  slogan: String
   shortDescription: String
   colors: BrandColors!
   logo: BrandLogo
@@ -55,8 +56,11 @@ type BrandImage {
 }
 
 type BrandCoverImage {
+  altText: String
   url: String
   heroUrl: String
+  width: Int
+  height: Int
 }
 
 type ArticleConnection {
@@ -79,4 +83,6 @@ type ArticleImage {
   url: String
   cardImageUrl: String
   altText: String
+  width: Int
+  height: Int
 }

@@ -24,7 +24,7 @@ const STORE_LOAD_ERROR_MESSAGE = 'Failed to load storefront data';
 // In development with Webpack/CRA HMR, caches are cleared on module dispose (see below).
 const storefrontDataCache = new Map<string, { data: StorefrontData; expiresAt: number }>();
 // Track in-flight requests per cache key to de-duplicate concurrent fetches.
-const inflightRequests = new Map<string, Promise<StorefrontData>>();
+const inflightRequests = new Map<string, { promise: Promise<StorefrontData>; abort?: () => void }>();
 
 const touchCacheEntry = (cacheKey: string, value: { data: StorefrontData; expiresAt: number }) => {
   // Refresh key order for LRU behavior.
@@ -193,7 +193,17 @@ function toError(error: unknown, context: string): Error {
     return error;
   }
 
-  const details = typeof error === 'string' ? error : JSON.stringify(error);
+  let details = '';
+  if (typeof error === 'string') {
+    details = error;
+  } else {
+    try {
+      details = JSON.stringify(error);
+    } catch {
+      details = String(error);
+    }
+  }
+
   return new Error(`${context}: ${details || 'Unknown error'}`);
 }
 
@@ -254,9 +264,10 @@ export async function fetchStorefrontData(
 
   const existing = inflightRequests.get(cacheKey);
   if (existing && !options.force) {
-    return existing;
+    return existing.promise;
   }
   if (existing && options.force) {
+    existing.abort?.();
     inflightRequests.delete(cacheKey);
   }
   const client = getClient(clientKey);
@@ -268,6 +279,15 @@ export async function fetchStorefrontData(
   const controller =
     !timeoutSignal && typeof AbortController !== 'undefined' ? new AbortController() : undefined;
   const signal = timeoutSignal ?? controller?.signal;
+  const abortRequest = controller
+    ? () => {
+        if (!controller.signal.aborted) {
+          controller.abort();
+        }
+      }
+    : undefined;
+
+  let requestWithCleanup: Promise<StorefrontData>;
   const request = withTimeout(
     client
       .query<StorefrontData>({
@@ -278,21 +298,17 @@ export async function fetchStorefrontData(
       .then((result) => result.data),
     SHOPIFY_REQUEST_TIMEOUT_MS,
     `client: ${clientKey}`,
-    controller
-      ? () => {
-          if (!controller.signal.aborted) {
-            controller.abort();
-          }
-        }
-      : undefined
+    abortRequest
   );
 
   const requestWithCache = request.then((data) => {
     try {
-      touchCacheEntry(cacheKey, {
-        data,
-        expiresAt: Date.now() + CACHE_TTL_MS,
-      });
+      if (inflightRequests.get(cacheKey)?.promise === requestWithCleanup) {
+        touchCacheEntry(cacheKey, {
+          data,
+          expiresAt: Date.now() + CACHE_TTL_MS,
+        });
+      }
     } catch (error) {
       // Log cache population errors at debug level so they don't affect callers but can be diagnosed.
       console.debug('Failed to populate storefront data cache', {
@@ -304,11 +320,13 @@ export async function fetchStorefrontData(
     return data;
   });
 
-  const requestWithCleanup = requestWithCache.finally(() => {
-    inflightRequests.delete(cacheKey);
+  requestWithCleanup = requestWithCache.finally(() => {
+    if (inflightRequests.get(cacheKey)?.promise === requestWithCleanup) {
+      inflightRequests.delete(cacheKey);
+    }
   });
 
-  inflightRequests.set(cacheKey, requestWithCleanup);
+  inflightRequests.set(cacheKey, { promise: requestWithCleanup, abort: abortRequest });
   return requestWithCleanup;
 }
 

@@ -3,7 +3,7 @@ import { Container, Row, Col, Spinner } from 'react-bootstrap';
 import { Block } from '@smolpack/react-bootstrap-extensions';
 
 import { Shop, ShopProps } from '../App';
-import { LinkCard, usePageMetadata } from '../components';
+import { LinkCard, StatusMessage, usePageMetadata } from '../components';
 import { LinkItem } from '../components/LinkCard';
 
 interface LinksProps extends ShopProps {}
@@ -54,6 +54,14 @@ function Links(props: LinksProps) {
                 </Spinner>
               </Col>
             ))
+          ) : props.error ? (
+            <Col xs={12}>
+              <StatusMessage
+                state="error"
+                message="We ran into trouble loading brand links."
+                onRetry={props.onRetry}
+              />
+            </Col>
           ) : items.map(item => (
             <Col key={item.id} xs={12} md={6} className="d-flex">
               <LinkCard item={item} />

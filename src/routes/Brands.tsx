@@ -52,9 +52,9 @@ function Brands(props: ShopProps) {
                 <Col className="mb-3" xs={12} md={10}>
                   <Placeholder as="p" className="lead" animation="wave">
                     {Array.from({ length: random(6, 18) }).map((_, j) => (
-                      <>
-                        <Placeholder key={j} xs={random(1, 8)} />{' '}
-                      </>
+                      <React.Fragment key={j}>
+                        <Placeholder xs={random(1, 8)} />{' '}
+                      </React.Fragment>
                     ))}
                   </Placeholder>
                   <Placeholder.Button variant="more" animation="wave" xs={2}>
@@ -65,7 +65,7 @@ function Brands(props: ShopProps) {
             </Container>
           </Block>
         ))
-      ) : status === 'ready' || props.shops.length > 0 ? displayShops.map((shop) => (
+      ) : status === 'ready' || displayShops.length > 0 ? displayShops.map((shop) => (
         <Block key={shop.id}>
           <Container className="border-bottom border-4" style={{
             '--bs-border-color': shop.brand?.colors?.primary?.[0]?.background

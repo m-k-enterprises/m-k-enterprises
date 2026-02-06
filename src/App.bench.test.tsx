@@ -72,7 +72,7 @@ describe('App performance benchmark', () => {
     // Total: 2 renders (8 calls).
 
     // Optimized Result:
-    // Total: 1 render (4 calls).
+    // Total: 1 render (3 calls).
     expect(mockUseStorefrontData).toHaveBeenCalledTimes(3);
   });
 

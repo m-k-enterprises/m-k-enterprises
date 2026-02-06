@@ -17,12 +17,13 @@ function BrandTile({ shop }: BrandTileProps) {
   const logoUrl = shop.brand?.squareLogo?.image?.displayUrl;
   const logoAlt = shop.brand?.squareLogo?.image?.altText || `${shop.name} logo`;
   const borderStyle = getBrandBorderStyle(shop.brand);
+  const heroUrl = shop.brand?.coverImage?.image?.heroUrl;
 
   return (
     <Card className="card-profile border-0">
       <Card.Header style={{
         backgroundColor: shop.brand?.colors?.primary?.[0]?.background,
-        backgroundImage: `url(${shop.brand?.coverImage?.image?.heroUrl})`
+        backgroundImage: heroUrl ? `url(${heroUrl})` : undefined
       }} />
       <Card.Body
         className="d-flex flex-column align-items-start"
