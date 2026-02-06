@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Col, Container, Image, Placeholder, Ratio, Row } from 'react-bootstrap';
 import { Block } from '@smolpack/react-bootstrap-extensions';
-import { activeBrands } from '../services';
+import { activeBrands } from '../services/brandConfig';
 import { PageLayout, StatusMessage, usePageMetadata } from '../components';
 import { ShopProps } from '../App';
 import { random } from 'lodash';
