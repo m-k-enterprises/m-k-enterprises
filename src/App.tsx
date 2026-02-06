@@ -4,7 +4,8 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { Container, Image, Nav, Navbar, Spinner } from 'react-bootstrap';
 import { Block } from '@smolpack/react-bootstrap-extensions';
 
-import { Article, Shop, StorefrontData, useStorefrontData } from './services';
+import type { Article, Shop, StorefrontData } from './services';
+import { useStorefrontData } from './services/storefront';
 import logo from './logo.svg';
 
 import './App.scss';

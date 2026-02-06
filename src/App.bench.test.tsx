@@ -23,13 +23,9 @@ jest.mock('./clients', () => ({
   },
 }));
 
-jest.mock('./services', () => {
-  const actual = jest.requireActual('./services');
-  return {
-    ...actual,
-    useStorefrontData: (...args: any[]) => mockUseStorefrontData(...args),
-  };
-});
+jest.mock('./services/storefront', () => ({
+  useStorefrontData: (...args: any[]) => mockUseStorefrontData(...args),
+}));
 
 import App from './App';
 
