@@ -86,13 +86,15 @@ function Brands(props: ShopProps) {
             </Row>
             <Row className="justify-content-center">
               <Col className="mb-3" xs={10} md={2}>
-                <Image
-                  src={shop.brand?.logo?.image?.displayUrl}
-                  alt={shop.brand?.logo?.image?.altText || `${shop.name} logo`}
-                  width={shop.brand?.logo?.image?.width}
-                  height={shop.brand?.logo?.image?.height}
-                  fluid
-                />
+                {shop.brand?.logo?.image?.displayUrl ? (
+                  <Image
+                    src={shop.brand?.logo?.image?.displayUrl}
+                    alt={shop.brand?.logo?.image?.altText || `${shop.name} logo`}
+                    width={shop.brand?.logo?.image?.width}
+                    height={shop.brand?.logo?.image?.height}
+                    fluid
+                  />
+                ) : null}
               </Col>
               <Col className="mb-3" xs={12} md={10}>
                 <p className="lead">{shop.brand?.shortDescription}</p>
