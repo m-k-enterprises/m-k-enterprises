@@ -20,7 +20,7 @@ function News(props: ArticleProps) {
     description: 'Read the latest news and updates from M-K Enterprises.',
   });
 
-  const status = props.loading ? 'loading' : props.error ? 'error' : props.articles.length === 0 ? 'empty' : 'ready';
+  const status = props.error ? 'error' : props.loading ? 'loading' : props.articles.length === 0 ? 'empty' : 'ready';
 
   return (
     <PageLayout title="Latest News">

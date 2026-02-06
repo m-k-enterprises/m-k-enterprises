@@ -21,12 +21,12 @@ const getBrandGridColumns = (shopCount: number) => {
 };
 
 const getContentStatus = (loading: boolean, error: boolean, hasData: boolean) => {
-  if (loading) {
-    return 'loading';
-  }
-
   if (error) {
     return 'error';
+  }
+
+  if (loading) {
+    return 'loading';
   }
 
   return hasData ? 'ready' : 'empty';
@@ -101,6 +101,12 @@ function Home(props: HomeProps) {
                 </Col>
               ))}
             </Row>
+          ) : brandStatus === 'error' ? (
+            <StatusMessage
+              state="error"
+              message="We ran into trouble loading brand details."
+              onRetry={props.onRetry}
+            />
           ) : brandStatus === 'ready' || hasBrands ? (
             <Row className="g-3" xs={1} md={brandGridColumns} data-testid="brand-tiles">
               {props.shops.map((shop) => (
