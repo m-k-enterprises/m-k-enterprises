@@ -1,6 +1,6 @@
 import { CSSProperties } from 'react';
 
-import { Brand } from '../services';
+import type { Brand } from '../services/shopifyTypes';
 
 /**
  * Produce a style object that sets `borderColor` from the brand's primary background colour.
