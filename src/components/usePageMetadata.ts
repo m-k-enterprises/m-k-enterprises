@@ -14,8 +14,9 @@ const SITE_NAME = 'M-K Enterprises';
  * element with the provided description, and updates a hidden ARIA live region so assistive technologies
  * announce title changes.
  *
- * @param title - The page-specific portion of the document title; it will be prefixed with the site name
- * @param description - The text to set as the page's meta description
+ * @param metadata - Page metadata payload for the current route.
+ * @param metadata.title - The page-specific portion of the document title; it will be prefixed with the site name
+ * @param metadata.description - The text to set as the page's meta description
  */
 export default function usePageMetadata({ title, description }: PageMetadata) {
   const lastMetadata = useRef<{ title: string; description: string } | null>(null);
