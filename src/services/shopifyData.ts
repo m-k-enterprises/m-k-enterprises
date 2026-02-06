@@ -190,7 +190,10 @@ function withTimeout<T>(
  */
 function toError(error: unknown, context: string): Error {
   if (error instanceof Error) {
-    return error;
+    const message = error.message ? `${context}: ${error.message}` : `${context}: Unknown error`;
+    const wrappedError = new Error(message);
+    (wrappedError as { cause?: unknown }).cause = error;
+    return wrappedError;
   }
 
   let details = '';
