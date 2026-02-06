@@ -111,11 +111,8 @@ function Home(props: HomeProps) {
             </Row>
           ) : (
             <StatusMessage
-              state={brandStatus === 'error' ? 'error' : 'empty'}
-              message={brandStatus === 'error'
-                  ? 'We ran into trouble loading brand details.'
-                  : 'No brand details are available right now.'}
-              onRetry={brandStatus === 'error' ? props.onRetry : undefined}
+              state="empty"
+              message="No brand details are available right now."
             />
           )}
         </Container>

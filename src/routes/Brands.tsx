@@ -75,7 +75,9 @@ function Brands(props: ShopProps) {
                 <Ratio aspectRatio="16x9">
                   <div style={{
                     backgroundColor: shop.brand?.colors?.primary?.[0]?.background,
-                    backgroundImage: `url(${shop.brand?.coverImage?.image?.heroUrl})`,
+                    backgroundImage: shop.brand?.coverImage?.image?.heroUrl
+                      ? `url(${shop.brand?.coverImage?.image?.heroUrl})`
+                      : undefined,
                     backgroundPosition: 'center',
                     backgroundSize: 'cover'
                   }} />
