@@ -23,6 +23,14 @@ interface StatusMessageProps {
  */
 function StatusMessage({ state, message, onRetry }: StatusMessageProps) {
   const variant = state === 'error' ? 'danger' : state === 'loading' ? 'info' : 'secondary';
+  const handleRetry = React.useCallback(() => {
+    if (!onRetry) {
+      return;
+    }
+    void Promise.resolve(onRetry()).catch(() => {
+      // Errors are surfaced through state; avoid unhandled rejections here.
+    });
+  }, [onRetry]);
 
   return (
     <Alert
@@ -44,7 +52,7 @@ function StatusMessage({ state, message, onRetry }: StatusMessageProps) {
         <>
           <hr />
           <div className="d-flex justify-content-end">
-            <Button variant={variant} onClick={onRetry} size="sm">
+            <Button variant={variant} onClick={handleRetry} size="sm">
               Retry
             </Button>
           </div>
