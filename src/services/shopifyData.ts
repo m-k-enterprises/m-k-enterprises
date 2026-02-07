@@ -391,7 +391,9 @@ export function useStorefrontData(clientKey: BrandKey): StorefrontResponse {
         if (!mountedRef.current) {
           return;
         }
-        setState({ data: null, error: toError(error, STORE_LOAD_ERROR_MESSAGE), loading: false });
+        const normalizedError = toError(error, STORE_LOAD_ERROR_MESSAGE);
+        setState({ data: null, error: normalizedError, loading: false });
+        throw normalizedError;
       }
     },
     [clientKey]
