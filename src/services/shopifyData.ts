@@ -420,7 +420,7 @@ export function useStorefrontData(clientKey: BrandKey): StorefrontResponse {
         }
         const normalizedError = toError(error, STORE_LOAD_ERROR_MESSAGE);
         setState({ data: null, error: normalizedError, loading: false });
-        throw normalizedError;
+        return;
       }
     },
     [clientKey]
