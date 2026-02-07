@@ -46,9 +46,11 @@ export default function LinkCard(props: LinkCardProps) {
       <Card.Body className="d-flex flex-column align-items-center justify-content-between" style={{
         color: item.colors?.foreground
       }}>
-        <Col className="mb-3 mx-auto" xs={10} md={2}>
-          <Image src={item.logo?.url} alt={logoAlt} width={item.logo?.width} height={item.logo?.height} fluid />
-        </Col>
+        {item.logo?.url ? (
+          <Col className="mb-3 mx-auto" xs={10} md={2}>
+            <Image src={item.logo?.url} alt={logoAlt} width={item.logo?.width} height={item.logo?.height} fluid />
+          </Col>
+        ) : null}
         <Card.Text>{item.slogan}</Card.Text>
         <Button
           variant="more"
