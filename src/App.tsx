@@ -61,6 +61,10 @@ function App() {
   const queryPocketBearsApparel = useStorefrontData('pocketBearsApparel');
   const queryMythicalMoods = useStorefrontData('mythicalMoods');
 
+  const { retry: retryBearBelts } = queryBearBelts;
+  const { retry: retryPocketBearsApparel } = queryPocketBearsApparel;
+  const { retry: retryMythicalMoods } = queryMythicalMoods;
+
   const queries = [
     queryBearBelts,
     queryPocketBearsApparel,
@@ -72,9 +76,9 @@ function App() {
 
   const retryAll = React.useCallback(async () => {
     const results = await Promise.allSettled([
-      queryBearBelts.retry(),
-      queryPocketBearsApparel.retry(),
-      queryMythicalMoods.retry(),
+      retryBearBelts(),
+      retryPocketBearsApparel(),
+      retryMythicalMoods(),
     ]);
 
     const rejected = results.filter(
@@ -88,7 +92,7 @@ function App() {
       const message = reason instanceof Error ? reason.message : String(reason);
       throw new Error(`Failed to retry storefront data: ${message}`);
     }
-  }, [queryBearBelts, queryPocketBearsApparel, queryMythicalMoods]);
+  }, [retryBearBelts, retryPocketBearsApparel, retryMythicalMoods]);
 
   const bearBeltsData = React.useMemo(() => mapStorefrontData(queryBearBelts.data), [queryBearBelts.data]);
   const pocketBearsData = React.useMemo(() => mapStorefrontData(queryPocketBearsApparel.data), [queryPocketBearsApparel.data]);
