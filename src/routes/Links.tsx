@@ -12,7 +12,7 @@ const mapShopToLinkItem = (shop: Shop): LinkItem => ({
   id: shop.id,
   name: shop.name,
   url: shop.primaryDomain.url,
-  slogan: shop.brand?.shortDescription,
+  description: shop.brand?.shortDescription,
   logo: {
     url: shop.brand?.logo?.image?.displayUrl,
     alt: shop.brand?.logo?.image?.altText,

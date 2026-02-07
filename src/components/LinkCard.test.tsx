@@ -20,7 +20,7 @@ const linkItem: LinkItem = {
   }
 };
 
-test('link has correct attributes', () => {
+  description: 'Be awesome',
   render(<LinkCard item={linkItem} />);
   const link = screen.getByRole('button', { name: /visit/i });
   expect(link).toHaveAttribute('href', linkItem.url);
