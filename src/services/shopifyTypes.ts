@@ -2,6 +2,8 @@ export interface ArticleImage {
   url?: string;
   cardImageUrl?: string;
   altText?: string;
+  width?: number;
+  height?: number;
 }
 
 export interface Article {
@@ -10,6 +12,7 @@ export interface Article {
   onlineStoreUrl?: string;
   handle: string;
   excerpt?: string;
+  excerptHtml?: string;
   publishedAt: string;
   image?: ArticleImage;
   brand?: Brand;
