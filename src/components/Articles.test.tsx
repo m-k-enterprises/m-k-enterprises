@@ -17,6 +17,9 @@ test('renders article title and excerpt', () => {
   render(<Articles loading={false} error={false} articles={articles} />);
   expect(screen.getByText('Test')).toBeInTheDocument();
   expect(screen.getByText('Short summary')).toBeInTheDocument();
+  const link = screen.getByRole('link', { name: /read more/i });
+  expect(link).toHaveAttribute('target', '_blank');
+  expect(link).toHaveAttribute('rel', 'noopener noreferrer');
 });
 
 test('Articles loading state is stable across re-renders', () => {
