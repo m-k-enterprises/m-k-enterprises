@@ -279,9 +279,36 @@ export async function fetchStorefrontData(
   // If the request resolves or rejects early (including via abort), withTimeout clears
   // its timer so a timeout error will not fire after the fact.
   const timeoutSignal = getTimeoutSignal(SHOPIFY_REQUEST_TIMEOUT_MS);
-  const controller =
-    !timeoutSignal && typeof AbortController !== 'undefined' ? new AbortController() : undefined;
-  const signal = timeoutSignal ?? controller?.signal;
+  const controller = typeof AbortController !== 'undefined' ? new AbortController() : undefined;
+  let signal = controller?.signal ?? timeoutSignal;
+
+  if (controller && timeoutSignal) {
+    const anySignal =
+      typeof AbortSignal !== 'undefined'
+        ? (AbortSignal as { any?: (signals: AbortSignal[]) => AbortSignal }).any
+        : undefined;
+
+    if (typeof anySignal === 'function') {
+      signal = anySignal([controller.signal, timeoutSignal]);
+    } else {
+      timeoutSignal.addEventListener(
+        'abort',
+        () => {
+          if (!controller.signal.aborted) {
+            try {
+              const reason = (timeoutSignal as AbortSignal & { reason?: unknown }).reason;
+              controller.abort(reason);
+            } catch {
+              controller.abort();
+            }
+          }
+        },
+        { once: true }
+      );
+      signal = controller.signal;
+    }
+  }
+
   const abortRequest = controller
     ? () => {
         if (!controller.signal.aborted) {
