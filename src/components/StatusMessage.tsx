@@ -1,4 +1,4 @@
-import { random } from 'lodash';
+import random from 'lodash/random';
 import React from 'react';
 import { Alert, Button, Placeholder } from 'react-bootstrap';
 

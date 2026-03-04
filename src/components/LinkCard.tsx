@@ -34,6 +34,7 @@ interface LinkCardProps {
 export default function LinkCard(props: LinkCardProps) {
   const { item } = props;
   const logoAlt = item.logo?.alt || (item.name ? `${item.name} logo` : `Logo`);
+  const backgroundImage = item.coverImageUrl ? `url(${item.coverImageUrl})` : undefined;
 
   return (
     <Card className="card-link flex-fill text-center" style={{
@@ -41,7 +42,7 @@ export default function LinkCard(props: LinkCardProps) {
     }}>
       <div className="img-background" style={{
         backgroundColor: item.colors?.background,
-        backgroundImage: `url(${item.coverImageUrl})`
+        backgroundImage,
       }} />
       <Card.Body className="d-flex flex-column align-items-center justify-content-between" style={{
         color: item.colors?.foreground
