@@ -97,56 +97,6 @@ function getCacheKey(clientKey: BrandKey): string {
 }
 
 /**
- * Obtain an AbortSignal that is aborted after the specified timeout in milliseconds.
- *
- * @param timeoutMs - Timeout duration in milliseconds
- * @returns An `AbortSignal` that will be aborted after `timeoutMs`, or `undefined` if no compatible abort mechanism is available
- */
-function getTimeoutSignal(timeoutMs: number): AbortSignal | undefined {
-  const timeout =
-    typeof AbortSignal !== 'undefined'
-      ? (AbortSignal as { timeout?: (ms: number) => AbortSignal }).timeout
-      : undefined;
-
-  if (typeof timeout === 'function') {
-    return timeout(timeoutMs);
-  }
-
-  return createTimeoutSignal(timeoutMs);
-}
-
-/**
- * Creates an AbortSignal that will be aborted after the given timeout.
- *
- * @param timeoutMs - Timeout in milliseconds after which the signal will be aborted
- * @returns An `AbortSignal` that will be aborted after `timeoutMs` milliseconds; the abort reason is an `Error` with message `"Shopify request timed out"` in environments that support abort reasons. Returns `undefined` if `AbortController` is not available in the runtime.
- */
-function createTimeoutSignal(timeoutMs: number): AbortSignal | undefined {
-  if (typeof AbortController === 'undefined') {
-    return undefined;
-  }
-
-  const controller = new AbortController();
-  let timeoutId: ReturnType<typeof setTimeout> | undefined;
-  const cleanup = () => {
-    if (timeoutId) {
-      clearTimeout(timeoutId);
-    }
-  };
-  timeoutId = setTimeout(() => {
-    // Reason is optional; older browsers will ignore it.
-    cleanup();
-    try {
-      controller.abort(new Error('Shopify request timed out'));
-    } catch {
-      // Ignore errors from abort in very old implementations.
-    }
-  }, timeoutMs);
-  controller.signal.addEventListener('abort', cleanup, { once: true });
-  return controller.signal;
-}
-
-/**
  * Enforces a fail-fast timeout for an asynchronous operation, rejecting with a timeout error if the deadline elapses.
  *
  * @param promise - The promise representing the asynchronous operation to wrap.
@@ -274,40 +224,10 @@ export async function fetchStorefrontData(
     inflightRequests.delete(cacheKey);
   }
   const client = getClient(clientKey);
-  // Use an AbortSignal when available to cancel the underlying request; withTimeout
-  // still provides a consistent fail-fast error even if the transport ignores aborts.
-  // If the request resolves or rejects early (including via abort), withTimeout clears
-  // its timer so a timeout error will not fire after the fact.
-  const timeoutSignal = getTimeoutSignal(SHOPIFY_REQUEST_TIMEOUT_MS);
+  // Use an AbortSignal when available to cancel the underlying request on timeout/force refresh;
+  // withTimeout remains the single source of timeout deadlines and clears its timer on settle.
   const controller = typeof AbortController !== 'undefined' ? new AbortController() : undefined;
-  let signal = controller?.signal ?? timeoutSignal;
-
-  if (controller && timeoutSignal) {
-    const anySignal =
-      typeof AbortSignal !== 'undefined'
-        ? (AbortSignal as { any?: (signals: AbortSignal[]) => AbortSignal }).any
-        : undefined;
-
-    if (typeof anySignal === 'function') {
-      signal = anySignal([controller.signal, timeoutSignal]);
-    } else {
-      timeoutSignal.addEventListener(
-        'abort',
-        () => {
-          if (!controller.signal.aborted) {
-            try {
-              const reason = (timeoutSignal as AbortSignal & { reason?: unknown }).reason;
-              controller.abort(reason);
-            } catch {
-              controller.abort();
-            }
-          }
-        },
-        { once: true }
-      );
-      signal = controller.signal;
-    }
-  }
+  const signal = controller?.signal;
 
   const abortRequest = controller
     ? () => {
