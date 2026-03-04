@@ -75,23 +75,11 @@ function App() {
   const error = queries.some((query) => query.error);
 
   const retryAll = React.useCallback(async () => {
-    const results = await Promise.allSettled([
+    await Promise.all([
       retryBearBelts(),
       retryPocketBearsApparel(),
       retryMythicalMoods(),
     ]);
-
-    const rejected = results.filter(
-      (result): result is PromiseRejectedResult => result.status === 'rejected',
-    );
-
-    if (rejected.length > 0) {
-      // Re-throw the first error so callers still see a failure,
-      // but only after all retries have been attempted.
-      const reason = rejected[0].reason;
-      const message = reason instanceof Error ? reason.message : String(reason);
-      throw new Error(`Failed to retry storefront data: ${message}`);
-    }
   }, [retryBearBelts, retryPocketBearsApparel, retryMythicalMoods]);
 
   const bearBeltsData = React.useMemo(() => mapStorefrontData(queryBearBelts.data), [queryBearBelts.data]);
