@@ -12,8 +12,24 @@
       logo {
         image {
           altText
-          url
-          logoUrl: url(transform: {maxWidth: 2880})
+          # originalUrl (field alias): url field; untransformed source URL for downloads/high-res
+          originalUrl: url
+          # displayUrl: transformed/optimized image for UI rendering (maxWidth 2880px; Shopify transforms preserve aspect ratio, so height scales automatically)
+          displayUrl: url(transform: {maxWidth: 2880})
+          # width/height: dimensions of the returned image after transforms
+          width
+          height
+        }
+      }
+      # squareLogo: use for 1:1 (square) contexts (e.g., avatars, app icons, profile images)
+      squareLogo {
+        image {
+          altText
+          # originalUrl (field alias): url field; untransformed source URL for downloads/high-res
+          originalUrl: url
+          # displayUrl: transformed/optimized image for UI rendering (maxWidth 2880px; Shopify transforms preserve aspect ratio, so height scales automatically)
+          displayUrl: url(transform: {maxWidth: 2880})
+          # width/height: dimensions of the returned image after transforms
           width
           height
         }
@@ -28,7 +44,7 @@
         image {
           altText
           url
-          carouselUrl: url(transform: {crop: CENTER, maxWidth: 5760, maxHeight: 3240})
+          heroUrl: url(transform: {crop: CENTER, maxWidth: 5760, maxHeight: 3240})
           width
           height
         }
@@ -39,12 +55,14 @@
     nodes {
       id
       title
-      excerptHtml
       onlineStoreUrl
+      handle
+      excerpt
+      excerptHtml
       image {
         altText
         url
-        newsUrl: url(transform: {crop: CENTER, maxWidth: 1920, maxHeight: 1080})
+        cardImageUrl: url(transform: {crop: CENTER, maxWidth: 1920, maxHeight: 1080})
         width
         height
       }

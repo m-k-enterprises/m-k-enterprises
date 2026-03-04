@@ -1,0 +1,87 @@
+# Storefront contract for brand + articles
+
+schema {
+  query: Query
+}
+
+type Query {
+  shop: Shop!
+  articles(first: Int!): ArticleConnection!
+}
+
+type Shop {
+  id: ID!
+  name: String!
+  primaryDomain: Domain!
+  shipsToCountries: [String!]!
+  brand: Brand
+}
+
+type Domain {
+  url: String!
+}
+
+type Brand {
+  slogan: String
+  shortDescription: String
+  colors: BrandColors!
+  logo: BrandLogo
+  squareLogo: BrandLogo
+  coverImage: BrandImage
+}
+
+type BrandColors {
+  primary: [BrandColor!]!
+}
+
+type BrandColor {
+  background: String!
+  foreground: String!
+}
+
+type BrandLogo {
+  image: BrandLogoImage
+}
+
+type BrandLogoImage {
+  originalUrl: String
+  displayUrl: String
+  altText: String
+  width: Int
+  height: Int
+}
+
+type BrandImage {
+  image: BrandCoverImage
+}
+
+type BrandCoverImage {
+  altText: String
+  url: String
+  heroUrl: String
+  width: Int
+  height: Int
+}
+
+type ArticleConnection {
+  nodes: [Article!]!
+}
+
+type Article {
+  id: ID!
+  title: String!
+  onlineStoreUrl: String
+  handle: String!
+  excerpt: String
+  excerptHtml: String
+  publishedAt: String!
+  image: ArticleImage
+}
+
+type ArticleImage {
+  url: String
+  cardImageUrl: String
+  altText: String
+  width: Int
+  height: Int
+}

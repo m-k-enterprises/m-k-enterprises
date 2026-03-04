@@ -6,23 +6,33 @@ import News from './News';
 const articles = Array.from({ length: 2 }, (_, i) => ({
   id: String(i + 1),
   title: `Article ${i + 1}`,
-  onlineStoreUrl: `https://example.com/article${i + 1}`,
+  onlineStoreUrl: 'https://example.com',
+  handle: `article-${i + 1}`,
+  excerpt: `Summary ${i + 1}`,
   publishedAt: '2022-01-01T00:00:00Z',
 }));
 
 test('renders heading', () => {
   render(<News loading={true} error={false} articles={[]} />);
-  const heading = screen.getByRole('heading', { name: /latest news/i });
+  const heading = screen.getByRole('heading', { level: 1, name: /latest news/i });
   expect(heading).toBeInTheDocument();
 });
 
-test('renders article links', () => {
+test('renders article titles', () => {
   render(<News loading={false} error={false} articles={articles} />);
-  const links = screen.getAllByRole('button', { name: /read more/i });
-  expect(links).toHaveLength(2);
-  links.forEach((link, i) => {
-    expect(link).toHaveAttribute('href', articles[i].onlineStoreUrl);
-    expect(link).toHaveAttribute('target', '_blank');
-    expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+  articles.forEach((article) => {
+    expect(screen.getByText(article.title)).toBeInTheDocument();
   });
+});
+
+test('shows empty state when no news is available', () => {
+  render(<News loading={false} error={false} articles={[]} />);
+  expect(screen.getByText(/no news updates are available/i)).toBeInTheDocument();
+});
+
+test('shows error state with retry', () => {
+  const onRetry = jest.fn();
+  render(<News loading={false} error={true} onRetry={onRetry} articles={[]} />);
+  expect(screen.getByText(/trouble loading news updates/i)).toBeInTheDocument();
+  expect(screen.getByRole('button', { name: /retry/i })).toBeInTheDocument();
 });

@@ -1,69 +1,83 @@
 import React from 'react';
 import { Button, Col, Container, Image, Placeholder, Ratio, Row } from 'react-bootstrap';
 import { Block } from '@smolpack/react-bootstrap-extensions';
-import { random } from 'lodash';
+import { activeBrands } from '../services/brandConfig';
+import { PageLayout, StatusMessage, usePageMetadata } from '../components';
 import { ShopProps } from '../App';
+import { random } from 'lodash';
+
+const activeBrandNames = new Set(activeBrands.map((brand) => brand.name));
 
 /**
- * Lists every brand with link to learn more.
+ * Render a list of active brand storefronts with visuals and a link to learn more.
  *
- * @param props - Shop data for all brands.
- * @returns JSX for the brands route.
+ * @param props - ShopProps containing shops and UI state (e.g. `loading`, `error`, `onRetry`)
+ * @returns The JSX element for the "Our Brands" page
  */
 function Brands(props: ShopProps) {
+  usePageMetadata({
+    title: 'Our Brands',
+    description: 'Learn more about the three active M-K Enterprises brands and their storefronts.',
+  });
+
+  const displayShops = React.useMemo(
+    () => props.shops.filter((shop) => activeBrandNames.has(shop.name)),
+    [props.shops],
+  );
+  const status = props.loading ? 'loading' : props.error ? 'error' : displayShops.length === 0 ? 'empty' : 'ready';
+
   return (
-    <>
-      <Block className="text-bg-primary">
-        <Container>
-          <Block.Title>Our Brands</Block.Title>
-        </Container>
-      </Block>
-      {props.loading || props.error ? Array.from({ length: 2 }).map((_, index) => (
-        <Block key={index}>
-          <Container className="border-bottom border-4">
-            <Row className="justify-content-center mb-3">
-              <Col md={10}>
-                <Ratio aspectRatio="16x9">
-                  <Placeholder variant="top" animation="glow">
-                    <Placeholder className="w-100 h-100" />
+    <PageLayout title="Our Brands">
+      {status === 'loading' ? (
+        Array.from({ length: 3 }).map((_, i) => (
+          <Block key={i}>
+            <Container className="border-bottom border-4">
+              <Row className="justify-content-center mb-3">
+                <Col md={10}>
+                  <Ratio aspectRatio="16x9">
+                    <Placeholder animation="glow">
+                      <Placeholder className="w-100 h-100" />
+                    </Placeholder>
+                  </Ratio>
+                </Col>
+              </Row>
+              <Row className="justify-content-center">
+                <Col className="mb-3" xs={10} md={2}>
+                  <Ratio aspectRatio="16x9">
+                    <Placeholder animation="glow">
+                      <Placeholder className="w-100 h-100" />
+                    </Placeholder>
+                  </Ratio>
+                </Col>
+                <Col className="mb-3" xs={12} md={10}>
+                  <Placeholder as="p" className="lead" animation="wave">
+                    {Array.from({ length: random(6, 18) }).map((_, j) => (
+                      <React.Fragment key={j}>
+                        <Placeholder xs={random(1, 8)} />{' '}
+                      </React.Fragment>
+                    ))}
                   </Placeholder>
-                </Ratio>
-              </Col>
-            </Row>
-            <Row className="justify-content-center">
-              <Col className="mb-3" xs={10} md={2}>
-                <Ratio aspectRatio="16x9">
-                  <Placeholder variant="top" animation="glow">
-                    <Placeholder className="w-100 h-100" />
-                  </Placeholder>
-                </Ratio>
-              </Col>
-              <Col className="mb-3" xs={12} md={10}>
-                <Placeholder className="lead" as="p" animation="wave">
-                  {Array.from({ length: random(4, 8) }).map((_, i) => (
-                    <React.Fragment key={i}>
-                      <Placeholder xs={random(1, 6)} />{' '}
-                    </React.Fragment>
-                  ))}
-                </Placeholder>
-                <Placeholder.Button variant="more" animation="wave" xs={2}>
-                  <Placeholder xs={12} />
-                </Placeholder.Button>
-              </Col>
-            </Row>
-          </Container>
-        </Block>
-      )) : props.shops.map((shop, index) => (
+                  <Placeholder.Button variant="more" animation="wave" xs={2}>
+                    <Placeholder xs={12} />
+                  </Placeholder.Button>
+                </Col>
+              </Row>
+            </Container>
+          </Block>
+        ))
+      ) : status === 'ready' || displayShops.length > 0 ? displayShops.map((shop) => (
         <Block key={shop.id}>
           <Container className="border-bottom border-4" style={{
-            '--bs-border-color': shop.brand?.colors.primary[0].background
+            '--bs-border-color': shop.brand?.colors?.primary?.[0]?.background
           } as React.CSSProperties}>
             <Row className="justify-content-center mb-3">
               <Col md={10}>
                 <Ratio aspectRatio="16x9">
                   <div style={{
-                    backgroundColor: shop.brand?.colors.primary[0].background,
-                    backgroundImage: `url(${shop.brand?.coverImage?.image?.carouselUrl})`,
+                    backgroundColor: shop.brand?.colors?.primary?.[0]?.background,
+                    backgroundImage: shop.brand?.coverImage?.image?.heroUrl
+                      ? `url(${shop.brand?.coverImage?.image?.heroUrl})`
+                      : undefined,
                     backgroundPosition: 'center',
                     backgroundSize: 'cover'
                   }} />
@@ -72,7 +86,15 @@ function Brands(props: ShopProps) {
             </Row>
             <Row className="justify-content-center">
               <Col className="mb-3" xs={10} md={2}>
-                <Image src={shop.brand?.logo?.image?.logoUrl} alt={shop.brand?.logo?.image?.altText} width={shop.brand?.logo?.image?.width} height={shop.brand?.logo?.image?.height} fluid />
+                {shop.brand?.logo?.image?.displayUrl ? (
+                  <Image
+                    src={shop.brand?.logo?.image?.displayUrl}
+                    alt={shop.brand?.logo?.image?.altText || `${shop.name} logo`}
+                    width={shop.brand?.logo?.image?.width}
+                    height={shop.brand?.logo?.image?.height}
+                    fluid
+                  />
+                ) : null}
               </Col>
               <Col className="mb-3" xs={12} md={10}>
                 <p className="lead">{shop.brand?.shortDescription}</p>
@@ -89,8 +111,20 @@ function Brands(props: ShopProps) {
             </Row>
           </Container>
         </Block>
-      ))}
-    </>
+      )) : (
+        <Block>
+          <Container>
+            <StatusMessage
+              state={status === 'error' ? 'error' : 'empty'}
+              message={status === 'error'
+                  ? 'We ran into trouble loading brand details.'
+                  : 'No brand details are available right now.'}
+              onRetry={status === 'error' ? props.onRetry : undefined}
+              />
+          </Container>
+        </Block>
+      )}
+    </PageLayout>
   );
 }
 

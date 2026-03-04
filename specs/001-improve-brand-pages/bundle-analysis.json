@@ -1,0 +1,1649 @@
+{
+  "results": [
+    {
+      "bundleName": "build/static/js/1.f110e31c.chunk.js",
+      "totalBytes": 10032,
+      "mappedBytes": 9613,
+      "unmappedBytes": 374,
+      "eolBytes": 1,
+      "sourceMapCommentBytes": 44,
+      "files": {
+        "components/Articles.tsx": {
+          "size": 1819
+        },
+        "[no source]": {
+          "size": 406
+        },
+        "components/BrandTile.tsx": {
+          "size": 1110
+        },
+        "components/LinkCard.tsx": {
+          "size": 1005
+        },
+        "components/PageHeader.tsx": {
+          "size": 373
+        },
+        "components/PageLayout.tsx": {
+          "size": 189
+        },
+        "components/StatusMessage.tsx": {
+          "size": 492
+        },
+        "components/ShopCarouselItem.tsx": {
+          "size": 1217
+        },
+        "components/usePageMetadata.ts": {
+          "size": 255
+        },
+        "routes/Brands.tsx": {
+          "size": 2270
+        },
+        "../node_modules/react-bootstrap/esm/Row.js": {
+          "size": 477
+        },
+        "[sourceMappingURL]": {
+          "size": 44
+        },
+        "[unmapped]": {
+          "size": 374
+        },
+        "[EOLs]": {
+          "size": 1
+        }
+      }
+    },
+    {
+      "bundleName": "build/static/js/191.4dd109fe.chunk.js",
+      "totalBytes": 10344,
+      "mappedBytes": 9921,
+      "unmappedBytes": 376,
+      "eolBytes": 1,
+      "sourceMapCommentBytes": 46,
+      "files": {
+        "components/Articles.tsx": {
+          "size": 1819
+        },
+        "[no source]": {
+          "size": 220
+        },
+        "components/BrandTile.tsx": {
+          "size": 1110
+        },
+        "components/LinkCard.tsx": {
+          "size": 1005
+        },
+        "components/PageHeader.tsx": {
+          "size": 373
+        },
+        "components/PageLayout.tsx": {
+          "size": 189
+        },
+        "components/StatusMessage.tsx": {
+          "size": 492
+        },
+        "components/ShopCarouselItem.tsx": {
+          "size": 1217
+        },
+        "components/usePageMetadata.ts": {
+          "size": 255
+        },
+        "routes/PrivacyPolicy.tsx": {
+          "size": 3241
+        },
+        "[sourceMappingURL]": {
+          "size": 46
+        },
+        "[unmapped]": {
+          "size": 376
+        },
+        "[EOLs]": {
+          "size": 1
+        }
+      }
+    },
+    {
+      "bundleName": "build/static/js/193.cd6cb9fd.chunk.js",
+      "totalBytes": 16411,
+      "mappedBytes": 16258,
+      "unmappedBytes": 106,
+      "eolBytes": 1,
+      "sourceMapCommentBytes": 46,
+      "files": {
+        "../node_modules/lodash/_Symbol.js": {
+          "size": 32
+        },
+        "[no source]": {
+          "size": 2470
+        },
+        "../node_modules/lodash/_baseGetTag.js": {
+          "size": 172
+        },
+        "../node_modules/lodash/_baseRandom.js": {
+          "size": 79
+        },
+        "../node_modules/lodash/_baseTrim.js": {
+          "size": 88
+        },
+        "../node_modules/lodash/_freeGlobal.js": {
+          "size": 69
+        },
+        "../node_modules/lodash/_getRawTag.js": {
+          "size": 223
+        },
+        "../node_modules/lodash/_isIndex.js": {
+          "size": 161
+        },
+        "../node_modules/lodash/_isIterateeCall.js": {
+          "size": 176
+        },
+        "../node_modules/lodash/_objectToString.js": {
+          "size": 71
+        },
+        "../node_modules/lodash/_root.js": {
+          "size": 117
+        },
+        "../node_modules/lodash/_trimmedEndIndex.js": {
+          "size": 88
+        },
+        "../node_modules/lodash/eq.js": {
+          "size": 51
+        },
+        "../node_modules/lodash/isArrayLike.js": {
+          "size": 81
+        },
+        "../node_modules/lodash/isFunction.js": {
+          "size": 187
+        },
+        "../node_modules/lodash/isLength.js": {
+          "size": 82
+        },
+        "../node_modules/lodash/isObject.js": {
+          "size": 82
+        },
+        "../node_modules/lodash/isObjectLike.js": {
+          "size": 57
+        },
+        "../node_modules/lodash/isSymbol.js": {
+          "size": 102
+        },
+        "../node_modules/lodash/random.js": {
+          "size": 412
+        },
+        "../node_modules/lodash/toFinite.js": {
+          "size": 127
+        },
+        "../node_modules/lodash/toNumber.js": {
+          "size": 361
+        },
+        "../node_modules/react-bootstrap/esm/Alert.js": {
+          "size": 899
+        },
+        "../node_modules/react-bootstrap/esm/Button.js": {
+          "size": 507
+        },
+        "../node_modules/react-bootstrap/esm/CardImg.js": {
+          "size": 262
+        },
+        "../node_modules/react-bootstrap/esm/CardHeader.js": {
+          "size": 348
+        },
+        "../node_modules/react-bootstrap/esm/Card.js": {
+          "size": 755
+        },
+        "../node_modules/@restart/hooks/esm/useUpdateEffect.js": {
+          "size": 115
+        },
+        "../node_modules/@restart/hooks/esm/useTimeout.js": {
+          "size": 433
+        },
+        "../node_modules/react-bootstrap/esm/CarouselCaption.js": {
+          "size": 28
+        },
+        "../node_modules/react-bootstrap/esm/CarouselItem.js": {
+          "size": 245
+        },
+        "../node_modules/react-bootstrap/esm/ElementChildren.js": {
+          "size": 191
+        },
+        "../node_modules/react-bootstrap/esm/Carousel.js": {
+          "size": 5269
+        },
+        "../node_modules/react-bootstrap/esm/Col.js": {
+          "size": 825
+        },
+        "../node_modules/react-bootstrap/esm/usePlaceholder.js": {
+          "size": 299
+        },
+        "../node_modules/react-bootstrap/esm/PlaceholderButton.js": {
+          "size": 165
+        },
+        "../node_modules/react-bootstrap/esm/Placeholder.js": {
+          "size": 198
+        },
+        "../node_modules/react-bootstrap/esm/Ratio.js": {
+          "size": 431
+        },
+        "[sourceMappingURL]": {
+          "size": 46
+        },
+        "[unmapped]": {
+          "size": 106
+        },
+        "[EOLs]": {
+          "size": 1
+        }
+      }
+    },
+    {
+      "bundleName": "build/static/js/242.0f182cda.chunk.js",
+      "totalBytes": 9758,
+      "mappedBytes": 9335,
+      "unmappedBytes": 376,
+      "eolBytes": 1,
+      "sourceMapCommentBytes": 46,
+      "files": {
+        "components/Articles.tsx": {
+          "size": 1819
+        },
+        "[no source]": {
+          "size": 271
+        },
+        "components/BrandTile.tsx": {
+          "size": 1110
+        },
+        "components/LinkCard.tsx": {
+          "size": 1005
+        },
+        "components/PageHeader.tsx": {
+          "size": 373
+        },
+        "components/PageLayout.tsx": {
+          "size": 189
+        },
+        "components/StatusMessage.tsx": {
+          "size": 492
+        },
+        "components/ShopCarouselItem.tsx": {
+          "size": 1217
+        },
+        "components/usePageMetadata.ts": {
+          "size": 255
+        },
+        "routes/Home.tsx": {
+          "size": 2604
+        },
+        "[sourceMappingURL]": {
+          "size": 46
+        },
+        "[unmapped]": {
+          "size": 376
+        },
+        "[EOLs]": {
+          "size": 1
+        }
+      }
+    },
+    {
+      "bundleName": "build/static/js/30.4207019b.chunk.js",
+      "totalBytes": 72448,
+      "mappedBytes": 72223,
+      "unmappedBytes": 178,
+      "eolBytes": 2,
+      "sourceMapCommentBytes": 45,
+      "files": {
+        "../node_modules/lodash/lodash.js": {
+          "size": 71741
+        },
+        "../node_modules/react-bootstrap/esm/Row.js": {
+          "size": 482
+        },
+        "[sourceMappingURL]": {
+          "size": 45
+        },
+        "[unmapped]": {
+          "size": 178
+        },
+        "[EOLs]": {
+          "size": 2
+        }
+      }
+    },
+    {
+      "bundleName": "build/static/js/37.7da40df7.chunk.js",
+      "totalBytes": 9255,
+      "mappedBytes": 8834,
+      "unmappedBytes": 375,
+      "eolBytes": 1,
+      "sourceMapCommentBytes": 45,
+      "files": {
+        "components/Articles.tsx": {
+          "size": 1819
+        },
+        "[no source]": {
+          "size": 366
+        },
+        "components/BrandTile.tsx": {
+          "size": 1110
+        },
+        "components/LinkCard.tsx": {
+          "size": 1005
+        },
+        "components/PageHeader.tsx": {
+          "size": 373
+        },
+        "components/PageLayout.tsx": {
+          "size": 189
+        },
+        "components/StatusMessage.tsx": {
+          "size": 492
+        },
+        "components/ShopCarouselItem.tsx": {
+          "size": 1217
+        },
+        "components/usePageMetadata.ts": {
+          "size": 255
+        },
+        "routes/Links.tsx": {
+          "size": 1531
+        },
+        "../node_modules/react-bootstrap/esm/Row.js": {
+          "size": 477
+        },
+        "[sourceMappingURL]": {
+          "size": 45
+        },
+        "[unmapped]": {
+          "size": 375
+        },
+        "[EOLs]": {
+          "size": 1
+        }
+      }
+    },
+    {
+      "bundleName": "build/static/js/424.f8bd319d.chunk.js",
+      "totalBytes": 11342,
+      "mappedBytes": 10919,
+      "unmappedBytes": 376,
+      "eolBytes": 1,
+      "sourceMapCommentBytes": 46,
+      "files": {
+        "components/Articles.tsx": {
+          "size": 1819
+        },
+        "[no source]": {
+          "size": 439
+        },
+        "components/BrandTile.tsx": {
+          "size": 1110
+        },
+        "components/LinkCard.tsx": {
+          "size": 1005
+        },
+        "components/PageHeader.tsx": {
+          "size": 373
+        },
+        "components/PageLayout.tsx": {
+          "size": 189
+        },
+        "components/StatusMessage.tsx": {
+          "size": 492
+        },
+        "components/ShopCarouselItem.tsx": {
+          "size": 1217
+        },
+        "components/usePageMetadata.ts": {
+          "size": 255
+        },
+        "routes/About.tsx": {
+          "size": 4020
+        },
+        "[sourceMappingURL]": {
+          "size": 46
+        },
+        "[unmapped]": {
+          "size": 376
+        },
+        "[EOLs]": {
+          "size": 1
+        }
+      }
+    },
+    {
+      "bundleName": "build/static/js/463.808cfc12.chunk.js",
+      "totalBytes": 22543,
+      "mappedBytes": 22318,
+      "unmappedBytes": 177,
+      "eolBytes": 2,
+      "sourceMapCommentBytes": 46,
+      "files": {
+        "../node_modules/charenc/charenc.js": {
+          "size": 431
+        },
+        "../node_modules/crypt/crypt.js": {
+          "size": 1287
+        },
+        "../node_modules/is-buffer/index.js": {
+          "size": 289
+        },
+        "../node_modules/is-retina/index.js": {
+          "size": 479
+        },
+        "../node_modules/lodash/_Hash.js": {
+          "size": 283
+        },
+        "../node_modules/lodash/_ListCache.js": {
+          "size": 284
+        },
+        "../node_modules/lodash/_Map.js": {
+          "size": 63
+        },
+        "../node_modules/lodash/_MapCache.js": {
+          "size": 284
+        },
+        "../node_modules/lodash/_Set.js": {
+          "size": 62
+        },
+        "../node_modules/lodash/_SetCache.js": {
+          "size": 207
+        },
+        "../node_modules/lodash/_apply.js": {
+          "size": 212
+        },
+        "../node_modules/lodash/_arrayIncludes.js": {
+          "size": 99
+        },
+        "../node_modules/lodash/_arrayIncludesWith.js": {
+          "size": 117
+        },
+        "../node_modules/lodash/_arrayMap.js": {
+          "size": 121
+        },
+        "../node_modules/lodash/_arrayPush.js": {
+          "size": 110
+        },
+        "../node_modules/lodash/_assocIndexOf.js": {
+          "size": 115
+        },
+        "../node_modules/lodash/_baseFindIndex.js": {
+          "size": 129
+        },
+        "../node_modules/lodash/_baseFlatten.js": {
+          "size": 205
+        },
+        "../node_modules/lodash/_baseIndexOf.js": {
+          "size": 113
+        },
+        "../node_modules/lodash/_baseIntersection.js": {
+          "size": 504
+        },
+        "../node_modules/lodash/_baseIsArguments.js": {
+          "size": 104
+        },
+        "../node_modules/lodash/_baseIsNaN.js": {
+          "size": 58
+        },
+        "../node_modules/lodash/_baseIsNative.js": {
+          "size": 376
+        },
+        "../node_modules/lodash/_baseRest.js": {
+          "size": 105
+        },
+        "../node_modules/lodash/_baseSetToString.js": {
+          "size": 163
+        },
+        "../node_modules/lodash/_baseUnary.js": {
+          "size": 77
+        },
+        "../node_modules/lodash/_baseUniq.js": {
+          "size": 426
+        },
+        "../node_modules/lodash/_cacheHas.js": {
+          "size": 63
+        },
+        "../node_modules/lodash/_castArrayLikeObject.js": {
+          "size": 76
+        },
+        "../node_modules/lodash/_coreJsData.js": {
+          "size": 70
+        },
+        "../node_modules/lodash/_createSet.js": {
+          "size": 130
+        },
+        "../node_modules/lodash/_defineProperty.js": {
+          "size": 133
+        },
+        "../node_modules/lodash/_getMapData.js": {
+          "size": 134
+        },
+        "../node_modules/lodash/_getNative.js": {
+          "size": 97
+        },
+        "../node_modules/lodash/_getValue.js": {
+          "size": 74
+        },
+        "../node_modules/lodash/_hashClear.js": {
+          "size": 93
+        },
+        "../node_modules/lodash/_hashDelete.js": {
+          "size": 114
+        },
+        "../node_modules/lodash/_hashGet.js": {
+          "size": 207
+        },
+        "../node_modules/lodash/_hashHas.js": {
+          "size": 148
+        },
+        "../node_modules/lodash/_hashSet.js": {
+          "size": 169
+        },
+        "../node_modules/lodash/_isFlattenable.js": {
+          "size": 141
+        },
+        "../node_modules/lodash/_isKeyable.js": {
+          "size": 142
+        },
+        "../node_modules/lodash/_isMasked.js": {
+          "size": 172
+        },
+        "../node_modules/lodash/_listCacheClear.js": {
+          "size": 73
+        },
+        "../node_modules/lodash/_listCacheDelete.js": {
+          "size": 180
+        },
+        "../node_modules/lodash/_listCacheGet.js": {
+          "size": 114
+        },
+        "../node_modules/lodash/_listCacheHas.js": {
+          "size": 88
+        },
+        "../node_modules/lodash/_listCacheSet.js": {
+          "size": 144
+        },
+        "../node_modules/lodash/_mapCacheClear.js": {
+          "size": 144
+        },
+        "../node_modules/lodash/_mapCacheDelete.js": {
+          "size": 111
+        },
+        "../node_modules/lodash/_mapCacheGet.js": {
+          "size": 83
+        },
+        "../node_modules/lodash/_mapCacheHas.js": {
+          "size": 83
+        },
+        "../node_modules/lodash/_mapCacheSet.js": {
+          "size": 134
+        },
+        "../node_modules/lodash/_nativeCreate.js": {
+          "size": 65
+        },
+        "../node_modules/lodash/_overRest.js": {
+          "size": 265
+        },
+        "../node_modules/lodash/_setCacheAdd.js": {
+          "size": 102
+        },
+        "../node_modules/lodash/_setCacheHas.js": {
+          "size": 69
+        },
+        "../node_modules/lodash/_setToArray.js": {
+          "size": 114
+        },
+        "../node_modules/lodash/_setToString.js": {
+          "size": 57
+        },
+        "../node_modules/lodash/_shortOut.js": {
+          "size": 194
+        },
+        "../node_modules/lodash/_strictIndexOf.js": {
+          "size": 107
+        },
+        "../node_modules/lodash/_toSource.js": {
+          "size": 154
+        },
+        "../node_modules/lodash/constant.js": {
+          "size": 69
+        },
+        "../node_modules/lodash/identity.js": {
+          "size": 54
+        },
+        "../node_modules/lodash/intersection.js": {
+          "size": 148
+        },
+        "../node_modules/lodash/isArguments.js": {
+          "size": 221
+        },
+        "../node_modules/lodash/isArray.js": {
+          "size": 54
+        },
+        "../node_modules/lodash/isArrayLikeObject.js": {
+          "size": 83
+        },
+        "../node_modules/lodash/noop.js": {
+          "size": 45
+        },
+        "../node_modules/lodash/union.js": {
+          "size": 121
+        },
+        "../node_modules/md5/md5.js": {
+          "size": 3394
+        },
+        "../node_modules/object-assign/index.js": {
+          "size": 958
+        },
+        "../node_modules/query-string/index.js": {
+          "size": 2087
+        },
+        "../node_modules/react-bootstrap/esm/FigureImage.js": {
+          "size": 236
+        },
+        "../node_modules/react-bootstrap/esm/FigureCaption.js": {
+          "size": 53
+        },
+        "../node_modules/react-bootstrap/esm/Figure.js": {
+          "size": 218
+        },
+        "../node_modules/react-bootstrap/esm/Row.js": {
+          "size": 513
+        },
+        "../node_modules/react-gravatar/dist/index.js": {
+          "size": 2973
+        },
+        "../node_modules/strict-uri-encode/index.js": {
+          "size": 144
+        },
+        "[sourceMappingURL]": {
+          "size": 46
+        },
+        "[unmapped]": {
+          "size": 177
+        },
+        "[EOLs]": {
+          "size": 2
+        }
+      }
+    },
+    {
+      "bundleName": "build/static/js/465.932d97b3.chunk.js",
+      "totalBytes": 9173,
+      "mappedBytes": 8750,
+      "unmappedBytes": 376,
+      "eolBytes": 1,
+      "sourceMapCommentBytes": 46,
+      "files": {
+        "components/Articles.tsx": {
+          "size": 1819
+        },
+        "[no source]": {
+          "size": 396
+        },
+        "components/BrandTile.tsx": {
+          "size": 1110
+        },
+        "components/LinkCard.tsx": {
+          "size": 1005
+        },
+        "components/PageHeader.tsx": {
+          "size": 373
+        },
+        "components/PageLayout.tsx": {
+          "size": 189
+        },
+        "components/StatusMessage.tsx": {
+          "size": 492
+        },
+        "components/ShopCarouselItem.tsx": {
+          "size": 1217
+        },
+        "components/usePageMetadata.ts": {
+          "size": 255
+        },
+        "routes/Contact.tsx": {
+          "size": 1417
+        },
+        "../node_modules/react-bootstrap/esm/Row.js": {
+          "size": 477
+        },
+        "[sourceMappingURL]": {
+          "size": 46
+        },
+        "[unmapped]": {
+          "size": 376
+        },
+        "[EOLs]": {
+          "size": 1
+        }
+      }
+    },
+    {
+      "bundleName": "build/static/js/549.61dcc233.chunk.js",
+      "totalBytes": 8432,
+      "mappedBytes": 8009,
+      "unmappedBytes": 376,
+      "eolBytes": 1,
+      "sourceMapCommentBytes": 46,
+      "files": {
+        "components/Articles.tsx": {
+          "size": 1819
+        },
+        "[no source]": {
+          "size": 355
+        },
+        "components/BrandTile.tsx": {
+          "size": 1110
+        },
+        "components/LinkCard.tsx": {
+          "size": 1005
+        },
+        "components/PageHeader.tsx": {
+          "size": 373
+        },
+        "components/PageLayout.tsx": {
+          "size": 189
+        },
+        "components/StatusMessage.tsx": {
+          "size": 492
+        },
+        "components/ShopCarouselItem.tsx": {
+          "size": 1217
+        },
+        "components/usePageMetadata.ts": {
+          "size": 255
+        },
+        "routes/News.tsx": {
+          "size": 717
+        },
+        "../node_modules/react-bootstrap/esm/Row.js": {
+          "size": 477
+        },
+        "[sourceMappingURL]": {
+          "size": 46
+        },
+        "[unmapped]": {
+          "size": 376
+        },
+        "[EOLs]": {
+          "size": 1
+        }
+      }
+    },
+    {
+      "bundleName": "build/static/js/787.735a8ce1.chunk.js",
+      "totalBytes": 4611,
+      "mappedBytes": 4289,
+      "unmappedBytes": 275,
+      "eolBytes": 1,
+      "sourceMapCommentBytes": 46,
+      "files": {
+        "../node_modules/web-vitals/dist/web-vitals.js": {
+          "size": 4284
+        },
+        "[no source]": {
+          "size": 5
+        },
+        "[sourceMappingURL]": {
+          "size": 46
+        },
+        "[unmapped]": {
+          "size": 275
+        },
+        "[EOLs]": {
+          "size": 1
+        }
+      }
+    },
+    {
+      "bundleName": "build/static/js/801.2070604b.chunk.js",
+      "totalBytes": 7695,
+      "mappedBytes": 7272,
+      "unmappedBytes": 376,
+      "eolBytes": 1,
+      "sourceMapCommentBytes": 46,
+      "files": {
+        "components/Articles.tsx": {
+          "size": 1819
+        },
+        "[no source]": {
+          "size": 220
+        },
+        "components/BrandTile.tsx": {
+          "size": 1110
+        },
+        "components/LinkCard.tsx": {
+          "size": 1005
+        },
+        "components/PageHeader.tsx": {
+          "size": 373
+        },
+        "components/PageLayout.tsx": {
+          "size": 189
+        },
+        "components/StatusMessage.tsx": {
+          "size": 492
+        },
+        "components/ShopCarouselItem.tsx": {
+          "size": 1217
+        },
+        "components/usePageMetadata.ts": {
+          "size": 255
+        },
+        "routes/Responsibility.tsx": {
+          "size": 592
+        },
+        "[sourceMappingURL]": {
+          "size": 46
+        },
+        "[unmapped]": {
+          "size": 376
+        },
+        "[EOLs]": {
+          "size": 1
+        }
+      }
+    },
+    {
+      "bundleName": "build/static/js/main.ce4512bb.js",
+      "totalBytes": 428875,
+      "mappedBytes": 428651,
+      "unmappedBytes": 181,
+      "eolBytes": 2,
+      "sourceMapCommentBytes": 41,
+      "files": {
+        "services/brandConfig.ts": {
+          "size": 271
+        },
+        "../node_modules/tslib/tslib.es6.js": {
+          "size": 2591
+        },
+        "../node_modules/ts-invariant/src/invariant.ts": {
+          "size": 658
+        },
+        "../node_modules/@apollo/src/utilities/globals/maybe.ts": {
+          "size": 40
+        },
+        "../node_modules/@apollo/src/utilities/globals/global.ts": {
+          "size": 191
+        },
+        "../node_modules/@apollo/src/utilities/globals/DEV.ts": {
+          "size": 225
+        },
+        "../node_modules/ts-invariant/process/index.js": {
+          "size": 496
+        },
+        "../node_modules/graphql/jsutils/devAssert.mjs": {
+          "size": 64
+        },
+        "../node_modules/graphql/jsutils/inspect.mjs": {
+          "size": 1174
+        },
+        "../node_modules/graphql/language/source.mjs": {
+          "size": 19
+        },
+        "../node_modules/zen-observable-ts/module.js": {
+          "size": 7144
+        },
+        "../node_modules/@apollo/src/utilities/globals/fix-graphql.ts": {
+          "size": 4
+        },
+        "../node_modules/@apollo/src/utilities/globals/index.ts": {
+          "size": 61
+        },
+        "../node_modules/@apollo/src/utilities/common/objects.ts": {
+          "size": 52
+        },
+        "../node_modules/@apollo/src/utilities/graphql/fragments.ts": {
+          "size": 1101
+        },
+        "../node_modules/@apollo/src/utilities/graphql/storeUtils.ts": {
+          "size": 2864
+        },
+        "../node_modules/@apollo/src/utilities/graphql/getFromAST.ts": {
+          "size": 2104
+        },
+        "../node_modules/@apollo/src/link/core/ApolloLink.ts": {
+          "size": 1522
+        },
+        "../node_modules/graphql/language/ast.mjs": {
+          "size": 2176
+        },
+        "../node_modules/graphql/language/kinds.mjs": {
+          "size": 1546
+        },
+        "../node_modules/@apollo/src/link/utils/createOperation.ts": {
+          "size": 239
+        },
+        "../node_modules/@apollo/src/link/utils/transformOperation.ts": {
+          "size": 211
+        },
+        "../node_modules/@apollo/src/link/utils/validateOperation.ts": {
+          "size": 220
+        },
+        "../node_modules/@apollo/src/link/core/execute.ts": {
+          "size": 25
+        },
+        "../node_modules/graphql/language/visitor.mjs": {
+          "size": 1631
+        },
+        "../node_modules/@apollo/src/utilities/graphql/directives.ts": {
+          "size": 1216
+        },
+        "../node_modules/@apollo/src/link/http/serializeFetchParameter.ts": {
+          "size": 204
+        },
+        "../node_modules/@apollo/src/utilities/common/canUse.ts": {
+          "size": 329
+        },
+        "../node_modules/@apollo/src/link/http/iterators/nodeStream.ts": {
+          "size": 784
+        },
+        "../node_modules/@apollo/src/link/http/iterators/reader.ts": {
+          "size": 119
+        },
+        "../node_modules/@apollo/src/link/http/responseIterator.ts": {
+          "size": 272
+        },
+        "../node_modules/@apollo/src/utilities/common/responseIterator.ts": {
+          "size": 180
+        },
+        "../node_modules/@apollo/src/link/http/iterators/async.ts": {
+          "size": 139
+        },
+        "../node_modules/@apollo/src/link/http/iterators/promise.ts": {
+          "size": 244
+        },
+        "../node_modules/@apollo/src/link/utils/throwServerError.ts": {
+          "size": 118
+        },
+        "../node_modules/@apollo/src/link/http/parseAndCheckHttpResponse.ts": {
+          "size": 2567
+        },
+        "../node_modules/graphql/language/characterClasses.mjs": {
+          "size": 36
+        },
+        "../node_modules/graphql/language/printString.mjs": {
+          "size": 1042
+        },
+        "../node_modules/graphql/language/printer.mjs": {
+          "size": 5590
+        },
+        "../node_modules/graphql/language/blockString.mjs": {
+          "size": 406
+        },
+        "../node_modules/@apollo/src/link/http/selectHttpOptionsAndBody.ts": {
+          "size": 1025
+        },
+        "../node_modules/@apollo/src/link/utils/fromError.ts": {
+          "size": 56
+        },
+        "../node_modules/@apollo/src/link/http/createHttpLink.ts": {
+          "size": 1864
+        },
+        "../node_modules/@apollo/src/link/http/checkFetcher.ts": {
+          "size": 514
+        },
+        "../node_modules/@apollo/src/link/http/selectURI.ts": {
+          "size": 84
+        },
+        "../node_modules/@apollo/src/link/http/createSignalIfSupported.ts": {
+          "size": 146
+        },
+        "../node_modules/@apollo/src/link/http/rewriteURIForGET.ts": {
+          "size": 548
+        },
+        "../node_modules/@apollo/src/link/http/HttpLink.ts": {
+          "size": 129
+        },
+        "../node_modules/@wry/equality/src/equality.ts": {
+          "size": 1790
+        },
+        "../node_modules/@apollo/src/utilities/common/arrays.ts": {
+          "size": 51
+        },
+        "../node_modules/@apollo/src/utilities/common/mergeDeep.ts": {
+          "size": 918
+        },
+        "../node_modules/@apollo/src/utilities/common/incrementalResult.ts": {
+          "size": 308
+        },
+        "../node_modules/@wry/trie/src/trie.ts": {
+          "size": 765
+        },
+        "../node_modules/@apollo/src/utilities/common/compact.ts": {
+          "size": 207
+        },
+        "../node_modules/@apollo/src/cache/inmemory/helpers.ts": {
+          "size": 1091
+        },
+        "../node_modules/@apollo/src/cache/inmemory/object-canon.ts": {
+          "size": 1569
+        },
+        "../node_modules/@apollo/src/utilities/observables/asyncMap.ts": {
+          "size": 539
+        },
+        "../node_modules/@apollo/src/utilities/common/errorHandling.ts": {
+          "size": 195
+        },
+        "../node_modules/@apollo/src/utilities/common/filterInPlace.ts": {
+          "size": 108
+        },
+        "../node_modules/@apollo/src/utilities/graphql/transform.ts": {
+          "size": 3314
+        },
+        "../node_modules/@apollo/src/utilities/common/makeUniqueId.ts": {
+          "size": 145
+        },
+        "../node_modules/@apollo/src/utilities/observables/iteration.ts": {
+          "size": 118
+        },
+        "../node_modules/@apollo/src/utilities/observables/subclassing.ts": {
+          "size": 129
+        },
+        "../node_modules/@apollo/src/utilities/observables/Concast.ts": {
+          "size": 1955
+        },
+        "../node_modules/@apollo/src/errors/index.ts": {
+          "size": 641
+        },
+        "../node_modules/@apollo/src/core/networkStatus.ts": {
+          "size": 235
+        },
+        "../node_modules/@apollo/src/utilities/common/cloneDeep.ts": {
+          "size": 439
+        },
+        "../node_modules/@apollo/src/core/ObservableQuery.ts": {
+          "size": 9287
+        },
+        "../node_modules/@wry/context/src/slot.ts": {
+          "size": 1082
+        },
+        "../node_modules/@wry/context/src/context.ts": {
+          "size": 21
+        },
+        "../node_modules/optimism/src/cache.ts": {
+          "size": 1119
+        },
+        "../node_modules/optimism/src/context.ts": {
+          "size": 10
+        },
+        "../node_modules/optimism/src/helpers.ts": {
+          "size": 225
+        },
+        "../node_modules/optimism/src/entry.ts": {
+          "size": 2625
+        },
+        "../node_modules/optimism/src/dep.ts": {
+          "size": 382
+        },
+        "../node_modules/optimism/src/index.ts": {
+          "size": 1195
+        },
+        "../node_modules/@apollo/src/cache/inmemory/reactiveVars.ts": {
+          "size": 771
+        },
+        "../node_modules/@apollo/src/core/LocalState.ts": {
+          "size": 4542
+        },
+        "../node_modules/@apollo/src/core/QueryInfo.ts": {
+          "size": 4893
+        },
+        "../node_modules/@apollo/src/core/QueryManager.ts": {
+          "size": 16119
+        },
+        "../node_modules/@apollo/src/utilities/common/mergeOptions.ts": {
+          "size": 93
+        },
+        "../node_modules/@apollo/src/core/ApolloClient.ts": {
+          "size": 5937
+        },
+        "../node_modules/@apollo/src/version.ts": {
+          "size": 8
+        },
+        "../node_modules/@apollo/src/cache/core/cache.ts": {
+          "size": 1605
+        },
+        "../node_modules/@apollo/src/cache/core/types/common.ts": {
+          "size": 311
+        },
+        "../node_modules/@apollo/src/utilities/common/maybeDeepFreeze.ts": {
+          "size": 329
+        },
+        "../node_modules/@apollo/src/cache/inmemory/entityStore.ts": {
+          "size": 7191
+        },
+        "../node_modules/@apollo/src/cache/inmemory/readFromStore.ts": {
+          "size": 4380
+        },
+        "../node_modules/@apollo/src/cache/inmemory/key-extractor.ts": {
+          "size": 1742
+        },
+        "../node_modules/@apollo/src/cache/inmemory/policies.ts": {
+          "size": 6672
+        },
+        "../node_modules/@apollo/src/utilities/common/stringifyForDisplay.ts": {
+          "size": 153
+        },
+        "../node_modules/@apollo/src/cache/inmemory/writeToStore.ts": {
+          "size": 6679
+        },
+        "../node_modules/@apollo/src/cache/inmemory/inMemoryCache.ts": {
+          "size": 5340
+        },
+        "clients.ts": {
+          "size": 1094
+        },
+        "services/shopifyData.ts": {
+          "size": 6974
+        },
+        "../node_modules/@babel/runtime/helpers/esm/construct.js": {
+          "size": 205
+        },
+        "../node_modules/@babel/runtime/helpers/esm/wrapNativeSuper.js": {
+          "size": 467
+        },
+        "../node_modules/@babel/runtime/helpers/esm/isNativeFunction.js": {
+          "size": 64
+        },
+        "../node_modules/@remix-run/router/history.ts": {
+          "size": 4396
+        },
+        "../node_modules/@remix-run/router/utils.ts": {
+          "size": 9747
+        },
+        "../node_modules/@remix-run/router/router.ts": {
+          "size": 25186
+        },
+        "../node_modules/@restart/hooks/esm/useCommittedRef.js": {
+          "size": 185
+        },
+        "../node_modules/@restart/hooks/esm/useEventCallback.js": {
+          "size": 171
+        },
+        "../node_modules/@restart/hooks/esm/useIsomorphicEffect.js": {
+          "size": 201
+        },
+        "../node_modules/@restart/hooks/esm/useMergedRefs.js": {
+          "size": 296
+        },
+        "../node_modules/@restart/hooks/esm/useMounted.js": {
+          "size": 260
+        },
+        "../node_modules/@restart/hooks/esm/usePrevious.js": {
+          "size": 180
+        },
+        "../node_modules/@restart/hooks/esm/useWillUnmount.js": {
+          "size": 233
+        },
+        "../node_modules/@restart/hooks/esm/useUpdatedRef.js": {
+          "size": 55
+        },
+        "../node_modules/@restart/hooks/esm/useResizeObserver.js": {
+          "size": 35
+        },
+        "../node_modules/@restart/ui/esm/Anchor.js": {
+          "size": 622
+        },
+        "../node_modules/@restart/ui/esm/Button.js": {
+          "size": 1056
+        },
+        "../node_modules/@smolpack/react-bootstrap-extensions/dist/index.js": {
+          "size": 2949
+        },
+        "../node_modules/classnames/index.js": {
+          "size": 607
+        },
+        "../node_modules/dom-helpers/esm/canUseDOM.js": {
+          "size": 166
+        },
+        "../node_modules/dom-helpers/esm/getComputedStyle.js": {
+          "size": 49
+        },
+        "../node_modules/dom-helpers/esm/ownerWindow.js": {
+          "size": 61
+        },
+        "../node_modules/dom-helpers/esm/hyphenate.js": {
+          "size": 69
+        },
+        "../node_modules/dom-helpers/esm/hyphenateStyle.js": {
+          "size": 56
+        },
+        "../node_modules/dom-helpers/esm/isTransform.js": {
+          "size": 120
+        },
+        "../node_modules/dom-helpers/esm/css.js": {
+          "size": 385
+        },
+        "../node_modules/dom-helpers/esm/addEventListener.js": {
+          "size": 404
+        },
+        "../node_modules/dom-helpers/esm/removeEventListener.js": {
+          "size": 142
+        },
+        "../node_modules/dom-helpers/esm/listen.js": {
+          "size": 101
+        },
+        "../node_modules/dom-helpers/esm/ownerDocument.js": {
+          "size": 113
+        },
+        "../node_modules/invariant/browser.js": {
+          "size": 381
+        },
+        "../node_modules/prop-types-extra/lib/all.js": {
+          "size": 446
+        },
+        "../node_modules/prop-types-extra/lib/utils/createChainableTypeChecker.js": {
+          "size": 459
+        },
+        "../node_modules/prop-types/factoryWithThrowingShims.js": {
+          "size": 654
+        },
+        "../node_modules/prop-types/index.js": {
+          "size": 50
+        },
+        "../node_modules/prop-types/lib/ReactPropTypesSecret.js": {
+          "size": 96
+        },
+        "../node_modules/react-bootstrap/esm/CardHeaderContext.js": {
+          "size": 224
+        },
+        "../node_modules/react-bootstrap/esm/CloseButton.js": {
+          "size": 516
+        },
+        "../node_modules/react-bootstrap/esm/Container.js": {
+          "size": 537
+        },
+        "../node_modules/react-bootstrap/esm/Fade.js": {
+          "size": 817
+        },
+        "../node_modules/react-bootstrap/esm/Image.js": {
+          "size": 671
+        },
+        "../node_modules/react-bootstrap/esm/Spinner.js": {
+          "size": 528
+        },
+        "../node_modules/react-bootstrap/esm/ThemeProvider.js": {
+          "size": 611
+        },
+        "../node_modules/react-bootstrap/esm/TransitionWrapper.js": {
+          "size": 886
+        },
+        "../node_modules/react-bootstrap/esm/safeFindDOMNode.js": {
+          "size": 55
+        },
+        "../node_modules/dom-helpers/esm/camelize.js": {
+          "size": 135
+        },
+        "../node_modules/react-bootstrap/esm/createWithBsPrefix.js": {
+          "size": 522
+        },
+        "../node_modules/react-bootstrap/esm/divWithClassName.js": {
+          "size": 231
+        },
+        "../node_modules/dom-helpers/esm/transitionEnd.js": {
+          "size": 419
+        },
+        "../node_modules/dom-helpers/esm/triggerEvent.js": {
+          "size": 142
+        },
+        "../node_modules/react-bootstrap/esm/transitionEndListener.js": {
+          "size": 251
+        },
+        "../node_modules/react-bootstrap/esm/triggerBrowserReflow.js": {
+          "size": 96
+        },
+        "../node_modules/react-dom/cjs/react-dom.production.min.js": {
+          "size": 129572
+        },
+        "../node_modules/react-dom/client.js": {
+          "size": 104
+        },
+        "../node_modules/react-dom/index.js": {
+          "size": 259
+        },
+        "../node_modules/react-router-bootstrap/LinkContainer.js": {
+          "size": 2961
+        },
+        "../node_modules/react-router-bootstrap/index.js": {
+          "size": 3140
+        },
+        "../node_modules/react-router-dom/dom.ts": {
+          "size": 2377
+        },
+        "../node_modules/react-router-dom/index.tsx": {
+          "size": 9223
+        },
+        "../node_modules/react-router/lib/use-sync-external-store-shim/useSyncExternalStoreShimClient.ts": {
+          "size": 264
+        },
+        "../node_modules/react-router/lib/use-sync-external-store-shim/index.ts": {
+          "size": 142
+        },
+        "../node_modules/react-router/lib/context.ts": {
+          "size": 240
+        },
+        "../node_modules/react-router/lib/hooks.tsx": {
+          "size": 6306
+        },
+        "../node_modules/react-router/lib/components.tsx": {
+          "size": 5071
+        },
+        "../node_modules/react-router/index.ts": {
+          "size": 464
+        },
+        "../node_modules/react-transition-group/esm/config.js": {
+          "size": 5
+        },
+        "../node_modules/react-transition-group/esm/TransitionGroupContext.js": {
+          "size": 24
+        },
+        "../node_modules/react-transition-group/esm/Transition.js": {
+          "size": 3754
+        },
+        "../node_modules/@babel/runtime/helpers/esm/inheritsLoose.js": {
+          "size": 88
+        },
+        "../node_modules/react-transition-group/esm/utils/reflow.js": {
+          "size": 24
+        },
+        "../node_modules/react/cjs/react-jsx-runtime.production.min.js": {
+          "size": 599
+        },
+        "../node_modules/react/cjs/react.production.min.js": {
+          "size": 6442
+        },
+        "../node_modules/react/index.js": {
+          "size": 52
+        },
+        "../node_modules/react/jsx-runtime.js": {
+          "size": 51
+        },
+        "../node_modules/scheduler/cjs/scheduler.production.min.js": {
+          "size": 3840
+        },
+        "../node_modules/scheduler/index.js": {
+          "size": 53
+        },
+        "../node_modules/@babel/runtime/helpers/esm/extends.js": {
+          "size": 293
+        },
+        "../node_modules/uncontrollable/lib/esm/utils.js": {
+          "size": 68
+        },
+        "../node_modules/uncontrollable/lib/esm/hook.js": {
+          "size": 840
+        },
+        "../node_modules/react-lifecycles-compat/react-lifecycles-compat.es.js": {
+          "size": 610
+        },
+        "../node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js": {
+          "size": 173
+        },
+        "../node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js": {
+          "size": 383
+        },
+        "../node_modules/@babel/runtime/helpers/esm/classCallCheck.js": {
+          "size": 161
+        },
+        "../node_modules/@babel/runtime/helpers/esm/createClass.js": {
+          "size": 386
+        },
+        "../node_modules/@babel/runtime/helpers/esm/createForOfIteratorHelper.js": {
+          "size": 751
+        },
+        "../node_modules/@babel/runtime/helpers/esm/possibleConstructorReturn.js": {
+          "size": 183
+        },
+        "../node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js": {
+          "size": 121
+        },
+        "../node_modules/@babel/runtime/helpers/esm/createSuper.js": {
+          "size": 225
+        },
+        "../node_modules/@babel/runtime/helpers/esm/defineProperty.js": {
+          "size": 187
+        },
+        "../node_modules/@babel/runtime/helpers/esm/getPrototypeOf.js": {
+          "size": 249
+        },
+        "../node_modules/@babel/runtime/helpers/esm/inherits.js": {
+          "size": 322
+        },
+        "../node_modules/@babel/runtime/helpers/esm/isNativeReflectConstruct.js": {
+          "size": 370
+        },
+        "../node_modules/@babel/runtime/helpers/esm/objectSpread2.js": {
+          "size": 663
+        },
+        "../node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js": {
+          "size": 283
+        },
+        "../node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js": {
+          "size": 247
+        },
+        "../node_modules/@babel/runtime/helpers/esm/regeneratorRuntime.js": {
+          "size": 6623
+        },
+        "../node_modules/@babel/runtime/helpers/esm/setPrototypeOf.js": {
+          "size": 232
+        },
+        "../node_modules/@babel/runtime/helpers/esm/slicedToArray.js": {
+          "size": 146
+        },
+        "../node_modules/@babel/runtime/helpers/esm/arrayWithHoles.js": {
+          "size": 41
+        },
+        "../node_modules/@babel/runtime/helpers/esm/iterableToArrayLimit.js": {
+          "size": 311
+        },
+        "../node_modules/@babel/runtime/helpers/esm/nonIterableRest.js": {
+          "size": 172
+        },
+        "../node_modules/@babel/runtime/helpers/esm/toConsumableArray.js": {
+          "size": 82
+        },
+        "../node_modules/@babel/runtime/helpers/esm/arrayWithoutHoles.js": {
+          "size": 49
+        },
+        "../node_modules/@babel/runtime/helpers/esm/iterableToArray.js": {
+          "size": 113
+        },
+        "../node_modules/@babel/runtime/helpers/esm/nonIterableSpread.js": {
+          "size": 167
+        },
+        "../node_modules/@babel/runtime/helpers/esm/typeof.js": {
+          "size": 341
+        },
+        "../node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js": {
+          "size": 301
+        },
+        "../webpack/bootstrap": {
+          "size": 170
+        },
+        "../webpack/runtime/compat%20get%20default%20export": {
+          "size": 122
+        },
+        "../webpack/runtime/create%20fake%20namespace%20object": {
+          "size": 526
+        },
+        "../webpack/runtime/define%20property%20getters": {
+          "size": 107
+        },
+        "../webpack/runtime/ensure%20chunk": {
+          "size": 110
+        },
+        "../webpack/runtime/get%20javascript%20chunk%20filename": {
+          "size": 235
+        },
+        "../webpack/runtime/get%20mini-css%20chunk%20filename": {
+          "size": 25
+        },
+        "../webpack/runtime/global": {
+          "size": 167
+        },
+        "../webpack/runtime/hasOwnProperty%20shorthand": {
+          "size": 79
+        },
+        "../webpack/runtime/load%20script": {
+          "size": 772
+        },
+        "../webpack/runtime/make%20namespace%20object": {
+          "size": 176
+        },
+        "../webpack/runtime/node%20module%20decorator": {
+          "size": 67
+        },
+        "../webpack/runtime/publicPath": {
+          "size": 19
+        },
+        "../webpack/runtime/jsonp%20chunk%20loading": {
+          "size": 943
+        },
+        "../node_modules/@restart/ui/esm/SelectableContext.js": {
+          "size": 208
+        },
+        "../node_modules/react-bootstrap/esm/NavbarBrand.js": {
+          "size": 291
+        },
+        "../node_modules/react-bootstrap/esm/createChainedFunction.js": {
+          "size": 609
+        },
+        "../node_modules/react-bootstrap/esm/Collapse.js": {
+          "size": 1649
+        },
+        "../node_modules/react-bootstrap/esm/NavbarContext.js": {
+          "size": 88
+        },
+        "../node_modules/react-bootstrap/esm/NavbarCollapse.js": {
+          "size": 371
+        },
+        "../node_modules/react-bootstrap/esm/NavbarToggle.js": {
+          "size": 572
+        },
+        "../node_modules/@restart/hooks/esm/useMediaQuery.js": {
+          "size": 555
+        },
+        "../node_modules/@restart/hooks/esm/useBreakpoint.js": {
+          "size": 698
+        },
+        "../node_modules/dom-helpers/esm/activeElement.js": {
+          "size": 118
+        },
+        "../node_modules/dom-helpers/esm/contains.js": {
+          "size": 215
+        },
+        "../node_modules/@restart/ui/esm/DataKey.js": {
+          "size": 91
+        },
+        "../node_modules/@restart/ui/esm/ModalManager.js": {
+          "size": 1729
+        },
+        "../node_modules/@restart/ui/esm/getScrollbarWidth.js": {
+          "size": 157
+        },
+        "../node_modules/@restart/ui/esm/useWindow.js": {
+          "size": 95
+        },
+        "../node_modules/@restart/ui/esm/useWaitForDOMRef.js": {
+          "size": 452
+        },
+        "../node_modules/@restart/ui/esm/Modal.js": {
+          "size": 3478
+        },
+        "../node_modules/react-bootstrap/esm/OffcanvasBody.js": {
+          "size": 113
+        },
+        "../node_modules/react-bootstrap/esm/OffcanvasToggling.js": {
+          "size": 643
+        },
+        "../node_modules/react-bootstrap/esm/ModalContext.js": {
+          "size": 119
+        },
+        "../node_modules/react-bootstrap/esm/AbstractModalHeader.js": {
+          "size": 433
+        },
+        "../node_modules/react-bootstrap/esm/OffcanvasHeader.js": {
+          "size": 327
+        },
+        "../node_modules/react-bootstrap/esm/OffcanvasTitle.js": {
+          "size": 79
+        },
+        "../node_modules/@babel/runtime/helpers/esm/superPropBase.js": {
+          "size": 100
+        },
+        "../node_modules/@babel/runtime/helpers/esm/get.js": {
+          "size": 271
+        },
+        "../node_modules/dom-helpers/esm/querySelectorAll.js": {
+          "size": 120
+        },
+        "../node_modules/dom-helpers/esm/removeClass.js": {
+          "size": 292
+        },
+        "../node_modules/react-bootstrap/esm/BootstrapModalManager.js": {
+          "size": 1809
+        },
+        "../node_modules/dom-helpers/esm/addClass.js": {
+          "size": 175
+        },
+        "../node_modules/dom-helpers/esm/hasClass.js": {
+          "size": 131
+        },
+        "../node_modules/react-bootstrap/esm/Offcanvas.js": {
+          "size": 2265
+        },
+        "../node_modules/react-bootstrap/esm/NavbarOffcanvas.js": {
+          "size": 331
+        },
+        "../node_modules/react-bootstrap/esm/Navbar.js": {
+          "size": 1145
+        },
+        "../node_modules/@restart/ui/esm/NavContext.js": {
+          "size": 63
+        },
+        "../node_modules/@restart/ui/esm/TabContext.js": {
+          "size": 36
+        },
+        "../node_modules/@restart/ui/esm/NavItem.js": {
+          "size": 1107
+        },
+        "../node_modules/@restart/ui/esm/Nav.js": {
+          "size": 1564
+        },
+        "../node_modules/@restart/hooks/esm/useForceUpdate.js": {
+          "size": 47
+        },
+        "../node_modules/react-bootstrap/esm/NavItem.js": {
+          "size": 98
+        },
+        "../node_modules/react-bootstrap/esm/NavLink.js": {
+          "size": 534
+        },
+        "../node_modules/react-bootstrap/esm/Nav.js": {
+          "size": 818
+        },
+        "logo.svg": {
+          "size": 68
+        },
+        "App.tsx": {
+          "size": 3782
+        },
+        "reportWebVitals.ts": {
+          "size": 177
+        },
+        "index.tsx": {
+          "size": 117
+        },
+        "[sourceMappingURL]": {
+          "size": 41
+        },
+        "[unmapped]": {
+          "size": 181
+        },
+        "[EOLs]": {
+          "size": 2
+        }
+      }
+    }
+  ]
+}

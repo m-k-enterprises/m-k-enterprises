@@ -2,8 +2,18 @@ import React from 'react';
 import { Button, Card, Col, Placeholder, Ratio } from 'react-bootstrap';
 import random from 'lodash/random';
 import { ArticleProps } from '../App';
+import { getBrandBorderStyle } from './brandStyles';
 
+/**
+ * Render a responsive grid of article cards, showing randomized skeleton placeholders when loading or an error is present.
+ *
+ * Renders six skeleton cards with varied placeholder widths while `props.loading` or `props.error` is true; otherwise renders one card per `props.articles`. Each article card conditionally includes a 16:9 image (chosen from `image.cardImageUrl` or `image.url`), title, optional excerpt, an optional "Read more" link when `onlineStoreUrl` is present, and a footer with the published date formatted as "day month year".
+ *
+ * @param props - Component props (see `ArticleProps`): includes `articles`, `loading`, and `error`.
+ * @returns A fragment of Col/Card elements representing either skeletons or article entries suitable for rendering in a grid.
+ */
 function Articles(props: ArticleProps) {
+  // Intentionally randomize skeleton widths once per mount for visual variety.
   const skeletons = React.useMemo(() => Array.from({ length: 6 }).map(() => ({
     title: Array.from({ length: random(2, 8) }).map(() => random(1, 6)),
     text: Array.from({ length: random(3, 12) }).map(() => random(1, 6)),
@@ -49,21 +59,42 @@ function Articles(props: ArticleProps) {
       )) : props.articles.map(article => (
         <Col key={article.id}>
           <Card className="border-0" border="light">
-            <Ratio aspectRatio="16x9">
-              <Card.Img variant="top" src={article.image?.newsUrl} alt={article.image?.altText} width={article.image?.width} height={article.image?.height} />
-            </Ratio>
-            <Card.Body>
+            {(() => {
+              const imageUrl = article.image?.cardImageUrl ?? article.image?.url;
+              if (!imageUrl) {
+                return null;
+              }
+
+              return (
+                <Ratio aspectRatio="16x9">
+                  <Card.Img
+                    variant="top"
+                    src={imageUrl}
+                    alt={article.image?.altText || article.title}
+                    width={article.image?.width}
+                    height={article.image?.height}
+                  />
+                </Ratio>
+              );
+            })()}
+            <Card.Body
+              className="d-flex flex-column align-items-start"
+              style={getBrandBorderStyle(article.brand)}
+            >
               <Card.Title>{article.title}</Card.Title>
-              <Card.Text dangerouslySetInnerHTML={{ __html: article.excerptHtml || '' }} />
-              <Button
-                variant="more"
-                as="a"
-                href={article.onlineStoreUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Read more
-              </Button>
+              {article.excerpt && <Card.Text>{article.excerpt}</Card.Text>}
+              {article.onlineStoreUrl ? (
+                <Button
+                  variant="more"
+                  as="a"
+                  href={article.onlineStoreUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-auto"
+                >
+                  Read more
+                </Button>
+              ) : null}
             </Card.Body>
             <Card.Footer className="text-muted">{new Date(article.publishedAt).toLocaleDateString(undefined, {
               day: 'numeric',

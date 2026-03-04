@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import ShopCarouselItem from './ShopCarouselItem';
 import { Shop } from '../App';
 // Mock react-bootstrap
@@ -36,27 +36,28 @@ const shop: Shop = {
   primaryDomain: { url: 'https://test.com' },
   brand: {
     colors: { primary: [{ background: '#ffffff', foreground: '#000000' }] },
-    coverImage: { image: { carouselUrl: 'test.jpg', url: 'test.jpg' } }
+    shortDescription: 'A short description',
+    coverImage: { image: { heroUrl: 'test.jpg' } }
   },
 };
 
 test('ShopCarouselItem merges className', () => {
-  const { getByTestId } = render(
+  render(
     <ShopCarouselItem shop={shop} className="custom-class" />
   );
 
-  const item = getByTestId('carousel-item');
+  const item = screen.getByTestId('carousel-item');
   expect(item).toHaveClass('carousel-item-large');
   expect(item).toHaveClass('custom-class');
 });
 
 test('ShopCarouselItem merges style', () => {
   const customStyle = { color: 'red', margin: '10px' };
-  const { getByTestId } = render(
+  render(
     <ShopCarouselItem shop={shop} style={customStyle} />
   );
 
-  const item = getByTestId('carousel-item');
+  const item = screen.getByTestId('carousel-item');
   const style = item.style;
 
   expect(style.color).toBe('red');
@@ -66,13 +67,13 @@ test('ShopCarouselItem merges style', () => {
 
 test('ShopCarouselItem ignores children passed to it', () => {
   // We check that the children passed are NOT rendered
-  const { queryByText, getByText } = render(
+  render(
     <ShopCarouselItem shop={shop} {...({} as any)}>
       <div className="ignored-child">I should not be here</div>
     </ShopCarouselItem>
   );
 
-  expect(queryByText('I should not be here')).not.toBeInTheDocument();
+  expect(screen.queryByText('I should not be here')).not.toBeInTheDocument();
   // Should render internal content (e.g. Shop name)
-  expect(getByText('Test Shop')).toBeInTheDocument();
+  expect(screen.getByText('Test Shop')).toBeInTheDocument();
 });

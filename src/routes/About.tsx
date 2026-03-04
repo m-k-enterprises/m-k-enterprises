@@ -6,15 +6,21 @@ import union from 'lodash/union';
 import Gravatar from 'react-gravatar';
 
 import { ShopProps } from '../App';
+import { PageLayout, usePageMetadata } from '../components';
 import about from './about.jpg';
 
 /**
- * About page describing the company and team.
+ * Render the About page for the company, including shipping stats, mission, and team.
  *
- * @param props - Shop data with loading state.
- * @returns JSX for the about route.
+ * @param props - Shop data and UI state; contains `shops`, `loading`, and `error`
+ * @returns The rendered JSX element for the About page
  */
 function About(props: ShopProps) {
+  usePageMetadata({
+    title: 'About',
+    description: 'Learn about the M-K Enterprises story, mission, and leadership team.',
+  });
+
   const shipsToCountriesMin = useMemo(
     () => intersection(...props.shops.map(shop => shop.shipsToCountries)).length,
     [props.shops]
@@ -42,18 +48,13 @@ function About(props: ShopProps) {
   ];
 
   return (
-    <>
-      <Block className="text-bg-primary">
-        <Container>
-          <Block.Title>About Us</Block.Title>
-        </Container>
-      </Block>
+    <PageLayout title="About Us">
       <Block>
         <Row>
           <Col>
             <StatCard className="text-center">
               <StatCard.Desc>Ships to</StatCard.Desc>
-              {props.loading || props.error ? (
+              {(props.loading || props.error) && props.shops.length === 0 ? (
                 <Placeholder className="statcard-number text-primary" as="h2" animation="wave">
                   <Placeholder xs={1} />
                 </Placeholder>
@@ -121,7 +122,14 @@ function About(props: ShopProps) {
           {team.map(member => (
             <Col key={member.email} xs={6} md={4} xl={3}>
               <Card className="border-0" border="light">
-                <Gravatar className="card-img-top img-fluid" email={member.email} rating="g" size={1920} default="blank" />
+                <Gravatar
+                  className="card-img-top img-fluid"
+                  email={member.email}
+                  rating="g"
+                  size={1920}
+                  default="blank"
+                  alt={`${member.firstName} ${member.lastName}`}
+                />
                 <Card.Body>
                   <Card.Title>{member.firstName} {member.lastName}</Card.Title>
                   <Card.Text>{member.job}</Card.Text>
@@ -140,7 +148,7 @@ function About(props: ShopProps) {
           ))}
         </Row>
       </Container>
-    </>
+    </PageLayout>
   );
 }
 

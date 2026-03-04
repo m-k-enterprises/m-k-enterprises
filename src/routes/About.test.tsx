@@ -10,7 +10,7 @@ const urls = [
 
 test('renders heading', () => {
   render(<About loading={true} error={false} shops={[]} />);
-  const heading = screen.getByRole('heading', { name: /about us/i });
+  const heading = screen.getByRole('heading', { level: 1, name: /about us/i });
   expect(heading).toBeInTheDocument();
 });
 

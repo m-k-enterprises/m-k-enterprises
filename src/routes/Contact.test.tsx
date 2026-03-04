@@ -10,14 +10,14 @@ const shops: Shop[] = Array.from({ length: 2 }, (_, i) => ({
   shipsToCountries: [],
   primaryDomain: { url: `https://shop${i + 1}.com` },
   brand: {
-    logo: { image: { url: '', logoUrl: `logo${i + 1}.png`, altText: `Logo ${i + 1}`, width: 1, height: 1 } },
+    logo: { image: { displayUrl: `logo${i + 1}.png`, altText: `Logo ${i + 1}`, width: 1, height: 1 } },
     colors: { primary: [{ background: '#fff', foreground: '#000' }] },
   },
 }));
 
 test('renders heading', () => {
   render(<Contact loading={true} error={false} shops={[]} />);
-  const heading = screen.getByRole('heading', { name: /need support\?/i });
+  const heading = screen.getByRole('heading', { level: 1, name: /need support\?/i });
   expect(heading).toBeInTheDocument();
 });
 

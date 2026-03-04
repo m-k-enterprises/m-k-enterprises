@@ -1,28 +1,65 @@
 import React from 'react';
-import { Button, Carousel, Container, Placeholder, Row } from 'react-bootstrap';
+import { Carousel, Col, Container, Placeholder, Row, Spinner } from 'react-bootstrap';
 import { Block } from '@smolpack/react-bootstrap-extensions';
 import { random } from 'lodash';
-import { Articles, ShopCarouselItem } from '../components';
+import { Articles, BrandTile, ShopCarouselItem, StatusMessage, usePageMetadata } from '../components';
 import { ArticleProps, ShopProps } from '../App';
 
 interface HomeProps extends ShopProps, ArticleProps {}
 
 /**
- * Home page showing brand highlights and latest news.
+ * Determines how many columns to use for the brand grid based on the number of shops.
  *
- * @param props - Shop and article data with loading states.
- * @returns JSX for the home route.
+ * @param shopCount - Total number of shops to display in the grid.
+ * @returns The number of columns to use for the brand grid layout.
+ */
+const getBrandGridColumns = (shopCount: number) => {
+  // Use 2 columns for an even number of shops and 3 columns for an odd number.
+  // This keeps even counts in a balanced 2-column grid (e.g., 4 shops → 2×2)
+  // and uses 3 columns for odd counts to reduce the visual impact of a short final row (e.g., 5 shops → 3+2).
+  return shopCount % 2 === 0 ? 2 : 3;
+};
+
+const getContentStatus = (loading: boolean, error: boolean, hasData: boolean) => {
+  if (error) {
+    return 'error';
+  }
+
+  if (loading) {
+    return 'loading';
+  }
+
+  return hasData ? 'ready' : 'empty';
+};
+
+/**
+ * Render the home page with brand highlights and the latest news.
+ *
+ * @param props - Home page props containing `shops`, `articles`, `loading`, `error` and `onRetry` handler used to control content rendering.
+ * @returns The rendered Home page element
  */
 function Home(props: HomeProps) {
+  usePageMetadata({
+    title: 'Home',
+    description: 'Explore the active M-K Enterprises brands and the latest company news.',
+  });
+
+  const hasBrands = props.shops.length > 0;
+  const hasArticles = props.articles.length > 0;
+  const brandStatus = getContentStatus(props.loading, props.error, hasBrands);
+  const newsStatus = getContentStatus(props.loading, props.error, hasArticles);
+  const brandGridColumns = getBrandGridColumns(props.shops.length);
+
   return (
     <>
+      <h1 className="visually-hidden">M-K Enterprises Home</h1>
       <Carousel>
-        {props.loading || props.error ? (
+        {brandStatus === 'loading' ? (
           <Carousel.Item className="carousel-item-large">
             <div className="carousel-background" />
             <Carousel.Caption className="text-end text-primary">
               <Container>
-                <Placeholder className="display-1" animation="wave" as="h1">
+                <Placeholder className="display-1" animation="wave" as="h2">
                   {Array.from({ length: random(2, 3) }).map((_, i) => (
                     <React.Fragment key={i}>
                       <Placeholder xs={random(1, 3)} />{' '}
@@ -53,10 +90,55 @@ function Home(props: HomeProps) {
       </Block>
       <Block>
         <Container>
-          <h1>Latest News</h1>
-          <Row className="g-3" xs={1} md={2} xl={3}>
-            <Articles loading={props.loading} error={props.error} articles={props.articles} />
-          </Row>
+          <h2>Our Brands</h2>
+          {brandStatus === 'loading' ? (
+            <Row className="g-3" xs={1} md={brandGridColumns}>
+              {Array.from({ length: 3 }).map((_, i) => (
+                <Col key={i} className="text-center">
+                  <Spinner animation="border" role="status">
+                    <span className="visually-hidden">Loading&hellip;</span>
+                  </Spinner>
+                </Col>
+              ))}
+            </Row>
+          ) : brandStatus === 'error' ? (
+            <StatusMessage
+              state="error"
+              message="We ran into trouble loading brand details."
+              onRetry={props.onRetry}
+            />
+          ) : brandStatus === 'ready' || hasBrands ? (
+            <Row className="g-3" xs={1} md={brandGridColumns} data-testid="brand-tiles">
+              {props.shops.map((shop) => (
+                <Col key={shop.id}>
+                  <BrandTile shop={shop} />
+                </Col>
+              ))}
+            </Row>
+          ) : (
+            <StatusMessage
+              state="empty"
+              message="No brand details are available right now."
+            />
+          )}
+        </Container>
+      </Block>
+      <Block>
+        <Container>
+          <h2>Latest News</h2>
+          {newsStatus === 'loading' || newsStatus === 'ready' || hasArticles ? (
+            <Row className="g-3" xs={1} md={2} xl={3}>
+              <Articles loading={props.loading} error={props.error} articles={props.articles} />
+            </Row>
+          ) : (
+            <StatusMessage
+              state={newsStatus === 'error' ? 'error' : 'empty'}
+              message={newsStatus === 'error'
+                  ? 'We ran into trouble loading news updates.'
+                  : 'No news updates are available right now.'}
+              onRetry={newsStatus === 'error' ? props.onRetry : undefined}
+            />
+          )}
         </Container>
       </Block>
     </>
