@@ -115,7 +115,11 @@ function withTimeout<T>(
     // Enforce a fail-fast deadline for Shopify requests; canceled if the wrapped promise settles first.
     const timeoutId = setTimeout(() => {
       const suffix = context ? ` (${context})` : '';
-      onTimeout?.();
+      try {
+        onTimeout?.();
+      } catch {
+        // Preserve timeout rejection semantics even if timeout cleanup logic throws.
+      }
       reject(new Error(`Shopify request timed out${suffix}`));
     }, timeoutMs);
 
