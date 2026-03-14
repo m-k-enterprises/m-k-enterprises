@@ -1,8 +1,8 @@
 import React from 'react';
 import { Col, Container, Image, Placeholder, Ratio, Row } from 'react-bootstrap';
 import { Block } from '@smolpack/react-bootstrap-extensions';
-import { PageLayout, usePageMetadata } from '../components';
-import { ShopProps } from '../App';
+import { PageLayout } from '../components';
+import type { ShopProps } from '../site/siteData';
 
 /**
  * Render the contact page listing each brand as a linked logo.
@@ -13,11 +13,6 @@ import { ShopProps } from '../App';
  * @returns The JSX element for the contact route
  */
 function Contact(props: ShopProps) {
-  usePageMetadata({
-    title: 'Contact',
-    description: 'Get support by connecting with the active M-K Enterprises brands.',
-  });
-
   return (
     <PageLayout title="Need Support?">
       <Block>

@@ -1,27 +1,41 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import ShopCarouselItem from './ShopCarouselItem';
-import { Shop } from '../App';
-// Mock react-bootstrap
+import ShopCarouselItem, { type ShopCarouselItemProps } from './ShopCarouselItem';
+import type { Shop } from '../site/siteData';
+
 jest.mock('react-bootstrap', () => {
   const original = jest.requireActual('react-bootstrap');
-  // Mock Carousel to just return children
-  const Carousel = ({ children }: any) => <div>{children}</div>;
+  const Carousel = ({ children }: React.PropsWithChildren) => <div>{children}</div>;
+  Carousel.displayName = 'MockCarousel';
 
-  // Create a MockItem component that renders a div with data-testid
-  const MockItem = (props: any) => (
-    <div data-testid="carousel-item" className={props.className} style={props.style}>
-      {props.children}
-    </div>
-  );
+  function MockCarouselItem({
+    children,
+    className,
+    style,
+  }: React.PropsWithChildren<React.HTMLAttributes<HTMLDivElement>>) {
+    return (
+      <div data-testid="carousel-item" className={className} style={style}>
+        {children}
+      </div>
+    );
+  }
 
-  // Assign MockItem to Carousel.Item
-  (Carousel as any).Item = MockItem;
+  function MockCarouselCaption({
+    children,
+    className,
+    style,
+  }: React.PropsWithChildren<React.HTMLAttributes<HTMLDivElement>>) {
+    return (
+      <div className={`carousel-caption ${className || ''}`.trim()} style={style}>
+        {children}
+      </div>
+    );
+  }
 
-  // Mock Caption as well
-  (Carousel as any).Caption = ({ children, className, style }: any) => (
-    <div className={`carousel-caption ${className || ''}`} style={style}>{children}</div>
-  );
+  Object.assign(Carousel, {
+    Item: MockCarouselItem,
+    Caption: MockCarouselCaption,
+  });
 
   return {
     ...original,
@@ -66,14 +80,16 @@ test('ShopCarouselItem merges style', () => {
 });
 
 test('ShopCarouselItem ignores children passed to it', () => {
-  // We check that the children passed are NOT rendered
+  const ShopCarouselItemWithChildren = ShopCarouselItem as React.ComponentType<
+    React.PropsWithChildren<ShopCarouselItemProps>
+  >;
+
   render(
-    <ShopCarouselItem shop={shop} {...({} as any)}>
+    <ShopCarouselItemWithChildren shop={shop}>
       <div className="ignored-child">I should not be here</div>
-    </ShopCarouselItem>
+    </ShopCarouselItemWithChildren>
   );
 
   expect(screen.queryByText('I should not be here')).not.toBeInTheDocument();
-  // Should render internal content (e.g. Shop name)
   expect(screen.getByText('Test Shop')).toBeInTheDocument();
 });

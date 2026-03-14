@@ -2,11 +2,11 @@ import React from 'react';
 import { Button, Col, Container, Image, Placeholder, Ratio, Row } from 'react-bootstrap';
 import { Block } from '@smolpack/react-bootstrap-extensions';
 import { activeBrands } from '../services/brandConfig';
-import { PageLayout, StatusMessage, usePageMetadata } from '../components';
-import { ShopProps } from '../App';
-import { random } from 'lodash';
+import { PageLayout, StatusMessage } from '../components';
+import type { ShopProps } from '../site/siteData';
 
 const activeBrandNames = new Set(activeBrands.map((brand) => brand.name));
+const brandDescriptionSkeleton = [6, 5, 4, 3, 5, 2, 4, 3];
 
 /**
  * Render a list of active brand storefronts with visuals and a link to learn more.
@@ -15,11 +15,6 @@ const activeBrandNames = new Set(activeBrands.map((brand) => brand.name));
  * @returns The JSX element for the "Our Brands" page
  */
 function Brands(props: ShopProps) {
-  usePageMetadata({
-    title: 'Our Brands',
-    description: 'Learn more about the three active M-K Enterprises brands and their storefronts.',
-  });
-
   const displayShops = React.useMemo(
     () => props.shops.filter((shop) => activeBrandNames.has(shop.name)),
     [props.shops],
@@ -51,9 +46,9 @@ function Brands(props: ShopProps) {
                 </Col>
                 <Col className="mb-3" xs={12} md={10}>
                   <Placeholder as="p" className="lead" animation="wave">
-                    {Array.from({ length: random(6, 18) }).map((_, j) => (
+                    {brandDescriptionSkeleton.map((width, j) => (
                       <React.Fragment key={j}>
-                        <Placeholder xs={random(1, 8)} />{' '}
+                        <Placeholder xs={width} />{' '}
                       </React.Fragment>
                     ))}
                   </Placeholder>

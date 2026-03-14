@@ -1,7 +1,7 @@
 # 📍 Routes Guide (src/routes)
 
-This folder contains **page-level React components** that map to the app’s URL paths via React-Router.  
-Each file exports a **default function component** and is **lazy-loaded** in `App.tsx` to enable code-splitting.
+This folder contains **page-level React components** that supply content for the Next.js App Router.  
+Each file exports a **default function component** and is mounted by a matching `src/app/**/page.tsx` entry.
 
 ---
 
@@ -32,7 +32,7 @@ AGENTS.md         # ← you are here
 |--------|------------|
 | File name | `PascalCase.tsx` matching component name |
 | Export   | **default** export only |
-| Props    | Keep minimal; use hooks (e.g. `useShop()`) rather than props when possible |
+| Props    | Keep minimal; use shared hooks only when route-level state is genuinely shared |
 | Styling  | Use Bootstrap utility classes + `.scss` for route-specific styles (optional) |
 | Tests    | Co-locate as in the same folder |
 
@@ -59,15 +59,15 @@ export default function FooBar() {
    export { default as FooBar } from './FooBar';
    ```
 
-3. **Wire into Router** (`src/App.tsx`)
+3. **Wire into App Router** (`src/app/<route>/page.tsx`)
 
    ```tsx
-   const FooBar = lazy(() => import('./routes/FooBar'));
-   // ...
-   <Route path="/foo" element={<FooBar />} />
+   export default function Page() {
+     return <FooBar />;
+   }
    ```
 
-4. **Add Menu Link** (if required) in `NavBar.tsx`.
+4. **Add Menu Link** (if required) in `src/app/_components/SiteShell.tsx`.
 
 5. **Write a Test**
 
@@ -84,8 +84,8 @@ export default function FooBar() {
 
 ## 🧩 Route-Level Data
 
-* For Shopify data, **query in parent layout** (e.g. `App.tsx`) and pass down via context/hooks (`useBrands()`).
-* If a route needs unique data, place **GraphQL queries** in `src/routes/fooBar.gql` and import with `graphql.macro`.
+* For shared Shopify data, prefer the shared route wrappers in `src/app/_components/RoutePages.tsx`.
+* If a route needs unique data, add a Next-compatible `gql` document under `src/services/` and consume it through the storefront layer.
 
 ---
 
@@ -101,7 +101,7 @@ When a task says “add a new page” or “modify route X”:
 
 * **Search** in `src/routes/` first.
 * **Keep barrel export** (`index.ts`) in sync.
-* **Update router** in `App.tsx`.
+* **Update App Router entry** in `src/app/`.
 * **Add/adjust tests** so CI stays green.
 
 Happy routing! 🛣️

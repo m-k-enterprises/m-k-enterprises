@@ -5,9 +5,19 @@ import intersection from 'lodash/intersection';
 import union from 'lodash/union';
 import Gravatar from 'react-gravatar';
 
-import { ShopProps } from '../App';
-import { PageLayout, usePageMetadata } from '../components';
+import type { ShopProps } from '../site/siteData';
+import { PageLayout } from '../components';
 import about from './about.jpg';
+
+const aboutImageUrl = typeof about === 'string' ? about : about.src;
+const GravatarImage = Gravatar as unknown as React.ComponentType<{
+  className: string;
+  email: string;
+  rating: string;
+  size: number;
+  default: string;
+  alt: string;
+}>;
 
 /**
  * Render the About page for the company, including shipping stats, mission, and team.
@@ -16,11 +26,6 @@ import about from './about.jpg';
  * @returns The rendered JSX element for the About page
  */
 function About(props: ShopProps) {
-  usePageMetadata({
-    title: 'About',
-    description: 'Learn about the M-K Enterprises story, mission, and leadership team.',
-  });
-
   const shipsToCountriesMin = useMemo(
     () => intersection(...props.shops.map(shop => shop.shipsToCountries)).length,
     [props.shops]
@@ -71,8 +76,8 @@ function About(props: ShopProps) {
           <Row className="align-items-center">
             <Col>
               <Figure>
-                <Figure.Image src={about} alt="Bear Belts launch event" fluid />
-                <Figure.Caption className="text-center">Bear Belts' first event in Edinburgh.</Figure.Caption>
+                <Figure.Image src={aboutImageUrl} alt="Bear Belts launch event" fluid />
+                <Figure.Caption className="text-center">Bear Belts&apos; first event in Edinburgh.</Figure.Caption>
               </Figure>
             </Col>
             <Col>
@@ -107,7 +112,7 @@ function About(props: ShopProps) {
       </Block>
       <Block>
         <Container>
-          <h2>One of the world's most popular brands, brought to you by M-K Enterprises.</h2>
+          <h2>One of the world&apos;s most popular brands, brought to you by M-K Enterprises.</h2>
           <p>Founded in 2022 by Kristian and Paul Matthews-Kennington, M-K Enterprises quickly established itself as a force to be reckoned with. With a laser focus on quality and customer service, the company has earned a reputation for excellence that has attracted a global following.</p>
           <p>M-K Enterprises offers a diverse portfolio of brands and products that cater to a range of needs. With a commitment to innovation and collaboration, the company works with partners and customers alike to develop cutting-edge solutions that meet the demands of a rapidly changing world.</p>
         </Container>
@@ -122,7 +127,7 @@ function About(props: ShopProps) {
           {team.map(member => (
             <Col key={member.email} xs={6} md={4} xl={3}>
               <Card className="border-0" border="light">
-                <Gravatar
+                <GravatarImage
                   className="card-img-top img-fluid"
                   email={member.email}
                   rating="g"

@@ -1,11 +1,13 @@
 import React from 'react';
 import { Carousel, Col, Container, Placeholder, Row, Spinner } from 'react-bootstrap';
 import { Block } from '@smolpack/react-bootstrap-extensions';
-import { random } from 'lodash';
-import { Articles, BrandTile, ShopCarouselItem, StatusMessage, usePageMetadata } from '../components';
-import { ArticleProps, ShopProps } from '../App';
+import { Articles, BrandTile, ShopCarouselItem, StatusMessage } from '../components';
+import type { ArticleProps, ShopProps } from '../site/siteData';
 
 interface HomeProps extends ShopProps, ArticleProps {}
+
+const carouselHeadingSkeleton = [3, 2, 1];
+const carouselDescriptionSkeleton = [5, 6, 4, 3, 2];
 
 /**
  * Determines how many columns to use for the brand grid based on the number of shops.
@@ -39,11 +41,6 @@ const getContentStatus = (loading: boolean, error: boolean, hasData: boolean) =>
  * @returns The rendered Home page element
  */
 function Home(props: HomeProps) {
-  usePageMetadata({
-    title: 'Home',
-    description: 'Explore the active M-K Enterprises brands and the latest company news.',
-  });
-
   const hasBrands = props.shops.length > 0;
   const hasArticles = props.articles.length > 0;
   const brandStatus = getContentStatus(props.loading, props.error, hasBrands);
@@ -60,16 +57,16 @@ function Home(props: HomeProps) {
             <Carousel.Caption className="text-end text-primary">
               <Container>
                 <Placeholder className="display-1" animation="wave" as="h2">
-                  {Array.from({ length: random(2, 3) }).map((_, i) => (
+                  {carouselHeadingSkeleton.map((width, i) => (
                     <React.Fragment key={i}>
-                      <Placeholder xs={random(1, 3)} />{' '}
+                      <Placeholder xs={width} />{' '}
                     </React.Fragment>
                   ))}
                 </Placeholder>
                 <Placeholder className="lead" animation="wave" as="p">
-                  {Array.from({ length: random(4, 8) }).map((_, i) => (
+                  {carouselDescriptionSkeleton.map((width, i) => (
                     <React.Fragment key={i}>
-                      <Placeholder xs={random(1, 6)} />{' '}
+                      <Placeholder xs={width} />{' '}
                     </React.Fragment>
                   ))}
                 </Placeholder>

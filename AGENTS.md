@@ -1,7 +1,7 @@
-# M-K Enterprises React Frontend
+# M-K Enterprises Next.js Frontend
 
 A TypeScript + React app that showcases our brands, news, and landing pages.  
-Tech stack: **Create React App**, React-Router, Apollo Client (Shopify Storefront GraphQL), React-Bootstrap + custom SCSS.
+Tech stack: **Next.js App Router**, Apollo Client (Shopify Storefront GraphQL), React-Bootstrap + custom SCSS.
 
 ---
 
@@ -10,10 +10,10 @@ Tech stack: **Create React App**, React-Router, Apollo Client (Shopify Storefron
 | Step | Command |
 |------|---------|
 | Install deps | `yarn install` (keep `yarn.lock` authoritative) |
-| Start dev server | `yarn start` → http://localhost:3000 (hot-reload) |
-| Run tests | `yarn test` (React Testing Library + Jest, watch mode) |
+| Start dev server | `yarn dev` → http://localhost:3000 (hot-reload) |
+| Run tests | `yarn test` (Jest via `next/jest`) |
 | Lint (optional) | `yarn lint` |
-| Type-check only | `tsc --noEmit` |
+| Type-check only | `npx tsc --noEmit` |
 | Prod build | `yarn build` → outputs `build/` |
 | Deploy to GH Pages | `yarn deploy` (script runs `gh-pages -d build`) |
 
@@ -23,7 +23,7 @@ Tech stack: **Create React App**, React-Router, Apollo Client (Shopify Storefron
 
 ## 🧪 Testing
 
-- Jest is pre-configured by CRA; tests live beside code as `*.test.tsx` / `*.test.ts`.
+- Jest is configured through `next/jest`; tests live beside code as `*.test.tsx` / `*.test.ts`.
 - CI tip: run with `CI=true yarn test --coverage` for deterministic output.
 
 ---
@@ -32,15 +32,15 @@ Tech stack: **Create React App**, React-Router, Apollo Client (Shopify Storefron
 
 ```
 
-src/                 # CRA app source root (no backend/ frontend/ tests dirs)
+src/                 # Next.js source root
+├── app/             # App Router layouts and page entries
 ├── components/      # Re-usable UI widgets
-├── routes/          # Page components, lazy-loaded
+├── routes/          # Shared page content used by App Router entries
 ├── clients.ts       # Apollo Shopify clients
-├── storefront.gql   # GraphQL queries (loaded via graphql.macro)
-├── App.tsx          # Router + Suspense wrapper
+├── services/        # Shopify query and storefront hooks
 └── index.scss       # Bootstrap reboot/grid + globals
 public/
-└── index.html
+└── CNAME / icons / manifest / robots
 
 ```
 
@@ -57,7 +57,7 @@ public/
 | Components | Function components with ES module **default export** |
 | Hooks | Follow React Hook rules (`useX` prefix) |
 | Props | Typed via `interface` |
-| Lint | CRA ESLint (`react-app`, `react-app/jest`) |
+| Lint | Next.js ESLint flat config |
 | Formatting | Tabs = 2 spaces, single quotes, trailing commas (follow CRA defaults) |
 
 ---
@@ -74,8 +74,8 @@ public/
 
 ### 🤖 Agent Notes
 
-- Put new page components in `src/routes/` and export them from `index.ts` re-export barrel.  
-- Add env secrets via `.env` (local) or CI secrets before running `yarn start`; CRA auto-loads `REACT_APP_*` vars.
+- Put new route content in `src/routes/` and add the matching App Router entry in `src/app/`.
+- Add env secrets via `.env` (local) or CI secrets before running `yarn dev`; Next auto-loads `NEXT_PUBLIC_*` vars.
 - Never log Shopify tokens; keep disabled brands (Sizzle & Soak, Aura & Essence) out of routes and API calls.
 
 Happy shipping!

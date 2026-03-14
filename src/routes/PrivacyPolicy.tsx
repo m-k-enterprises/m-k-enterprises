@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
 import { Block } from '@smolpack/react-bootstrap-extensions';
-import { PageLayout, usePageMetadata } from '../components';
+import { PageLayout } from '../components';
 
 /**
  * Privacy Policy page.
@@ -9,19 +9,14 @@ import { PageLayout, usePageMetadata } from '../components';
  * @returns React element containing the policy.
  */
 function PrivacyPolicy() {
-  usePageMetadata({
-    title: 'Privacy Policy',
-    description: 'Read how M-K Enterprises handles personal data and privacy rights.',
-  });
-
   return (
     <PageLayout title="Privacy Policy">
       <Block>
         <Container>
           <h2>Introduction and Scope</h2>
           <p>
-            This Privacy Policy describes how M-K Enterprises ("we", "our", or
-            "us") collects, uses, and shares personal information when you use
+            This Privacy Policy describes how M-K Enterprises (&quot;we&quot;, &quot;our&quot;, or
+            &quot;us&quot;) collects, uses, and shares personal information when you use
             our website. It applies to all visitors and users of the site and is
             effective as of 1 January 2023.
           </p>

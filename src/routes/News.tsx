@@ -1,8 +1,8 @@
 import React from 'react';
 import { Container, Row } from 'react-bootstrap';
 import { Block } from '@smolpack/react-bootstrap-extensions';
-import { Articles, PageLayout, StatusMessage, usePageMetadata } from '../components';
-import { ArticleProps } from '../App';
+import { Articles, PageLayout, StatusMessage } from '../components';
+import type { ArticleProps } from '../site/siteData';
 
 /**
  * Render the News route showing recent company articles.
@@ -15,11 +15,6 @@ import { ArticleProps } from '../App';
  * @returns The rendered React element for the news page
  */
 function News(props: ArticleProps) {
-  usePageMetadata({
-    title: 'News',
-    description: 'Read the latest news and updates from M-K Enterprises.',
-  });
-
   const status = props.error ? 'error' : props.loading ? 'loading' : props.articles.length === 0 ? 'empty' : 'ready';
 
   return (

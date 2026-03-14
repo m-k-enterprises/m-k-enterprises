@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Card, Image } from 'react-bootstrap';
-import { Shop } from '../App';
+import type { Shop } from '../site/siteData';
 import { getBrandBorderStyle } from './brandStyles';
 
 interface BrandTileProps {

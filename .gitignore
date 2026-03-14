@@ -10,6 +10,7 @@
 
 # production
 /build
+/.next
 
 # misc
 .DS_Store
@@ -34,3 +35,5 @@ npm_output.log
 
 # build artifacts
 /dist
+next-env.d.ts
+*.tsbuildinfo

@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, within } from '@testing-library/react';
 
 import Home from './Home';
-import { Shop } from '../App';
+import type { Shop } from '../site/siteData';
 
 const shops: Shop[] = Array.from({ length: 3 }, (_, i) => ({
   id: String(i + 1),

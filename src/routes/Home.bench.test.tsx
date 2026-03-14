@@ -1,17 +1,27 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import Home from './Home';
-import { Shop } from '../App';
+import type { Shop } from '../site/siteData';
 import { Carousel } from 'react-bootstrap';
 
-// Mock react-bootstrap to spy on Carousel.Item and Carousel.Caption
 jest.mock('react-bootstrap', () => {
   const original = jest.requireActual('react-bootstrap');
-  const Item = jest.fn((props) => <div data-testid="carousel-item">{props.children}</div>);
-  const Caption = jest.fn((props) => <div data-testid="carousel-caption">{props.children}</div>);
-  const Carousel = ({ children }: any) => <div>{children}</div>;
-  (Carousel as any).Item = Item;
-  (Carousel as any).Caption = Caption;
+  const Carousel = ({ children }: React.PropsWithChildren) => <div>{children}</div>;
+  Carousel.displayName = 'MockCarousel';
+
+  const mockCarouselItem = jest.fn(function MockCarouselItem({ children }: React.PropsWithChildren) {
+    return <div data-testid="carousel-item">{children}</div>;
+  });
+
+  const mockCarouselCaption = jest.fn(function MockCarouselCaption({ children }: React.PropsWithChildren) {
+    return <div data-testid="carousel-caption">{children}</div>;
+  });
+
+  Object.assign(Carousel, {
+    Item: mockCarouselItem,
+    Caption: mockCarouselCaption,
+  });
+
   return {
     ...original,
     Carousel,
@@ -27,11 +37,13 @@ const shops: Shop[] = Array.from({ length: 1 }, (_, i) => ({
 }));
 
 test('Home does NOT re-render Carousel.Item on re-render with same props', () => {
+  const MockItem = Carousel.Item as unknown as jest.Mock;
+  MockItem.mockClear();
+
   const { rerender } = render(
     <Home loading={false} error={false} shops={shops} articles={[]} />
   );
 
-  const MockItem = Carousel.Item as jest.Mock;
   expect(MockItem).toHaveBeenCalledTimes(1);
 
   // Rerender with SAME props

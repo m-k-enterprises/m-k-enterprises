@@ -1,8 +1,16 @@
 import React from 'react';
 import { Button, Card, Col, Placeholder, Ratio } from 'react-bootstrap';
-import random from 'lodash/random';
-import { ArticleProps } from '../App';
+import type { ArticleProps } from '../site/siteData';
 import { getBrandBorderStyle } from './brandStyles';
+
+const articleSkeletons = [
+  { title: [6, 4, 3], text: [5, 4, 6, 3, 2], footer: [1, 2] },
+  { title: [4, 5, 2], text: [6, 3, 4, 5], footer: [1, 3] },
+  { title: [5, 3], text: [4, 4, 2, 6, 3], footer: [1, 2] },
+  { title: [3, 2, 4, 5], text: [5, 2, 3, 4], footer: [1, 3] },
+  { title: [6, 5], text: [3, 4, 5, 2, 4], footer: [1, 2] },
+  { title: [4, 4, 3], text: [6, 5, 2, 3], footer: [1, 3] },
+];
 
 /**
  * Render a responsive grid of article cards, showing randomized skeleton placeholders when loading or an error is present.
@@ -13,16 +21,9 @@ import { getBrandBorderStyle } from './brandStyles';
  * @returns A fragment of Col/Card elements representing either skeletons or article entries suitable for rendering in a grid.
  */
 function Articles(props: ArticleProps) {
-  // Intentionally randomize skeleton widths once per mount for visual variety.
-  const skeletons = React.useMemo(() => Array.from({ length: 6 }).map(() => ({
-    title: Array.from({ length: random(2, 8) }).map(() => random(1, 6)),
-    text: Array.from({ length: random(3, 12) }).map(() => random(1, 6)),
-    footer: [random(1), random(1, 3)]
-  })), []);
-
   return (
     <>
-      {props.loading || props.error ? skeletons.map((skeleton, index) => (
+      {props.loading || props.error ? articleSkeletons.map((skeleton, index) => (
         <Col key={index} border="light">
           <Card border="light">
             <Ratio aspectRatio="16x9">

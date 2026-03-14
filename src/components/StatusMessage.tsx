@@ -1,4 +1,3 @@
-import random from 'lodash/random';
 import React from 'react';
 import { Alert, Button, Placeholder } from 'react-bootstrap';
 
@@ -41,7 +40,7 @@ function StatusMessage({ state, message, onRetry }: StatusMessageProps) {
       {state === 'loading' ? (
         <>
           <Placeholder as={Alert.Heading} animation="glow">
-            <Placeholder xs={random(2, 6)} />
+            <Placeholder xs={4} />
           </Placeholder>
           <span className="visually-hidden">{message}</span>
         </>

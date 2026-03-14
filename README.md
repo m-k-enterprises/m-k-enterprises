@@ -1,26 +1,26 @@
-# Getting Started with Create React App
+# M-K Enterprises Next.js Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project now runs on [Next.js](https://nextjs.org/) App Router with static export output for GitHub Pages deployment.
 
 ## Setup
 
 1. Copy `.env.example` to `.env` and fill in your Shopify tokens.
-2. Install dependencies with `yarn install` or `npm install`.
-3. Start the dev server with `yarn start`.
+2. Install dependencies with `yarn install`.
+3. Start the dev server with `yarn dev`.
 
 ### Required environment variables
 
 ```
-REACT_APP_SHOPIFY_TOKEN_BEAR_BELTS=<token>
-REACT_APP_SHOPIFY_TOKEN_POCKET_BEARS_APPAREL=<token>
-REACT_APP_SHOPIFY_TOKEN_MYTHICAL_MOODS=<token>
-# REACT_APP_SHOPIFY_TOKEN_SIZZLE_SOAK=<token> # optional, currently disabled
-# REACT_APP_SHOPIFY_TOKEN_AURA_ESSENCE=<token> # optional, currently disabled
+NEXT_PUBLIC_SHOPIFY_TOKEN_BEAR_BELTS=<token>
+NEXT_PUBLIC_SHOPIFY_TOKEN_POCKET_BEARS_APPAREL=<token>
+NEXT_PUBLIC_SHOPIFY_TOKEN_MYTHICAL_MOODS=<token>
+# NEXT_PUBLIC_SHOPIFY_TOKEN_SIZZLE_SOAK=<token> # optional, currently disabled
+# NEXT_PUBLIC_SHOPIFY_TOKEN_AURA_ESSENCE=<token> # optional, currently disabled
 ```
 
 **Secrets hygiene**: never log or surface Shopify tokens in UI. Tokens live only
 in `.env` (local) or CI secret stores (pipeline); `.env.example` must contain
-placeholders only. CI should inject `REACT_APP_*` values via encrypted secrets.
+placeholders only. CI should inject `NEXT_PUBLIC_*` values via encrypted secrets.
 
 **Brand matrix**: Bear Belts, Pocket Bears Apparel, and Mythical Moods are
 active. Sizzle & Soak and Aura & Essence are disabled (no UI routes or calls).
@@ -29,9 +29,9 @@ active. Sizzle & Soak and Aura & Essence are disabled (no UI routes or calls).
 
 In the project directory, you can run:
 
-### `yarn start`
+### `yarn dev`
 
-Runs the app in the development mode.\
+Runs the Next.js dev server.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.\
@@ -39,35 +39,34 @@ You will also see any lint errors in the console.
 
 ### `yarn test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Runs the Jest test suite through `next/jest`.
 
 ### `yarn lint`
 
-Runs ESLint over all `.ts` and `.tsx` files in `src/`.
+Runs ESLint with the Next.js config.
 
 ### `yarn build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Builds the app for production and statically exports the site to the `build` folder.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+The exported output preserves direct-route HTML for each public page and is ready for `gh-pages`.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### `yarn deploy`
 
-### `yarn eject`
+Publishes the `build/` directory to GitHub Pages.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### `yarn preview`
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Serves the exported `build/` directory locally for a quick deploy smoke test.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Deployment Notes
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- The site uses `output: 'export'`, `distDir: 'build'`, and `trailingSlash: true` in `next.config.ts`.
+- `public/CNAME` is copied into the export output so the custom domain remains attached to GitHub Pages.
+- The old SPA redirect shim is no longer needed because each preserved route now exports its own static HTML file.
 
 ## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+You can learn more in the [Next.js documentation](https://nextjs.org/docs/app/getting-started/installation).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+To learn React, check out the [React documentation](https://react.dev/).

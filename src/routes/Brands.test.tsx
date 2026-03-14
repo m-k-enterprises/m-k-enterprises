@@ -10,7 +10,7 @@ jest.mock('../clients', () => ({
 }));
 
 import Brands from './Brands';
-import { Shop } from '../App';
+import type { Shop } from '../site/siteData';
 
 const shops: Shop[] = [
   {
@@ -72,6 +72,17 @@ const shops: Shop[] = [
   },
 ];
 
+const disabledShop: Shop = {
+  id: '4',
+  name: 'Aura & Essence',
+  shipsToCountries: [],
+  primaryDomain: { url: 'https://disabled.example.com' },
+  brand: {
+    shortDescription: 'Disabled brand',
+    colors: { primary: [{ background: '#fff', foreground: '#000' }] },
+  },
+};
+
 test('renders heading', () => {
   render(<Brands loading={true} error={false} shops={[]} />);
   const heading = screen.getByRole('heading', { level: 1, name: /our brands/i });
@@ -87,6 +98,13 @@ test('renders brand cards with correct links', () => {
     expect(link).toHaveAttribute('target', '_blank');
     expect(link).toHaveAttribute('rel', 'noopener noreferrer');
   });
+});
+
+test('filters disabled brands even if they are present in props', () => {
+  render(<Brands loading={false} error={false} shops={[...shops, disabledShop]} />);
+
+  expect(screen.queryByText(/aura & essence/i)).not.toBeInTheDocument();
+  expect(screen.getAllByRole('button', { name: /learn more/i })).toHaveLength(3);
 });
 
 test('shows empty state when no brands are available', () => {

@@ -2,11 +2,11 @@ import React from 'react';
 import { Container, Row, Col, Spinner } from 'react-bootstrap';
 import { Block } from '@smolpack/react-bootstrap-extensions';
 
-import { Shop, ShopProps } from '../App';
-import { LinkCard, StatusMessage, usePageMetadata } from '../components';
+import { LinkCard, StatusMessage } from '../components';
 import { LinkItem } from '../components/LinkCard';
+import type { Shop, ShopProps } from '../site/siteData';
 
-interface LinksProps extends ShopProps {}
+type LinksProps = ShopProps;
 
 const mapShopToLinkItem = (shop: Shop): LinkItem => ({
   id: shop.id,
@@ -34,11 +34,6 @@ const mapShopToLinkItem = (shop: Shop): LinkItem => ({
  */
 
 function Links(props: LinksProps) {
-  usePageMetadata({
-    title: 'Brand Links',
-    description: 'Direct links to each active M-K Enterprises brand storefront.',
-  });
-
   const items = props.shops.map(mapShopToLinkItem);
 
   return (

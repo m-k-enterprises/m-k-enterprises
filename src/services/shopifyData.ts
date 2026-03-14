@@ -1,18 +1,14 @@
 import React from 'react';
 import { ApolloClient, NormalizedCacheObject } from '@apollo/client';
-import { loader } from 'graphql.macro';
 
 import { clients } from '../clients';
 import { StorefrontData, StorefrontResponse } from './shopifyTypes';
 import { BrandKey } from './brandConfig';
-
-const storefrontQuery = loader('../storefront.gql');
+import { storefrontQuery } from './storefrontQuery';
 
 // 10s network timeout for Shopify storefront requests: long enough for typical responses,
 // but short enough to fail fast and surface errors promptly in the UI.
 const SHOPIFY_REQUEST_TIMEOUT_MS = 10 * 1000;
-
-
 
 // Cache Shopify storefront responses for a short period to reduce network and API load
 const CACHE_TTL_MINUTES = 5;
@@ -241,7 +237,6 @@ export async function fetchStorefrontData(
       }
     : undefined;
 
-  let requestWithCleanup: Promise<StorefrontData>;
   const request = withTimeout(
     client
       .query<StorefrontData>({
@@ -274,7 +269,7 @@ export async function fetchStorefrontData(
     return data;
   });
 
-  requestWithCleanup = requestWithCache.finally(() => {
+  const requestWithCleanup = requestWithCache.finally(() => {
     if (inflightRequests.get(cacheKey)?.promise === requestWithCleanup) {
       inflightRequests.delete(cacheKey);
     }
