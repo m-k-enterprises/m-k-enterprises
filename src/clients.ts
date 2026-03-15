@@ -59,6 +59,9 @@ function newClient(options: ClientOptions) {
 
 function getClientOptions(clientKey: BrandKey): ClientOptions {
   const definition = clientDefinitions[clientKey];
+  if (!definition) {
+    throw new Error(`Unknown Shopify client key: ${clientKey}`);
+  }
 
   return {
     uri: definition.uri,

@@ -31,4 +31,11 @@ test('exports clients when tokens present', async () => {
   expect(getClient('bearBelts')).toBeTruthy();
 });
 
+test('throws a descriptive error for an unknown client key', async () => {
+  const { getClient } = await import('./clients');
+  const invalidClientKey = 'unknown-brand' as import('./services').BrandKey;
+
+  expect(() => getClient(invalidClientKey)).toThrow('Unknown Shopify client key: unknown-brand');
+});
+
 export {}

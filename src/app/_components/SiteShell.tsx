@@ -1,6 +1,6 @@
 'use client';
 
-import type { ReactNode } from 'react';
+import { useSyncExternalStore, type ReactNode } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Container, Image, Nav, Navbar } from 'react-bootstrap';
@@ -18,6 +18,8 @@ const navigationItems = [
   { href: '/responsibility', label: 'Responsibility' },
   { href: '/contact', label: 'Contact' },
 ];
+const footerStartYear = 2022;
+const subscribeToYearRange = () => () => {};
 
 function normalisePathname(pathname: string): string {
   if (pathname === '/') {
@@ -31,9 +33,26 @@ function isActiveRoute(currentPathname: string, href: string): boolean {
   return normalisePathname(currentPathname) === normalisePathname(href);
 }
 
+function getCurrentFooterYearRange(): string {
+  const currentYear = new Date().getFullYear();
+
+  return currentYear <= footerStartYear
+    ? `${footerStartYear}`
+    : `${footerStartYear} - ${currentYear}`;
+}
+
+function FooterYearRange() {
+  const yearRange = useSyncExternalStore(
+    subscribeToYearRange,
+    getCurrentFooterYearRange,
+    () => `${footerStartYear} - Present`,
+  );
+
+  return <>{yearRange}</>;
+}
+
 export default function SiteShell({ children }: SiteShellProps) {
   const pathname = usePathname();
-  const currentYear = new Date().getFullYear();
 
   return (
     <>
@@ -60,7 +79,7 @@ export default function SiteShell({ children }: SiteShellProps) {
       <Block>
         <Container>
           <p>
-            &copy; 2022 - {currentYear} M-K Enterprises. All rights reserved.
+            &copy; <FooterYearRange /> M-K Enterprises. All rights reserved.
             {' '}
             <Link href="/privacy-policy">Privacy Policy</Link>
           </p>
