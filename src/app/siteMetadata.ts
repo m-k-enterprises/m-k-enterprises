@@ -3,6 +3,18 @@ import type { Metadata, Viewport } from 'next';
 const siteName = 'M-K Enterprises';
 const siteDescription = 'M-K Enterprises web site.';
 const siteUrl = new URL('https://m-k.enterprises');
+const siteOpenGraph: NonNullable<Metadata['openGraph']> = {
+  type: 'website',
+  siteName,
+  title: siteName,
+  description: siteDescription,
+  url: '/',
+};
+const siteTwitter: NonNullable<Metadata['twitter']> = {
+  card: 'summary_large_image',
+  title: siteName,
+  description: siteDescription,
+};
 
 interface PageMetadataOptions {
   title: string;
@@ -31,18 +43,8 @@ export const siteMetadata: Metadata = {
     icon: '/favicon.ico',
     apple: '/logo192.png',
   },
-  openGraph: {
-    type: 'website',
-    siteName,
-    title: siteName,
-    description: siteDescription,
-    url: '/',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: siteName,
-    description: siteDescription,
-  },
+  openGraph: siteOpenGraph,
+  twitter: siteTwitter,
 };
 
 export const siteViewport: Viewport = {
@@ -61,11 +63,13 @@ export function buildPageMetadata({ title, description, path }: PageMetadataOpti
       canonical: canonicalPath,
     },
     openGraph: {
+      ...siteOpenGraph,
       title,
       description,
       url: canonicalPath,
     },
     twitter: {
+      ...siteTwitter,
       title,
       description,
     },

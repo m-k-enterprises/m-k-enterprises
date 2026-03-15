@@ -10,7 +10,7 @@ This project now runs on [Next.js](https://nextjs.org/) App Router with static e
 
 ### Required environment variables
 
-```
+```env
 NEXT_PUBLIC_SHOPIFY_TOKEN_BEAR_BELTS=<token>
 NEXT_PUBLIC_SHOPIFY_TOKEN_POCKET_BEARS_APPAREL=<token>
 NEXT_PUBLIC_SHOPIFY_TOKEN_MYTHICAL_MOODS=<token>
@@ -18,9 +18,13 @@ NEXT_PUBLIC_SHOPIFY_TOKEN_MYTHICAL_MOODS=<token>
 # NEXT_PUBLIC_SHOPIFY_TOKEN_AURA_ESSENCE=<token> # optional, currently disabled
 ```
 
-**Secrets hygiene**: never log or surface Shopify tokens in UI. Tokens live only
-in `.env` (local) or CI secret stores (pipeline); `.env.example` must contain
-placeholders only. CI should inject `NEXT_PUBLIC_*` values via encrypted secrets.
+**Public token hygiene**: `NEXT_PUBLIC_*` values are embedded into the client
+bundle at build time and are publicly readable by design. Treat these Shopify
+tokens as browser-safe public tokens, keep `.env.example` limited to
+placeholders, and store the source values in local `.env` files or CI secret
+stores for operational management. If a credential must remain secret, do not
+prefix it with `NEXT_PUBLIC_`; keep it in server-only runtime configuration or
+behind a server-side route instead.
 
 **Brand matrix**: Bear Belts, Pocket Bears Apparel, and Mythical Moods are
 active. Sizzle & Soak and Aura & Essence are disabled (no UI routes or calls).
@@ -50,6 +54,10 @@ Runs ESLint with the Next.js config.
 Builds the app for production and statically exports the site to the `build` folder.
 
 The exported output preserves direct-route HTML for each public page and is ready for `gh-pages`.
+
+### `yarn start`
+
+Serves the exported `build/` directory locally to mirror the production static hosting setup.
 
 ### `yarn deploy`
 

@@ -35,9 +35,9 @@
     "predeploy": "yarn run build",
     "deploy": "gh-pages -d build",
     "dev": "next dev",
-    "start": "next dev",
+    "start": "serve ./build",
     "build": "next build",
-    "preview": "npx serve@latest ./build",
+    "preview": "serve ./build",
     "test": "jest",
     "test:watch": "jest --watch",
     "lint": "eslint .",
@@ -61,6 +61,7 @@
     "eslint": "^9.0.0",
     "eslint-config-next": "^16.1.6",
     "jest": "^30.3.0",
-    "jest-environment-jsdom": "^30.3.0"
+    "jest-environment-jsdom": "^30.3.0",
+    "serve": "^14.2.6"
   }
 }

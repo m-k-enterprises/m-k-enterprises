@@ -25,5 +25,8 @@
 ## 5. Verification
 
 - [x] 5.1 Update existing tests to run under `next/jest` and add or adjust route-level assertions where the migration changes structure.
+  Evidence: `jest.config.js` is wired through `next/jest`, and `src/routes/Brands.test.tsx` includes an explicit disabled-brand filter assertion to cover migration parity.
 - [x] 5.2 Run the repository quality gates in order: lint, tests, and production build; fix migration regressions that block parity.
+  Evidence: `yarn lint`, `npx tsc --noEmit`, `yarn test --runInBand`, and `yarn build` completed successfully for the migration branch before the change was marked complete.
 - [x] 5.3 Smoke-test each preserved top-level route for direct navigation, metadata presence, active-brand filtering, and deployable static output.
+  Evidence: `/`, `/about/`, `/brands/`, `/news/`, `/responsibility/`, `/contact/`, `/links/`, and `/privacy-policy/` were checked from the exported `build/` output for direct-route loading, title/description metadata, and static export parity.

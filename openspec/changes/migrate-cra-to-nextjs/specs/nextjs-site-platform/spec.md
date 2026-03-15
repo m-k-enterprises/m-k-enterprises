@@ -12,7 +12,7 @@ The application SHALL produce a static export build that is deployable to the cu
 
 #### Scenario: Production build creates deployable static output
 - **WHEN** the production build command is run
-- **THEN** the build output contains static files for each preserved top-level route and a deployable `404` page in the configured deploy directory
+- **THEN** the build output contains static files for each preserved top-level route and a deployable `404` page in the configured deployment directory
 
 ### Requirement: Page metadata is defined declaratively in the Next.js route structure
 Each top-level page SHALL define a unique, descriptive title and description through Next.js metadata exports, and the shared site-level metadata SHALL be defined in the root layout.

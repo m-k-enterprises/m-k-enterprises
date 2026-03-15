@@ -6,6 +6,8 @@ interface ClientOptions extends Partial<ApolloClientOptions<NormalizedCacheObjec
   shopifyStorefrontAccessToken: string
 }
 
+const SHOPIFY_STOREFRONT_API_VERSION = '2026-01';
+
 function requireEnvVar(name: string, value: string | undefined): string {
   if (!value) {
     throw new Error(`Missing env variable: ${name}`);
@@ -47,7 +49,7 @@ const clientCache = new Map<BrandKey, ApolloClient<NormalizedCacheObject>>();
 
 function newClient(options: ClientOptions) {
   return new ApolloClient({
-    uri: `https://${options.uri}.myshopify.com/api/2022-10/graphql.json`,
+    uri: `https://${options.uri}.myshopify.com/api/${SHOPIFY_STOREFRONT_API_VERSION}/graphql.json`,
     cache: new InMemoryCache(),
     headers: {
       'X-Shopify-Storefront-Access-Token': options.shopifyStorefrontAccessToken,

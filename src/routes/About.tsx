@@ -10,14 +10,11 @@ import { PageLayout } from '../components';
 import about from './about.jpg';
 
 const aboutImageUrl = typeof about === 'string' ? about : about.src;
-const GravatarImage = Gravatar as unknown as React.ComponentType<{
-  className: string;
-  email: string;
-  rating: string;
-  size: number;
-  default: string;
-  alt: string;
-}>;
+type GravatarProps = import('react-gravatar').Props;
+
+function GravatarImage(props: GravatarProps) {
+  return React.createElement(Gravatar as React.ElementType<GravatarProps>, props);
+}
 
 /**
  * Render the About page for the company, including shipping stats, mission, and team.

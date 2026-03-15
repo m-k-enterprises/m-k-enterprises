@@ -19,8 +19,16 @@ const navigationItems = [
   { href: '/contact', label: 'Contact' },
 ];
 
+function normalisePathname(pathname: string): string {
+  if (pathname === '/') {
+    return pathname;
+  }
+
+  return pathname.replace(/\/+$/, '');
+}
+
 function isActiveRoute(currentPathname: string, href: string): boolean {
-  return href === '/' ? currentPathname === href : currentPathname === href;
+  return normalisePathname(currentPathname) === normalisePathname(href);
 }
 
 export default function SiteShell({ children }: SiteShellProps) {

@@ -37,6 +37,23 @@ const touchCacheEntry = (cacheKey: string, value: { data: StorefrontData; expire
   }
 };
 
+function getCachedStorefrontData(clientKey: BrandKey): StorefrontData | null {
+  const cacheKey = getCacheKey(clientKey);
+  const cached = storefrontDataCache.get(cacheKey);
+
+  if (!cached) {
+    return null;
+  }
+
+  if (cached.expiresAt <= Date.now()) {
+    storefrontDataCache.delete(cacheKey);
+    return null;
+  }
+
+  touchCacheEntry(cacheKey, cached);
+  return cached.data;
+}
+
 interface WebpackHotModule {
   hot: {
     dispose(callback: () => void): void;
@@ -204,15 +221,9 @@ export async function fetchStorefrontData(
   options: { force?: boolean } = {}
 ): Promise<StorefrontData> {
   const cacheKey = getCacheKey(clientKey);
-  const cached = storefrontDataCache.get(cacheKey);
-  const isCacheValid = cached ? cached.expiresAt > Date.now() : false;
-  if (cached && !isCacheValid) {
-    storefrontDataCache.delete(cacheKey);
-  }
-
-  if (!options.force && cached && isCacheValid) {
-    touchCacheEntry(cacheKey, cached);
-    return cached.data;
+  const cachedData = options.force ? null : getCachedStorefrontData(clientKey);
+  if (cachedData) {
+    return cachedData;
   }
 
   const existing = inflightRequests.get(cacheKey);
@@ -303,15 +314,16 @@ export function clearStorefrontCache(clientKey?: BrandKey) {
  *  - `retry`: a function that re-fetches storefront data bypassing the cache
  */
 export function useStorefrontData(clientKey: BrandKey): StorefrontResponse {
+  const cachedData = getCachedStorefrontData(clientKey);
   const mountedRef = React.useRef(false);
   const [state, setState] = React.useState<{
     data: StorefrontData | null;
     error: Error | null;
     loading: boolean;
   }>({
-    data: null,
+    data: cachedData,
     error: null,
-    loading: true,
+    loading: cachedData === null,
   });
 
   React.useEffect(() => {
@@ -347,12 +359,32 @@ export function useStorefrontData(clientKey: BrandKey): StorefrontResponse {
 
   React.useEffect(() => {
     let active = true;
+    const nextCachedData = getCachedStorefrontData(clientKey);
 
     if (!mountedRef.current) {
       return () => {
         active = false;
       };
     }
+
+    if (nextCachedData) {
+      setState((prev) => {
+        if (prev.data === nextCachedData && prev.error === null && prev.loading === false) {
+          return prev;
+        }
+
+        return {
+          data: nextCachedData,
+          error: null,
+          loading: false,
+        };
+      });
+
+      return () => {
+        active = false;
+      };
+    }
+
     setState((prev) => ({ ...prev, loading: true, error: null }));
 
     fetchStorefrontData(clientKey)

@@ -7,7 +7,7 @@ The site is still built on Create React App, which keeps the entire experience i
 - Replace `react-scripts` and the CRA entrypoint with a Next.js application using the App Router.
 - Preserve the current public route map and visitor-facing behaviour for the existing pages: Home, About, Brands, News, Responsibility, Contact, Privacy Policy, and Links.
 - Move the shared shell, navigation, footer, and page-level metadata from runtime browser code into Next.js layouts, pages, and metadata exports.
-- Keep the first migration compatible with static hosting by using a static export build and updating the deploy pipeline accordingly.
+- Keep the first migration compatible with static hosting by using a static export build and updating the deployment pipeline accordingly.
 - Migrate environment variables, test setup, and build scripts from CRA conventions to Next.js conventions.
 - Retain the current Shopify storefront data scope and active-brand rules during the migration; do not reintroduce disabled brands or broaden API calls in this change.
 
