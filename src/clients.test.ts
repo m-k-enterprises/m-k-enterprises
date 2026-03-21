@@ -37,5 +37,3 @@ test('throws a descriptive error for an unknown client key', async () => {
 
   expect(() => getClient(invalidClientKey)).toThrow('Unknown Shopify client key: unknown-brand');
 });
-
-export {}
