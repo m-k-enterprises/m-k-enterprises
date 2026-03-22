@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-import { AboutPage } from '../_components/RoutePages';
+import AboutPageClient from './AboutPageClient';
 import { buildPageMetadata } from '../siteMetadata';
 
 export const metadata: Metadata = buildPageMetadata({
@@ -10,5 +10,5 @@ export const metadata: Metadata = buildPageMetadata({
 });
 
 export default function Page() {
-  return <AboutPage />;
+  return <AboutPageClient />;
 }

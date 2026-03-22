@@ -32,8 +32,8 @@
     "unsplash-js": "^7.0.15"
   },
   "scripts": {
-    "predeploy": "yarn run build",
-    "deploy": "gh-pages -d build",
+    "predeploy": "yarn run build && node -e \"require('fs').writeFileSync('build/.nojekyll', '')\"",
+    "deploy": "gh-pages --dotfiles -d build",
     "dev": "next dev",
     "start": "serve ./build",
     "build": "next build",

@@ -84,7 +84,7 @@ export default function FooBar() {
 
 ## 🧩 Route-Level Data
 
-* For shared Shopify data, prefer the shared route wrappers in `src/app/_components/RoutePages.tsx`.
+* For shared Shopify data, prefer a route-specific client wrapper colocated with the App Router `page.tsx` entry in `src/app/`.
 * If a route needs unique data, add a Next-compatible `gql` document under `src/services/` and consume it through the storefront layer.
 
 ---

@@ -1,8 +1,9 @@
-import { ApolloClient, ApolloClientOptions, InMemoryCache, NormalizedCacheObject } from '@apollo/client';
+import { ApolloClient, InMemoryCache, NormalizedCacheObject } from '@apollo/client';
 
 import type { BrandKey } from './services';
 
-interface ClientOptions extends Partial<ApolloClientOptions<NormalizedCacheObject>> {
+interface ClientOptions {
+  uri: string;
   shopifyStorefrontAccessToken: string
 }
 

@@ -18,11 +18,13 @@ const STORE_LOAD_ERROR_MESSAGE = 'Failed to load storefront data';
 
 // In-memory cache lives for the lifetime of the JS context (browser tab).
 // In development with Webpack/CRA HMR, caches are cleared on module dispose (see below).
-const storefrontDataCache = new Map<string, { data: StorefrontData; expiresAt: number }>();
+type StorefrontCacheEntry = { data: StorefrontData; expiresAt: number };
+
+const storefrontDataCache = new Map<string, StorefrontCacheEntry>();
 // Track in-flight requests per cache key to de-duplicate concurrent fetches.
 const inflightRequests = new Map<string, { promise: Promise<StorefrontData>; abort?: () => void }>();
 
-const touchCacheEntry = (cacheKey: string, value: { data: StorefrontData; expiresAt: number }) => {
+const touchCacheEntry = (cacheKey: string, value: StorefrontCacheEntry) => {
   // Refresh key order for LRU behavior.
   if (storefrontDataCache.has(cacheKey)) {
     storefrontDataCache.delete(cacheKey);
@@ -37,8 +39,7 @@ const touchCacheEntry = (cacheKey: string, value: { data: StorefrontData; expire
   }
 };
 
-function getCachedStorefrontData(clientKey: BrandKey): StorefrontData | null {
-  const cacheKey = getCacheKey(clientKey);
+function getCachedStorefrontEntry(cacheKey: string): StorefrontCacheEntry | null {
   const cached = storefrontDataCache.get(cacheKey);
 
   if (!cached) {
@@ -46,12 +47,15 @@ function getCachedStorefrontData(clientKey: BrandKey): StorefrontData | null {
   }
 
   if (cached.expiresAt <= Date.now()) {
-    storefrontDataCache.delete(cacheKey);
     return null;
   }
 
-  touchCacheEntry(cacheKey, cached);
-  return cached.data;
+  return cached;
+}
+
+function getCachedStorefrontData(clientKey: BrandKey): StorefrontData | null {
+  const cacheKey = getCacheKey(clientKey);
+  return getCachedStorefrontEntry(cacheKey)?.data ?? null;
 }
 
 interface WebpackHotModule {
@@ -221,9 +225,15 @@ export async function fetchStorefrontData(
   options: { force?: boolean } = {}
 ): Promise<StorefrontData> {
   const cacheKey = getCacheKey(clientKey);
-  const cachedData = options.force ? null : getCachedStorefrontData(clientKey);
-  if (cachedData) {
-    return cachedData;
+  const cachedEntry = options.force ? null : getCachedStorefrontEntry(cacheKey);
+  if (cachedEntry) {
+    touchCacheEntry(cacheKey, cachedEntry);
+    return cachedEntry.data;
+  }
+
+  const staleEntry = storefrontDataCache.get(cacheKey);
+  if (!options.force && staleEntry && staleEntry.expiresAt <= Date.now()) {
+    storefrontDataCache.delete(cacheKey);
   }
 
   const existing = inflightRequests.get(cacheKey);
@@ -359,7 +369,8 @@ export function useStorefrontData(clientKey: BrandKey): StorefrontResponse {
 
   React.useEffect(() => {
     let active = true;
-    const nextCachedData = getCachedStorefrontData(clientKey);
+    const cacheKey = getCacheKey(clientKey);
+    const nextCachedEntry = getCachedStorefrontEntry(cacheKey);
 
     if (!mountedRef.current) {
       return () => {
@@ -367,7 +378,10 @@ export function useStorefrontData(clientKey: BrandKey): StorefrontResponse {
       };
     }
 
-    if (nextCachedData) {
+    if (nextCachedEntry) {
+      touchCacheEntry(cacheKey, nextCachedEntry);
+      const nextCachedData = nextCachedEntry.data;
+
       setState((prev) => {
         if (prev.data === nextCachedData && prev.error === null && prev.loading === false) {
           return prev;
@@ -383,6 +397,11 @@ export function useStorefrontData(clientKey: BrandKey): StorefrontResponse {
       return () => {
         active = false;
       };
+    }
+
+    const staleEntry = storefrontDataCache.get(cacheKey);
+    if (staleEntry && staleEntry.expiresAt <= Date.now()) {
+      storefrontDataCache.delete(cacheKey);
     }
 
     setState((prev) => ({ ...prev, loading: true, error: null }));

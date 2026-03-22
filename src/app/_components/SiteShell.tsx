@@ -1,6 +1,6 @@
 'use client';
 
-import { useSyncExternalStore, type ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Container, Image, Nav, Navbar } from 'react-bootstrap';
@@ -19,7 +19,7 @@ const navigationItems = [
   { href: '/contact', label: 'Contact' },
 ];
 const footerStartYear = 2022;
-const subscribeToYearRange = () => () => {};
+const footerServerYearRange = `${footerStartYear} - Present`;
 
 function normalisePathname(pathname: string): string {
   if (pathname === '/') {
@@ -42,11 +42,17 @@ function getCurrentFooterYearRange(): string {
 }
 
 function FooterYearRange() {
-  const yearRange = useSyncExternalStore(
-    subscribeToYearRange,
-    getCurrentFooterYearRange,
-    () => `${footerStartYear} - Present`,
-  );
+  const [yearRange, setYearRange] = useState(footerServerYearRange);
+
+  useEffect(() => {
+    const frameId = window.requestAnimationFrame(() => {
+      setYearRange(getCurrentFooterYearRange());
+    });
+
+    return () => {
+      window.cancelAnimationFrame(frameId);
+    };
+  }, []);
 
   return <>{yearRange}</>;
 }
