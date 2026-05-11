@@ -21,13 +21,18 @@ function About(props: ShopProps) {
     description: 'Learn about the M-K Enterprises story, mission, and leadership team.',
   });
 
-  const shipsToCountriesMin = useMemo(
-    () => intersection(...props.shops.map(shop => shop.shipsToCountries)).length,
+  const shipsToCountries = useMemo(
+    () => props.shops.map((shop) => shop.shipsToCountries),
     [props.shops]
   );
+
+  const shipsToCountriesMin = useMemo(
+    () => intersection(...shipsToCountries).length,
+    [shipsToCountries]
+  );
   const shipsToCountriesMax = useMemo(
-    () => union(...props.shops.map(shop => shop.shipsToCountries)).length,
-    [props.shops]
+    () => union(...shipsToCountries).length,
+    [shipsToCountries]
   );
 
   const team = [
