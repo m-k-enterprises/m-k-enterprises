@@ -7,6 +7,9 @@ export const metadata: Metadata = {
   description: 'Read how M-K Enterprises handles personal data and privacy rights.',
 };
 
+/**
+ * Renders the privacy policy page.
+ */
 export default function PrivacyPolicyPage() {
   return <PrivacyPolicy />;
 }

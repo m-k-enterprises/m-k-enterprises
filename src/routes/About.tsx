@@ -12,10 +12,10 @@ import { PageLayout } from '../components';
 import about from './about.jpg';
 
 /**
- * Render the About page for the company, including shipping stats, mission, and team.
+ * Renders the company’s About page with shipping coverage, company information, and team details.
  *
- * @param props - Shop data and UI state; contains `shops`, `loading`, and `error`
- * @returns The rendered JSX element for the About page
+ * @param props - Optional storefront data to merge with the current storefront state
+ * @returns The rendered About page
  */
 function About(props?: Partial<ShopProps>) {
   const storefront = useStorefront();

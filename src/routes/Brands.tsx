@@ -11,10 +11,10 @@ const activeBrandNames = new Set(activeBrands.map((brand) => brand.name));
 const brandDescriptionSkeletonWidths = [5, 3, 7, 4, 6, 2, 5, 4];
 
 /**
- * Render a list of active brand storefronts with visuals and a link to learn more.
+ * Renders the “Our Brands” page with active brand storefronts and loading, error, or empty states.
  *
- * @param props - ShopProps containing shops and UI state (e.g. `loading`, `error`, `onRetry`)
- * @returns The JSX element for the "Our Brands" page
+ * @param props - Optional storefront values that override those provided by `useStorefront()`
+ * @returns The rendered “Our Brands” page
  */
 function Brands(props?: Partial<ShopProps>) {
   const storefront = useStorefront();

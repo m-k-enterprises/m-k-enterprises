@@ -6,11 +6,9 @@ import { Block } from '@smolpack/react-bootstrap-extensions';
 import { PageLayout } from '../components';
 
 /**
- * Render the Responsibility page describing the company's sustainability commitment.
+ * Renders the company's sustainability commitment page.
  *
- * Sets the page metadata title to "Responsibility" and a descriptive summary for the route.
- *
- * @returns The rendered JSX element for the Responsibility page (PageLayout containing the sustainability content).
+ * @returns The rendered Responsibility page.
  */
 function Responsibility() {
   return (

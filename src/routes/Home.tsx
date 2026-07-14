@@ -37,10 +37,10 @@ const getContentStatus = (loading: boolean, error: boolean, hasData: boolean) =>
 };
 
 /**
- * Render the home page with brand highlights and the latest news.
+ * Renders the home page with brand highlights and the latest news.
  *
- * @param props - Home page props containing `shops`, `articles`, `loading`, `error` and `onRetry` handler used to control content rendering.
- * @returns The rendered Home page element
+ * @param props - Optional values that override the storefront data and control content rendering.
+ * @returns The rendered home page element
  */
 function Home(props?: Partial<HomeProps>) {
   const storefront = useStorefront();

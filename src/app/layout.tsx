@@ -26,6 +26,12 @@ interface RootLayoutProps {
   children: React.ReactNode;
 }
 
+/**
+ * Defines the root layout for the application.
+ *
+ * @param children - Page content rendered within the application wrapper
+ * @returns The root HTML structure containing the application content
+ */
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" data-scroll-behavior="smooth">
