@@ -1,0 +1,69 @@
+import { gql } from '@apollo/client';
+
+export const storefrontQuery = gql`
+  query Storefront {
+    shop {
+      id
+      name
+      shipsToCountries
+      primaryDomain {
+        url
+      }
+      brand {
+        slogan
+        shortDescription
+        logo {
+          image {
+            altText
+            originalUrl: url
+            displayUrl: url(transform: { maxWidth: 2880 })
+            width
+            height
+          }
+        }
+        squareLogo {
+          image {
+            altText
+            originalUrl: url
+            displayUrl: url(transform: { maxWidth: 2880 })
+            width
+            height
+          }
+        }
+        colors {
+          primary {
+            background
+            foreground
+          }
+        }
+        coverImage {
+          image {
+            altText
+            url
+            heroUrl: url(transform: { crop: CENTER, maxWidth: 5760, maxHeight: 3240 })
+            width
+            height
+          }
+        }
+      }
+    }
+    articles(first: 6, sortKey: PUBLISHED_AT, reverse: true) {
+      nodes {
+        id
+        title
+        onlineStoreUrl
+        handle
+        excerpt
+        excerptHtml
+        image {
+          altText
+          url
+          cardImageUrl: url(transform: { crop: CENTER, maxWidth: 1920, maxHeight: 1080 })
+          width
+          height
+        }
+        publishedAt
+      }
+    }
+  }
+`;

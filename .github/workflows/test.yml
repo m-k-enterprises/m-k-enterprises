@@ -7,13 +7,16 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-2vcpu-ubuntu-2404
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '20.19.0'
           cache: yarn
       - run: corepack enable
-      - run: yarn install --immutable
-      - run: CI=true yarn test --coverage
+      - run: yarn install --frozen-lockfile
+      - run: yarn lint
+      - run: yarn typecheck
+      - run: CI=true yarn test --coverage --runInBand
+      - run: yarn build

@@ -1,13 +1,13 @@
 import React from 'react';
 import { Button, Carousel, Container } from 'react-bootstrap';
-import { Shop } from '../App';
+import type { Shop } from '../services';
 
 export type ShopCarouselItemProps = {
   shop: Shop;
 } & Omit<React.ComponentProps<typeof Carousel.Item>, 'children'>;
 
 const ShopCarouselItem = React.memo(React.forwardRef<HTMLDivElement, ShopCarouselItemProps>((inProps, ref) => {
-  const { shop, className, style, children, ...props } = inProps as ShopCarouselItemProps & { children?: React.ReactNode };
+  const { shop, className, style, ...props } = inProps;
   return (
   <Carousel.Item
     ref={ref}

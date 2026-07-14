@@ -1,81 +1,69 @@
-# M-K Enterprises React Frontend
+# M-K Enterprises Next.js Frontend
 
-A TypeScript + React app that showcases our brands, news, and landing pages.  
-Tech stack: **Create React App**, React-Router, Apollo Client (Shopify Storefront GraphQL), React-Bootstrap + custom SCSS.
-
----
+A TypeScript and React app that showcases our brands, news and landing pages.
+The stack is **Next.js App Router**, Apollo Client for Shopify Storefront
+GraphQL, React-Bootstrap and custom SCSS.
 
 ## 🛠️ Setup
 
 | Step | Command |
-|------|---------|
-| Install deps | `yarn install` (keep `yarn.lock` authoritative) |
-| Start dev server | `yarn start` → http://localhost:3000 (hot-reload) |
-| Run tests | `yarn test` (React Testing Library + Jest, watch mode) |
-| Lint (optional) | `yarn lint` |
-| Type-check only | `tsc --noEmit` |
-| Prod build | `yarn build` → outputs `build/` |
-| Deploy to GH Pages | `yarn deploy` (script runs `gh-pages -d build`) |
+| --- | --- |
+| Install dependencies | `yarn install` (`yarn.lock` is authoritative) |
+| Start development | `yarn dev` → http://localhost:3000 |
+| Run tests | `yarn test` (Jest + React Testing Library) |
+| Lint | `yarn lint` |
+| Type-check | `yarn typecheck` |
+| Production build | `yarn build` → `out/` |
+| Deploy to GitHub Pages | `yarn deploy` (`gh-pages -d out`) |
 
-> **Node LTS** is recommended. Use Yarn (packageManager is set to Yarn).
-
----
+Use Node.js 20.9 or later and Yarn 1.22.22.
 
 ## 🧪 Testing
 
-- Jest is pre-configured by CRA; tests live beside code as `*.test.tsx` / `*.test.ts`.
-- CI tip: run with `CI=true yarn test --coverage` for deterministic output.
+- Co-locate Jest tests as `*.test.tsx` or `*.test.ts`.
+- Use `CI=true yarn test --coverage --runInBand` for deterministic CI output.
+- Verify framework changes in this order: lint, type-check, tests, build.
 
----
+## 📁 Folder layout
 
-## 📁 Folder Layout (excerpt)
-
+```text
+src/
+├── app/                 # App Router pages, layout and metadata
+├── components/          # Reusable UI widgets
+├── routes/              # Page views imported by app/**/page.tsx
+├── services/            # Shopify query, cache, hooks and domain types
+├── App.tsx              # Shared storefront context, navigation and footer
+├── App.scss             # Bootstrap theme and component styles
+└── index.scss           # Global styles
+public/                  # Static assets copied into the export
 ```
 
-src/                 # CRA app source root (no backend/ frontend/ tests dirs)
-├── components/      # Re-usable UI widgets
-├── routes/          # Page components, lazy-loaded
-├── clients.ts       # Apollo Shopify clients
-├── storefront.gql   # GraphQL queries (loaded via graphql.macro)
-├── App.tsx          # Router + Suspense wrapper
-└── index.scss       # Bootstrap reboot/grid + globals
-public/
-└── index.html
+- Use PascalCase for component files such as `Home.tsx` and `BrandTile.tsx`.
+- Put URL entry points and route metadata in `src/app/`.
+- Keep SCSS beside the components it supports or in `src/` for global styles.
+- Do not add Tailwind; use Bootstrap utilities and the existing SCSS variables.
 
-```
-
-- **PascalCase** for component files (`Home.tsx`, `BrandCard.tsx`).
-- **SCSS** modules live next to components or in `src/`.
-- No Tailwind; styling via Bootstrap utilities and custom SCSS variables.
-
----
-
-## 📝 Coding Conventions
+## 📝 Coding conventions
 
 | Area | Rule |
-|------|------|
-| Components | Function components with ES module **default export** |
-| Hooks | Follow React Hook rules (`useX` prefix) |
-| Props | Typed via `interface` |
-| Lint | CRA ESLint (`react-app`, `react-app/jest`) |
-| Formatting | Tabs = 2 spaces, single quotes, trailing commas (follow CRA defaults) |
+| --- | --- |
+| Components | Function components with ES module default exports |
+| Routing | App Router pages and `next/link`; do not add React Router |
+| Client code | Add `'use client'` only where hooks, state or browser APIs require it |
+| Metadata | Export Next.js `Metadata` from the corresponding `page.tsx` |
+| Props | Define narrow TypeScript interfaces |
+| Formatting | Two spaces, single quotes and trailing commas |
 
----
+## 🔐 Shopify and environment variables
 
-## 🔧 Common Commands (reference)
+- Copy `.env.example` to `.env.local`; Next.js loads it automatically.
+- The static site uses `NEXT_PUBLIC_SHOPIFY_TOKEN_*` Storefront tokens in the
+  browser. Use only restricted Storefront tokens, never Admin or private tokens.
+- Never log token values or hard-code them in source.
+- Keep Sizzle & Soak and Aura & Essence disabled in routes and API calls.
 
-| Task | Command |
-|------|---------|
-| Storybook (if added) | `yarn storybook` |
-| Analyse bundle | `yarn build && npx source-map-explorer 'build/static/js/*.js'` |
-| Update GraphQL types | `npx graphql-codegen --config codegen.yml` |
+## 🚀 Static export
 
----
-
-### 🤖 Agent Notes
-
-- Put new page components in `src/routes/` and export them from `index.ts` re-export barrel.  
-- Add env secrets via `.env` (local) or CI secrets before running `yarn start`; CRA auto-loads `REACT_APP_*` vars.
-- Never log Shopify tokens; keep disabled brands (Sizzle & Soak, Aura & Essence) out of routes and API calls.
-
-Happy shipping!
+`next.config.ts` emits a static export with trailing slashes for GitHub Pages.
+Do not introduce server-only route handlers, dynamic rendering or default Next
+image optimisation without also changing the deployment architecture.

@@ -1,12 +1,10 @@
 import React from 'react';
 import { ApolloClient, NormalizedCacheObject } from '@apollo/client';
-import { loader } from 'graphql.macro';
 
 import { clients } from '../clients';
 import { StorefrontData, StorefrontResponse } from './shopifyTypes';
 import { BrandKey } from './brandConfig';
-
-const storefrontQuery = loader('../storefront.gql');
+import { storefrontQuery } from './storefrontQuery';
 
 // 10s network timeout for Shopify storefront requests: long enough for typical responses,
 // but short enough to fail fast and surface errors promptly in the UI.
@@ -21,7 +19,6 @@ const CACHE_MAX_ENTRIES = 10;
 const STORE_LOAD_ERROR_MESSAGE = 'Failed to load storefront data';
 
 // In-memory cache lives for the lifetime of the JS context (browser tab).
-// In development with Webpack/CRA HMR, caches are cleared on module dispose (see below).
 const storefrontDataCache = new Map<string, { data: StorefrontData; expiresAt: number }>();
 // Track in-flight requests per cache key to de-duplicate concurrent fetches.
 const inflightRequests = new Map<string, { promise: Promise<StorefrontData>; abort?: () => void }>();
@@ -41,41 +38,6 @@ const touchCacheEntry = (cacheKey: string, value: { data: StorefrontData; expire
   }
 };
 
-interface WebpackHotModule {
-  hot: {
-    dispose(callback: () => void): void;
-  };
-}
-
-/**
- * Type guard that determines whether a value is a Webpack hot module object exposing a `dispose` handler.
- *
- * @param moduleRef - Value to test for the Webpack hot-module shape
- * @returns `true` if `moduleRef` has a `hot.dispose` function, `false` otherwise
- */
-function hasWebpackHotModule(moduleRef: unknown): moduleRef is WebpackHotModule {
-  return (
-    typeof moduleRef === 'object' &&
-    moduleRef !== null &&
-    'hot' in (moduleRef as { hot?: unknown }) &&
-    typeof (moduleRef as { hot?: { dispose?: unknown } }).hot?.dispose === 'function'
-  );
-}
-
-if (
-  process.env.NODE_ENV === 'development' &&
-  typeof module !== 'undefined' &&
-  hasWebpackHotModule(module) &&
-  module.hot
-) {
-  // Reset in-memory caches on Webpack/CRA hot reloads so each fresh dev bundle
-  // starts from a clean state. `module.hot` is injected only in development builds.
-  const hot = module.hot;
-  hot.dispose(() => {
-    storefrontDataCache.clear();
-    inflightRequests.clear();
-  });
-}
 /**
  * Retrieve the Apollo Client instance for a given brand key.
  *
@@ -241,7 +203,6 @@ export async function fetchStorefrontData(
       }
     : undefined;
 
-  let requestWithCleanup: Promise<StorefrontData>;
   const request = withTimeout(
     client
       .query<StorefrontData>({
@@ -274,7 +235,7 @@ export async function fetchStorefrontData(
     return data;
   });
 
-  requestWithCleanup = requestWithCache.finally(() => {
+  const requestWithCleanup = requestWithCache.finally(() => {
     if (inflightRequests.get(cacheKey)?.promise === requestWithCleanup) {
       inflightRequests.delete(cacheKey);
     }

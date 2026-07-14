@@ -1,20 +1,27 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import Home from './Home';
-import { Shop } from '../App';
 import { Carousel } from 'react-bootstrap';
+
+import type { Shop } from '../services';
+import Home from './Home';
 
 // Mock react-bootstrap to spy on Carousel.Item and Carousel.Caption
 jest.mock('react-bootstrap', () => {
-  const original = jest.requireActual('react-bootstrap');
-  const Item = jest.fn((props) => <div data-testid="carousel-item">{props.children}</div>);
-  const Caption = jest.fn((props) => <div data-testid="carousel-caption">{props.children}</div>);
-  const Carousel = ({ children }: any) => <div>{children}</div>;
-  (Carousel as any).Item = Item;
-  (Carousel as any).Caption = Caption;
+  const original = jest.requireActual<typeof import('react-bootstrap')>('react-bootstrap');
+  const Item = jest.fn(({ children }: React.PropsWithChildren) => (
+    <div data-testid="carousel-item">{children}</div>
+  ));
+  const Caption = jest.fn(({ children }: React.PropsWithChildren) => (
+    <div data-testid="carousel-caption">{children}</div>
+  ));
+  const MockCarousel = Object.assign(
+    ({ children }: React.PropsWithChildren) => <div>{children}</div>,
+    { Item, Caption },
+  );
+
   return {
     ...original,
-    Carousel,
+    Carousel: MockCarousel,
   };
 });
 

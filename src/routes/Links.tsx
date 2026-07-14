@@ -1,12 +1,15 @@
+'use client';
+
 import React from 'react';
 import { Container, Row, Col, Spinner } from 'react-bootstrap';
 import { Block } from '@smolpack/react-bootstrap-extensions';
 
-import { Shop, ShopProps } from '../App';
-import { LinkCard, StatusMessage, usePageMetadata } from '../components';
+import { ShopProps, useStorefront } from '../App';
+import type { Shop } from '../services';
+import { LinkCard, StatusMessage } from '../components';
 import { LinkItem } from '../components/LinkCard';
 
-interface LinksProps extends ShopProps {}
+type LinksProps = Partial<ShopProps>;
 
 const mapShopToLinkItem = (shop: Shop): LinkItem => ({
   id: shop.id,
@@ -33,20 +36,17 @@ const mapShopToLinkItem = (shop: Shop): LinkItem => ({
  * @returns A React element that displays a grid of brand storefront link cards or loading spinners
  */
 
-function Links(props: LinksProps) {
-  usePageMetadata({
-    title: 'Brand Links',
-    description: 'Direct links to each active M-K Enterprises brand storefront.',
-  });
-
-  const items = props.shops.map(mapShopToLinkItem);
+function Links(props?: LinksProps) {
+  const storefront = useStorefront();
+  const pageProps = props ? { ...storefront, ...props } : storefront;
+  const items = pageProps.shops.map(mapShopToLinkItem);
 
   return (
     <Block>
       <Container className="links">
         <h1 className="visually-hidden">Brand Links</h1>
         <Row className="g-3">
-          {props.loading ? (
+          {pageProps.loading ? (
             Array.from({ length: 3 }).map((_, i) => (
               <Col key={i} xs={12} md={6} className="text-center">
                 <Spinner animation="border" role="status">
@@ -54,12 +54,12 @@ function Links(props: LinksProps) {
                 </Spinner>
               </Col>
             ))
-          ) : props.error ? (
+          ) : pageProps.error ? (
             <Col xs={12}>
               <StatusMessage
                 state="error"
                 message="We ran into trouble loading brand links."
-                onRetry={props.onRetry}
+                onRetry={pageProps.onRetry}
               />
             </Col>
           ) : items.map(item => (

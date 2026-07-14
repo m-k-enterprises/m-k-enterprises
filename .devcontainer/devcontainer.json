@@ -1,6 +1,6 @@
 {
   "name": "m-k-enterprises",
-  "image": "mcr.microsoft.com/vscode/devcontainers/typescript-node:18",
+  "image": "mcr.microsoft.com/vscode/devcontainers/typescript-node:20",
   "postCreateCommand": "sudo corepack enable && yarn install",
   "customizations": {
     "vscode": {

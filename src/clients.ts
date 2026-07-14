@@ -1,59 +1,87 @@
-import { ApolloClient, ApolloClientOptions, InMemoryCache } from '@apollo/client';
+import { ApolloClient, InMemoryCache, NormalizedCacheObject } from '@apollo/client';
 
-interface ClientOptions extends Partial<ApolloClientOptions<{}>> {
-  shopifyStorefrontAccessToken: string
+import type { BrandKey } from './services/brandConfig';
+
+interface ClientOptions {
+  uri: string;
+  shopifyStorefrontAccessToken: string;
 }
 
-function requireEnvVar(name: string): string {
-  const value = process.env[name]
-  if (!value) {
-    throw new Error(`Missing env variable: ${name}`)
-  }
-  return value
-}
-
-const clientOptions: Record<string, ClientOptions> = {
-  bearBelts: {
-    uri: 'bear-belts',
-    shopifyStorefrontAccessToken: requireEnvVar('REACT_APP_SHOPIFY_TOKEN_BEAR_BELTS')
-  },
-  pocketBearsApparel: {
-    uri: 'pocket-bears-apparel',
-    shopifyStorefrontAccessToken: requireEnvVar('REACT_APP_SHOPIFY_TOKEN_POCKET_BEARS_APPAREL')
-  },
-  mythicalMoods: {
-    uri: 'mythical-moods',
-    shopifyStorefrontAccessToken: requireEnvVar('REACT_APP_SHOPIFY_TOKEN_MYTHICAL_MOODS')
-  },
-  // sizzleSoak temporarily disabled
-  // sizzleSoak: {
-  //   uri: 'sizzle-soak',
-  //   shopifyStorefrontAccessToken: requireEnvVar('REACT_APP_SHOPIFY_TOKEN_SIZZLE_SOAK'),
-  // },
-  // auraEssence temporarily disabled
-  // auraEssence: {
-  //   uri: 'aura-and-essence',
-  //   shopifyStorefrontAccessToken: requireEnvVar('REACT_APP_SHOPIFY_TOKEN_AURA_ESSENCE')
-  // },
+const storefrontPaths: Record<BrandKey, string> = {
+  bearBelts: 'bear-belts',
+  pocketBearsApparel: 'pocket-bears-apparel',
+  mythicalMoods: 'mythical-moods',
 };
 
-function newClient(options: ClientOptions) {
+const clientCache = new Map<BrandKey, ApolloClient<NormalizedCacheObject>>();
+
+function requireEnvVar(name: string, value: string | undefined): string {
+  if (!value) {
+    throw new Error(`Missing env variable: ${name}`);
+  }
+
+  return value;
+}
+
+function getStorefrontToken(clientKey: BrandKey): string {
+  switch (clientKey) {
+    case 'bearBelts':
+      return requireEnvVar(
+        'NEXT_PUBLIC_SHOPIFY_TOKEN_BEAR_BELTS',
+        process.env.NEXT_PUBLIC_SHOPIFY_TOKEN_BEAR_BELTS,
+      );
+    case 'pocketBearsApparel':
+      return requireEnvVar(
+        'NEXT_PUBLIC_SHOPIFY_TOKEN_POCKET_BEARS_APPAREL',
+        process.env.NEXT_PUBLIC_SHOPIFY_TOKEN_POCKET_BEARS_APPAREL,
+      );
+    case 'mythicalMoods':
+      return requireEnvVar(
+        'NEXT_PUBLIC_SHOPIFY_TOKEN_MYTHICAL_MOODS',
+        process.env.NEXT_PUBLIC_SHOPIFY_TOKEN_MYTHICAL_MOODS,
+      );
+  }
+}
+
+function newClient(options: ClientOptions): ApolloClient<NormalizedCacheObject> {
   return new ApolloClient({
     uri: `https://${options.uri}.myshopify.com/api/2022-10/graphql.json`,
     cache: new InMemoryCache(),
     headers: {
-      'X-Shopify-Storefront-Access-Token': options.shopifyStorefrontAccessToken
-    }
+      'X-Shopify-Storefront-Access-Token': options.shopifyStorefrontAccessToken,
+    },
   });
 }
 
+function getClient(clientKey: BrandKey): ApolloClient<NormalizedCacheObject> {
+  const cachedClient = clientCache.get(clientKey);
+  if (cachedClient) {
+    return cachedClient;
+  }
+
+  const client = newClient({
+    uri: storefrontPaths[clientKey],
+    shopifyStorefrontAccessToken: getStorefrontToken(clientKey),
+  });
+  clientCache.set(clientKey, client);
+
+  return client;
+}
+
 /**
- * Pre-configured Apollo clients for each Shopify store.
+ * Lazily configured Apollo clients for each active Shopify storefront.
+ *
+ * Lazy creation allows Next.js to prerender the loading UI without requiring
+ * browser-only storefront tokens during the server build phase.
  */
 export const clients = {
-  bearBelts: newClient(clientOptions.bearBelts),
-  pocketBearsApparel: newClient(clientOptions.pocketBearsApparel),
-  mythicalMoods: newClient(clientOptions.mythicalMoods),
-  // sizzleSoak: newClient(clientOptions.sizzleSoak),
-  // auraEssence: newClient(clientOptions.auraEssence),
+  get bearBelts() {
+    return getClient('bearBelts');
+  },
+  get pocketBearsApparel() {
+    return getClient('pocketBearsApparel');
+  },
+  get mythicalMoods() {
+    return getClient('mythicalMoods');
+  },
 };

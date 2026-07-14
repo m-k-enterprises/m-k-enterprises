@@ -1,12 +1,14 @@
+'use client';
+
 import React from 'react';
 import { Button, Col, Container, Image, Placeholder, Ratio, Row } from 'react-bootstrap';
 import { Block } from '@smolpack/react-bootstrap-extensions';
 import { activeBrands } from '../services/brandConfig';
-import { PageLayout, StatusMessage, usePageMetadata } from '../components';
-import { ShopProps } from '../App';
-import { random } from 'lodash';
+import { PageLayout, StatusMessage } from '../components';
+import { ShopProps, useStorefront } from '../App';
 
 const activeBrandNames = new Set(activeBrands.map((brand) => brand.name));
+const brandDescriptionSkeletonWidths = [5, 3, 7, 4, 6, 2, 5, 4];
 
 /**
  * Render a list of active brand storefronts with visuals and a link to learn more.
@@ -14,17 +16,14 @@ const activeBrandNames = new Set(activeBrands.map((brand) => brand.name));
  * @param props - ShopProps containing shops and UI state (e.g. `loading`, `error`, `onRetry`)
  * @returns The JSX element for the "Our Brands" page
  */
-function Brands(props: ShopProps) {
-  usePageMetadata({
-    title: 'Our Brands',
-    description: 'Learn more about the three active M-K Enterprises brands and their storefronts.',
-  });
-
+function Brands(props?: Partial<ShopProps>) {
+  const storefront = useStorefront();
+  const pageProps = props ? { ...storefront, ...props } : storefront;
   const displayShops = React.useMemo(
-    () => props.shops.filter((shop) => activeBrandNames.has(shop.name)),
-    [props.shops],
+    () => pageProps.shops.filter((shop) => activeBrandNames.has(shop.name)),
+    [pageProps.shops],
   );
-  const status = props.loading ? 'loading' : props.error ? 'error' : displayShops.length === 0 ? 'empty' : 'ready';
+  const status = pageProps.loading ? 'loading' : pageProps.error ? 'error' : displayShops.length === 0 ? 'empty' : 'ready';
 
   return (
     <PageLayout title="Our Brands">
@@ -51,9 +50,9 @@ function Brands(props: ShopProps) {
                 </Col>
                 <Col className="mb-3" xs={12} md={10}>
                   <Placeholder as="p" className="lead" animation="wave">
-                    {Array.from({ length: random(6, 18) }).map((_, j) => (
+                    {brandDescriptionSkeletonWidths.map((width, j) => (
                       <React.Fragment key={j}>
-                        <Placeholder xs={random(1, 8)} />{' '}
+                        <Placeholder xs={width} />{' '}
                       </React.Fragment>
                     ))}
                   </Placeholder>
@@ -119,7 +118,7 @@ function Brands(props: ShopProps) {
               message={status === 'error'
                   ? 'We ran into trouble loading brand details.'
                   : 'No brand details are available right now.'}
-              onRetry={status === 'error' ? props.onRetry : undefined}
+              onRetry={status === 'error' ? pageProps.onRetry : undefined}
               />
           </Container>
         </Block>

@@ -23,11 +23,10 @@ test('renders article title and excerpt', () => {
 });
 
 test('Articles loading state is stable across re-renders', () => {
-  const { asFragment, rerender } = render(<Articles loading={true} error={false} articles={[]} />);
-  const firstRender = asFragment();
+  const { container, rerender } = render(<Articles loading={true} error={false} articles={[]} />);
+  const firstRender = container.innerHTML;
 
   rerender(<Articles loading={true} error={false} articles={[]} />);
-  const secondRender = asFragment();
 
-  expect(secondRender).toMatchObject(firstRender);
+  expect(container.innerHTML).toBe(firstRender);
 });
