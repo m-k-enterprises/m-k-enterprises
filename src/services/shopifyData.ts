@@ -127,14 +127,18 @@ function toError(error: unknown, context: string): Error {
 }
 
 /**
- * Loads storefront data for a brand using cached and deduplicated requests.
+ * Loads storefront data for a brand using a per-brand, in-memory cache.
  *
- * Forced requests bypass cached data and replace the cache with the fresh result.
- * Requests that exceed the configured timeout are rejected with a contextual timeout
- * error; errors from the underlying storefront request are propagated.
+ * Non-forced calls reuse data for {@link CACHE_TTL_MINUTES} minutes and share one
+ * in-flight network request per brand. A forced call bypasses the cache, aborts any
+ * in-flight request for that brand when supported, and stores the fresh result.
+ * Requests use {@link SHOPIFY_REQUEST_TIMEOUT_MS}; a timeout aborts the underlying
+ * request when supported and rejects with a contextual timeout error. Other request
+ * errors are propagated unchanged.
  *
  * @param clientKey - Brand identifier used to select the Shopify client.
- * @param options - Optional cache controls.
+ * @param options - Optional cache controls; set `force` to bypass cached data and replace
+ * any in-flight request.
  * @returns The storefront data for the brand.
  */
 export async function fetchStorefrontData(
@@ -231,10 +235,11 @@ export function clearStorefrontCache(clientKey?: BrandKey) {
 }
 
 /**
- * Loads storefront data for a brand and exposes its loading and error state.
+ * Loads storefront data for a brand and exposes a stable response shape.
  *
- * @param clientKey - The brand whose storefront data should be loaded
- * @returns The current storefront data, error, loading state, and a function that forces a fresh fetch
+ * @param clientKey - The brand whose storefront data should be loaded.
+ * @returns An object containing `data`, `error`, `loading`, and `retry`; `retry` forces
+ * a fresh fetch that bypasses the cache.
  */
 export function useStorefrontData(clientKey: BrandKey): StorefrontResponse {
   const mountedRef = React.useRef(false);
