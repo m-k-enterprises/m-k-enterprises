@@ -13,6 +13,8 @@ const storefrontPaths: Record<BrandKey, string> = {
   mythicalMoods: 'mythical-moods',
 };
 
+const SHOPIFY_STOREFRONT_API_VERSION = '2026-07';
+
 const clientCache = new Map<BrandKey, ApolloClient<NormalizedCacheObject>>();
 
 /**
@@ -65,7 +67,7 @@ function getStorefrontToken(clientKey: BrandKey): string {
  */
 function newClient(options: ClientOptions): ApolloClient<NormalizedCacheObject> {
   return new ApolloClient({
-    uri: `https://${options.uri}.myshopify.com/api/2022-10/graphql.json`,
+    uri: `https://${options.uri}.myshopify.com/api/${SHOPIFY_STOREFRONT_API_VERSION}/graphql.json`,
     cache: new InMemoryCache(),
     headers: {
       'X-Shopify-Storefront-Access-Token': options.shopifyStorefrontAccessToken,

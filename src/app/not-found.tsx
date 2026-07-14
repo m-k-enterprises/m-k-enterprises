@@ -1,27 +1,17 @@
-'use client';
+import type { Metadata } from 'next';
 
-import Link from 'next/link';
-import { Container } from 'react-bootstrap';
-import { Block } from '@smolpack/react-bootstrap-extensions';
+import NotFound from '../routes/NotFound';
 
-import PageLayout from '../components/PageLayout';
+export const metadata: Metadata = {
+  title: 'Page Not Found',
+  description: 'The page you requested could not be found.',
+};
 
 /**
- * Renders the page-not-found view with a link to the home page.
+ * Renders the page-not-found route.
  *
- * @returns The page-not-found layout
+ * @returns The page-not-found view.
  */
-export default function NotFound() {
-  return (
-    <PageLayout title="Page Not Found">
-      <Block>
-        <Container>
-          <p className="lead">The page you requested does not exist.</p>
-          <Link className="btn btn-primary" href="/">
-            Return home
-          </Link>
-        </Container>
-      </Block>
-    </PageLayout>
-  );
+export default function NotFoundPage() {
+  return <NotFound />;
 }
