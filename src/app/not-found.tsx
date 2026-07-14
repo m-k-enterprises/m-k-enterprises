@@ -6,6 +6,11 @@ import { Block } from '@smolpack/react-bootstrap-extensions';
 
 import PageLayout from '../components/PageLayout';
 
+/**
+ * Renders the page-not-found view with a link to the home page.
+ *
+ * @returns The page-not-found layout
+ */
 export default function NotFound() {
   return (
     <PageLayout title="Page Not Found">

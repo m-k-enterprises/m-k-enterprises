@@ -13,12 +13,10 @@ const articleSkeletons = [
 ] as const;
 
 /**
- * Render a responsive grid of article cards, showing randomized skeleton placeholders when loading or an error is present.
+ * Renders article cards in a responsive grid, or skeleton cards while loading or when an error is present.
  *
- * Renders six skeleton cards with varied placeholder widths while `props.loading` or `props.error` is true; otherwise renders one card per `props.articles`. Each article card conditionally includes a 16:9 image (chosen from `image.cardImageUrl` or `image.url`), title, optional excerpt, an optional "Read more" link when `onlineStoreUrl` is present, and a footer with the published date formatted as "day month year".
- *
- * @param props - Component props (see `ArticleProps`): includes `articles`, `loading`, and `error`.
- * @returns A fragment of Col/Card elements representing either skeletons or article entries suitable for rendering in a grid.
+ * @param props - Article data and rendering state.
+ * @returns A fragment containing skeleton cards or one card for each article.
  */
 function Articles(props: ArticleProps) {
   return (

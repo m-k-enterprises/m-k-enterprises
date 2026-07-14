@@ -15,6 +15,14 @@ const storefrontPaths: Record<BrandKey, string> = {
 
 const clientCache = new Map<BrandKey, ApolloClient<NormalizedCacheObject>>();
 
+/**
+ * Retrieves a configured environment variable value.
+ *
+ * @param name - The environment variable name used in the missing-value error
+ * @param value - The environment variable value
+ * @returns The configured value
+ * @throws If `value` is missing
+ */
 function requireEnvVar(name: string, value: string | undefined): string {
   if (!value) {
     throw new Error(`Missing env variable: ${name}`);
@@ -23,6 +31,12 @@ function requireEnvVar(name: string, value: string | undefined): string {
   return value;
 }
 
+/**
+ * Retrieves the configured Shopify Storefront access token for a brand.
+ *
+ * @param clientKey - The brand whose storefront token is required
+ * @returns The configured Shopify Storefront access token
+ */
 function getStorefrontToken(clientKey: BrandKey): string {
   switch (clientKey) {
     case 'bearBelts':
@@ -43,6 +57,12 @@ function getStorefrontToken(clientKey: BrandKey): string {
   }
 }
 
+/**
+ * Creates an Apollo client for a Shopify storefront.
+ *
+ * @param options - The storefront hostname segment and access token.
+ * @returns A configured Apollo client for the storefront's GraphQL API.
+ */
 function newClient(options: ClientOptions): ApolloClient<NormalizedCacheObject> {
   return new ApolloClient({
     uri: `https://${options.uri}.myshopify.com/api/2022-10/graphql.json`,
@@ -53,6 +73,12 @@ function newClient(options: ClientOptions): ApolloClient<NormalizedCacheObject> 
   });
 }
 
+/**
+ * Retrieves the Apollo client for a storefront, creating and caching it when necessary.
+ *
+ * @param clientKey - Identifies the storefront whose client should be retrieved
+ * @returns The Apollo client configured for the specified storefront
+ */
 function getClient(clientKey: BrandKey): ApolloClient<NormalizedCacheObject> {
   const cachedClient = clientCache.get(clientKey);
   if (cachedClient) {

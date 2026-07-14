@@ -7,6 +7,9 @@ export const metadata: Metadata = {
   description: 'Learn more about the three active M-K Enterprises brands and their storefronts.',
 };
 
+/**
+ * Renders the page showcasing the company's brands.
+ */
 export default function BrandsPage() {
   return <Brands />;
 }

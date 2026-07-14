@@ -7,6 +7,9 @@ export const metadata: Metadata = {
   description: 'Explore the active M-K Enterprises brands and the latest company news.',
 };
 
+/**
+ * Renders the home page.
+ */
 export default function HomePage() {
   return <Home />;
 }

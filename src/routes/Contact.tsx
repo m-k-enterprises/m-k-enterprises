@@ -7,12 +7,12 @@ import { PageLayout } from '../components';
 import { ShopProps, useStorefront } from '../App';
 
 /**
- * Render the contact page listing each brand as a linked logo.
+ * Renders the contact page with shop logos linked to their primary domains.
  *
- * Displays each shop's brand logo linking to its primary domain; if no shops are available and the component is loading or in an error state, renders two image placeholders to indicate loading.
+ * Displays placeholders when shop data is loading or has errored without any available shops.
  *
- * @param props - ShopProps containing the shops array and `loading`/`error` flags
- * @returns The JSX element for the contact route
+ * @param props - Optional storefront properties that override the values provided by `useStorefront`
+ * @returns The contact page element
  */
 function Contact(props?: Partial<ShopProps>) {
   const storefront = useStorefront();

@@ -39,6 +39,11 @@ const emptyStorefrontValue: StorefrontContextValue = {
 
 const StorefrontContext = React.createContext<StorefrontContextValue>(emptyStorefrontValue);
 
+/**
+ * Provides access to the shared storefront data and query state.
+ *
+ * @returns The current storefront context value
+ */
 export function useStorefront(): StorefrontContextValue {
   return React.useContext(StorefrontContext);
 }
@@ -52,6 +57,12 @@ const navigationItems = [
   { href: '/contact', label: 'Contact' },
 ] as const;
 
+/**
+ * Normalises storefront data for use by the application.
+ *
+ * @param data - The storefront data to normalise, or `null` when unavailable
+ * @returns The shop and its articles, with each article associated with the shop's brand
+ */
 function mapStorefrontData(data: StorefrontData | null) {
   if (!data) {
     return { shop: null as Shop | null, articles: [] as Article[] };

@@ -7,13 +7,9 @@ import { Articles, PageLayout, StatusMessage } from '../components';
 import { ArticleProps, useStorefront } from '../App';
 
 /**
- * Render the News route showing recent company articles.
+ * Renders the latest company news, showing articles when available or an appropriate status message otherwise.
  *
- * Sets page metadata (title "News" and a brief description) and displays either
- * an Articles grid when data is ready or a StatusMessage for loading, error or
- * empty states.
- *
- * @param props - ArticleProps containing `articles`, `loading`, `error` and optional `onRetry`
+ * @param props - Optional article data and state overrides
  * @returns The rendered React element for the news page
  */
 function News(props?: Partial<ArticleProps>) {

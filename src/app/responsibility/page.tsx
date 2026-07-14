@@ -7,6 +7,11 @@ export const metadata: Metadata = {
   description: 'See how M-K Enterprises is committed to responsible and sustainable practices.',
 };
 
+/**
+ * Renders the responsibility page.
+ *
+ * @returns The responsibility page content.
+ */
 export default function ResponsibilityPage() {
   return <Responsibility />;
 }
