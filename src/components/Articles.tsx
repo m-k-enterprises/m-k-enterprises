@@ -1,28 +1,27 @@
 import React from 'react';
 import { Button, Card, Col, Placeholder, Ratio } from 'react-bootstrap';
-import random from 'lodash/random';
 import { ArticleProps } from '../App';
 import { getBrandBorderStyle } from './brandStyles';
 
+const articleSkeletons = [
+  { title: [4, 3], text: [6, 5, 4, 2], footer: [1, 3] },
+  { title: [5, 2], text: [4, 6, 3, 5], footer: [1, 2] },
+  { title: [3, 5], text: [5, 4, 6, 2], footer: [1, 3] },
+  { title: [6, 2], text: [3, 5, 4, 6], footer: [1, 2] },
+  { title: [4, 4], text: [6, 3, 5, 3], footer: [1, 3] },
+  { title: [5, 3], text: [4, 5, 6, 2], footer: [1, 2] },
+] as const;
+
 /**
- * Render a responsive grid of article cards, showing randomized skeleton placeholders when loading or an error is present.
+ * Renders article cards in a responsive grid, or skeleton cards while loading or when an error is present.
  *
- * Renders six skeleton cards with varied placeholder widths while `props.loading` or `props.error` is true; otherwise renders one card per `props.articles`. Each article card conditionally includes a 16:9 image (chosen from `image.cardImageUrl` or `image.url`), title, optional excerpt, an optional "Read more" link when `onlineStoreUrl` is present, and a footer with the published date formatted as "day month year".
- *
- * @param props - Component props (see `ArticleProps`): includes `articles`, `loading`, and `error`.
- * @returns A fragment of Col/Card elements representing either skeletons or article entries suitable for rendering in a grid.
+ * @param props - Article data and rendering state.
+ * @returns A fragment containing skeleton cards or one card for each article.
  */
 function Articles(props: ArticleProps) {
-  // Intentionally randomize skeleton widths once per mount for visual variety.
-  const skeletons = React.useMemo(() => Array.from({ length: 6 }).map(() => ({
-    title: Array.from({ length: random(2, 8) }).map(() => random(1, 6)),
-    text: Array.from({ length: random(3, 12) }).map(() => random(1, 6)),
-    footer: [random(1), random(1, 3)]
-  })), []);
-
   return (
     <>
-      {props.loading || props.error ? skeletons.map((skeleton, index) => (
+      {props.loading || props.error ? articleSkeletons.map((skeleton, index) => (
         <Col key={index} border="light">
           <Card border="light">
             <Ratio aspectRatio="16x9">
@@ -96,7 +95,7 @@ function Articles(props: ArticleProps) {
                 </Button>
               ) : null}
             </Card.Body>
-            <Card.Footer className="text-muted">{new Date(article.publishedAt).toLocaleDateString(undefined, {
+            <Card.Footer className="text-muted">{new Date(article.publishedAt).toLocaleDateString('en-GB', {
               day: 'numeric',
               month: 'long',
               year: 'numeric'

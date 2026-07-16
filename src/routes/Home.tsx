@@ -1,11 +1,15 @@
+'use client';
+
 import React from 'react';
 import { Carousel, Col, Container, Placeholder, Row, Spinner } from 'react-bootstrap';
 import { Block } from '@smolpack/react-bootstrap-extensions';
-import { random } from 'lodash';
-import { Articles, BrandTile, ShopCarouselItem, StatusMessage, usePageMetadata } from '../components';
-import { ArticleProps, ShopProps } from '../App';
+import { Articles, BrandTile, ShopCarouselItem, StatusMessage } from '../components';
+import { ArticleProps, ShopProps, useStorefront } from '../App';
 
 interface HomeProps extends ShopProps, ArticleProps {}
+
+const heroTitleSkeletonWidths = [3, 2];
+const heroDescriptionSkeletonWidths = [5, 4, 6, 3, 5];
 
 /**
  * Determines how many columns to use for the brand grid based on the number of shops.
@@ -33,22 +37,19 @@ const getContentStatus = (loading: boolean, error: boolean, hasData: boolean) =>
 };
 
 /**
- * Render the home page with brand highlights and the latest news.
+ * Renders the home page with brand highlights and the latest news.
  *
- * @param props - Home page props containing `shops`, `articles`, `loading`, `error` and `onRetry` handler used to control content rendering.
- * @returns The rendered Home page element
+ * @param props - Optional values that override the storefront data and control content rendering.
+ * @returns The rendered home page element
  */
-function Home(props: HomeProps) {
-  usePageMetadata({
-    title: 'Home',
-    description: 'Explore the active M-K Enterprises brands and the latest company news.',
-  });
-
-  const hasBrands = props.shops.length > 0;
-  const hasArticles = props.articles.length > 0;
-  const brandStatus = getContentStatus(props.loading, props.error, hasBrands);
-  const newsStatus = getContentStatus(props.loading, props.error, hasArticles);
-  const brandGridColumns = getBrandGridColumns(props.shops.length);
+function Home(props?: Partial<HomeProps>) {
+  const storefront = useStorefront();
+  const pageProps = props ? { ...storefront, ...props } : storefront;
+  const hasBrands = pageProps.shops.length > 0;
+  const hasArticles = pageProps.articles.length > 0;
+  const brandStatus = getContentStatus(pageProps.loading, pageProps.error, hasBrands);
+  const newsStatus = getContentStatus(pageProps.loading, pageProps.error, hasArticles);
+  const brandGridColumns = getBrandGridColumns(pageProps.shops.length);
 
   return (
     <>
@@ -60,16 +61,16 @@ function Home(props: HomeProps) {
             <Carousel.Caption className="text-end text-primary">
               <Container>
                 <Placeholder className="display-1" animation="wave" as="h2">
-                  {Array.from({ length: random(2, 3) }).map((_, i) => (
+                  {heroTitleSkeletonWidths.map((width, i) => (
                     <React.Fragment key={i}>
-                      <Placeholder xs={random(1, 3)} />{' '}
+                      <Placeholder xs={width} />{' '}
                     </React.Fragment>
                   ))}
                 </Placeholder>
                 <Placeholder className="lead" animation="wave" as="p">
-                  {Array.from({ length: random(4, 8) }).map((_, i) => (
+                  {heroDescriptionSkeletonWidths.map((width, i) => (
                     <React.Fragment key={i}>
-                      <Placeholder xs={random(1, 6)} />{' '}
+                      <Placeholder xs={width} />{' '}
                     </React.Fragment>
                   ))}
                 </Placeholder>
@@ -79,7 +80,7 @@ function Home(props: HomeProps) {
               </Container>
             </Carousel.Caption>
           </Carousel.Item>
-        ) : props.shops.map(shop => (
+        ) : pageProps.shops.map(shop => (
           <ShopCarouselItem key={shop.id} shop={shop} />
         ))}
       </Carousel>
@@ -105,11 +106,11 @@ function Home(props: HomeProps) {
             <StatusMessage
               state="error"
               message="We ran into trouble loading brand details."
-              onRetry={props.onRetry}
+              onRetry={pageProps.onRetry}
             />
           ) : brandStatus === 'ready' || hasBrands ? (
             <Row className="g-3" xs={1} md={brandGridColumns} data-testid="brand-tiles">
-              {props.shops.map((shop) => (
+              {pageProps.shops.map((shop) => (
                 <Col key={shop.id}>
                   <BrandTile shop={shop} />
                 </Col>
@@ -128,7 +129,11 @@ function Home(props: HomeProps) {
           <h2>Latest News</h2>
           {newsStatus === 'loading' || newsStatus === 'ready' || hasArticles ? (
             <Row className="g-3" xs={1} md={2} xl={3}>
-              <Articles loading={props.loading} error={props.error} articles={props.articles} />
+              <Articles
+                loading={pageProps.loading}
+                error={pageProps.error}
+                articles={pageProps.articles}
+              />
             </Row>
           ) : (
             <StatusMessage
@@ -136,7 +141,7 @@ function Home(props: HomeProps) {
               message={newsStatus === 'error'
                   ? 'We ran into trouble loading news updates.'
                   : 'No news updates are available right now.'}
-              onRetry={newsStatus === 'error' ? props.onRetry : undefined}
+              onRetry={newsStatus === 'error' ? pageProps.onRetry : undefined}
             />
           )}
         </Container>

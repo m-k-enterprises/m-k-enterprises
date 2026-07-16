@@ -1,73 +1,67 @@
-# Getting Started with Create React App
+# M-K Enterprises
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A TypeScript and React site built with Next.js App Router. It showcases the
+M-K Enterprises brands, company news and supporting pages, with live Shopify
+Storefront data and a static export for GitHub Pages.
 
-## Setup
+## 🛠️ Setup
 
-1. Copy `.env.example` to `.env` and fill in your Shopify tokens.
-2. Install dependencies with `yarn install` or `npm install`.
-3. Start the dev server with `yarn start`.
+1. Use Node.js 20.9 or later.
+2. Copy `.env.example` to `.env.local` and add the Shopify Storefront tokens.
+3. Install dependencies with `yarn install`.
+4. Start the development server with `yarn dev`.
+5. Open [http://localhost:3000](http://localhost:3000).
 
-### Required environment variables
+### Environment variables
 
+```dotenv
+NEXT_PUBLIC_SHOPIFY_TOKEN_BEAR_BELTS=<storefront-token>
+NEXT_PUBLIC_SHOPIFY_TOKEN_POCKET_BEARS_APPAREL=<storefront-token>
+NEXT_PUBLIC_SHOPIFY_TOKEN_MYTHICAL_MOODS=<storefront-token>
 ```
-REACT_APP_SHOPIFY_TOKEN_BEAR_BELTS=<token>
-REACT_APP_SHOPIFY_TOKEN_POCKET_BEARS_APPAREL=<token>
-REACT_APP_SHOPIFY_TOKEN_MYTHICAL_MOODS=<token>
-# REACT_APP_SHOPIFY_TOKEN_SIZZLE_SOAK=<token> # optional, currently disabled
-# REACT_APP_SHOPIFY_TOKEN_AURA_ESSENCE=<token> # optional, currently disabled
+
+The site is statically hosted and loads Shopify data in the browser. Next.js
+therefore includes variables prefixed with `NEXT_PUBLIC_` in the client bundle.
+Use only restricted Shopify Storefront access tokens here. Never use Shopify
+Admin tokens or other private credentials, and never log token values.
+
+Bear Belts, Pocket Bears Apparel and Mythical Moods are active. Sizzle & Soak
+and Aura & Essence remain disabled and must not receive routes or API calls.
+
+## 🧰 Scripts
+
+| Command | Purpose |
+| --- | --- |
+| `yarn dev` | Run the Next.js development server |
+| `yarn start` | Alias for the development server |
+| `yarn lint` | Run ESLint across the repository |
+| `yarn typecheck` | Type-check without emitting files |
+| `yarn test` | Run Jest and React Testing Library tests |
+| `yarn build` | Build the static site into `out/` |
+| `yarn deploy` | Publish `out/` to GitHub Pages |
+
+Run non-watch tests in CI or locally with:
+
+```bash
+CI=true yarn test --coverage --runInBand
 ```
 
-**Secrets hygiene**: never log or surface Shopify tokens in UI. Tokens live only
-in `.env` (local) or CI secret stores (pipeline); `.env.example` must contain
-placeholders only. CI should inject `REACT_APP_*` values via encrypted secrets.
+## 📁 Structure
 
-**Brand matrix**: Bear Belts, Pocket Bears Apparel, and Mythical Moods are
-active. Sizzle & Soak and Aura & Essence are disabled (no UI routes or calls).
+```text
+src/
+├── app/                 # App Router layouts, pages and route metadata
+├── components/          # Reusable UI components
+├── routes/              # Existing page views mounted by app/**/page.tsx
+├── services/            # Shopify data, query and domain types
+├── App.tsx              # Shared storefront provider, navigation and footer
+├── App.scss             # Bootstrap theme and component styles
+└── index.scss           # Global reboot and grid styles
+public/                  # Static icons, manifest, robots.txt and CNAME
+```
 
-## Available Scripts
+## 🚀 Deployment
 
-In the project directory, you can run:
-
-### `yarn start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn lint`
-
-Runs ESLint over all `.ts` and `.tsx` files in `src/`.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+`next.config.ts` uses `output: 'export'` and trailing slashes so every route is
+emitted as static HTML suitable for GitHub Pages. `yarn build` writes the export
+to `out/`; `yarn deploy` publishes that directory and includes `public/CNAME`.

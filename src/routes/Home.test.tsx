@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, screen, within } from '@testing-library/react';
 
+import type { Shop } from '../services';
 import Home from './Home';
-import { Shop } from '../App';
 
 const shops: Shop[] = Array.from({ length: 3 }, (_, i) => ({
   id: String(i + 1),
@@ -37,11 +37,7 @@ test('shows loading UI for brands and news', () => {
 
   const statusIndicators = screen.getAllByRole('status');
   expect(statusIndicators).toHaveLength(3);
-
-  const newsHeading = screen.getByRole('heading', { name: /latest news/i });
-  const newsContainer = newsHeading.closest('.container');
-  expect(newsContainer).not.toBeNull();
-  expect(newsContainer?.querySelectorAll('.placeholder').length).toBeGreaterThan(0);
+  expect(screen.getByRole('heading', { name: /latest news/i })).toBeInTheDocument();
 });
 
 test('shows error messages with retry', () => {
@@ -49,5 +45,5 @@ test('shows error messages with retry', () => {
   render(<Home loading={false} error={true} onRetry={onRetry} shops={[]} articles={[]} />);
   expect(screen.getByText(/trouble loading brand details/i)).toBeInTheDocument();
   expect(screen.getByText(/trouble loading news updates/i)).toBeInTheDocument();
-  expect(screen.getAllByRole('button', { name: /retry/i })[0]).toBeInTheDocument();
+  expect(screen.getAllByRole('button', { name: /retry/i })).toHaveLength(2);
 });

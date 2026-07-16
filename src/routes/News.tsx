@@ -1,26 +1,21 @@
+'use client';
+
 import React from 'react';
 import { Container, Row } from 'react-bootstrap';
 import { Block } from '@smolpack/react-bootstrap-extensions';
-import { Articles, PageLayout, StatusMessage, usePageMetadata } from '../components';
-import { ArticleProps } from '../App';
+import { Articles, PageLayout, StatusMessage } from '../components';
+import { ArticleProps, useStorefront } from '../App';
 
 /**
- * Render the News route showing recent company articles.
+ * Renders the latest company news, showing articles when available or an appropriate status message otherwise.
  *
- * Sets page metadata (title "News" and a brief description) and displays either
- * an Articles grid when data is ready or a StatusMessage for loading, error or
- * empty states.
- *
- * @param props - ArticleProps containing `articles`, `loading`, `error` and optional `onRetry`
+ * @param props - Optional article data and state overrides
  * @returns The rendered React element for the news page
  */
-function News(props: ArticleProps) {
-  usePageMetadata({
-    title: 'News',
-    description: 'Read the latest news and updates from M-K Enterprises.',
-  });
-
-  const status = props.error ? 'error' : props.loading ? 'loading' : props.articles.length === 0 ? 'empty' : 'ready';
+function News(props?: Partial<ArticleProps>) {
+  const storefront = useStorefront();
+  const pageProps = props ? { ...storefront, ...props } : storefront;
+  const status = pageProps.error ? 'error' : pageProps.loading ? 'loading' : pageProps.articles.length === 0 ? 'empty' : 'ready';
 
   return (
     <PageLayout title="Latest News">
@@ -28,7 +23,11 @@ function News(props: ArticleProps) {
         <Container>
           {status === 'ready' ? (
             <Row className="g-3" xs={1} md={2}>
-              <Articles loading={props.loading} error={props.error} articles={props.articles} />
+              <Articles
+                loading={pageProps.loading}
+                error={pageProps.error}
+                articles={pageProps.articles}
+              />
             </Row>
           ) : (
             <StatusMessage
@@ -38,7 +37,7 @@ function News(props: ArticleProps) {
                 : status === 'error'
                   ? 'We ran into trouble loading news updates.'
                   : 'No news updates are available right now.'}
-              onRetry={status === 'error' ? props.onRetry : undefined}
+              onRetry={status === 'error' ? pageProps.onRetry : undefined}
             />
           )}
         </Container>

@@ -1,5 +1,8 @@
 # Quickstart: Brand-focused site refresh
 
+> Historical record: this document captures the January 2026 CRA implementation.
+> See the root `README.md` for the current Next.js setup and commands.
+
 ## Goal
 Implement homepage brand focus, shared layout and status messaging, and SEO metadata updates without changing existing routes.
 

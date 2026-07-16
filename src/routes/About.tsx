@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useMemo } from 'react';
 import { Button, Card, Col, Container, Figure, Placeholder, Row } from 'react-bootstrap';
 import { Block, PullQuote, StatCard } from '@smolpack/react-bootstrap-extensions';
@@ -5,29 +7,26 @@ import intersection from 'lodash/intersection';
 import union from 'lodash/union';
 import Gravatar from 'react-gravatar';
 
-import { ShopProps } from '../App';
-import { PageLayout, usePageMetadata } from '../components';
+import { ShopProps, useStorefront } from '../App';
+import { PageLayout } from '../components';
 import about from './about.jpg';
 
 /**
- * Render the About page for the company, including shipping stats, mission, and team.
+ * Renders the company’s About page with shipping coverage, company information, and team details.
  *
- * @param props - Shop data and UI state; contains `shops`, `loading`, and `error`
- * @returns The rendered JSX element for the About page
+ * @param props - Optional storefront data to merge with the current storefront state
+ * @returns The rendered About page
  */
-function About(props: ShopProps) {
-  usePageMetadata({
-    title: 'About',
-    description: 'Learn about the M-K Enterprises story, mission, and leadership team.',
-  });
-
+function About(props?: Partial<ShopProps>) {
+  const storefront = useStorefront();
+  const pageProps = props ? { ...storefront, ...props } : storefront;
   const shipsToCountriesMin = useMemo(
-    () => intersection(...props.shops.map(shop => shop.shipsToCountries)).length,
-    [props.shops]
+    () => intersection(...pageProps.shops.map(shop => shop.shipsToCountries)).length,
+    [pageProps.shops]
   );
   const shipsToCountriesMax = useMemo(
-    () => union(...props.shops.map(shop => shop.shipsToCountries)).length,
-    [props.shops]
+    () => union(...pageProps.shops.map(shop => shop.shipsToCountries)).length,
+    [pageProps.shops]
   );
 
   const team = [
@@ -54,7 +53,7 @@ function About(props: ShopProps) {
           <Col>
             <StatCard className="text-center">
               <StatCard.Desc>Ships to</StatCard.Desc>
-              {(props.loading || props.error) && props.shops.length === 0 ? (
+              {(pageProps.loading || pageProps.error) && pageProps.shops.length === 0 ? (
                 <Placeholder className="statcard-number text-primary" as="h2" animation="wave">
                   <Placeholder xs={1} />
                 </Placeholder>
@@ -71,8 +70,8 @@ function About(props: ShopProps) {
           <Row className="align-items-center">
             <Col>
               <Figure>
-                <Figure.Image src={about} alt="Bear Belts launch event" fluid />
-                <Figure.Caption className="text-center">Bear Belts' first event in Edinburgh.</Figure.Caption>
+                <Figure.Image src={about.src} alt="Bear Belts launch event" fluid />
+                <Figure.Caption className="text-center">Bear Belts’ first event in Edinburgh.</Figure.Caption>
               </Figure>
             </Col>
             <Col>
@@ -107,7 +106,7 @@ function About(props: ShopProps) {
       </Block>
       <Block>
         <Container>
-          <h2>One of the world's most popular brands, brought to you by M-K Enterprises.</h2>
+          <h2>One of the world’s most popular brands, brought to you by M-K Enterprises.</h2>
           <p>Founded in 2022 by Kristian and Paul Matthews-Kennington, M-K Enterprises quickly established itself as a force to be reckoned with. With a laser focus on quality and customer service, the company has earned a reputation for excellence that has attracted a global following.</p>
           <p>M-K Enterprises offers a diverse portfolio of brands and products that cater to a range of needs. With a commitment to innovation and collaboration, the company works with partners and customers alike to develop cutting-edge solutions that meet the demands of a rapidly changing world.</p>
         </Container>
